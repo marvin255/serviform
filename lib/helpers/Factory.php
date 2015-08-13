@@ -16,16 +16,18 @@ class Factory
 	{
 		if (strpos($type, '\\') !== false) {
 			$class = $type;
+		} elseif (strpos($type, '.') !== false) {
+			$class = '\\serviform\\fields\\' . implode('\\', explode('.', trim($type, "\r\n\t .")));
 		} else {
 			$name = ucfirst(trim($type));
 			$class = "\\serviform\\fields\\{$name}";
 		}
-		if (is_subclass_of($class, '\serviform\IElement')) {
+		if (is_subclass_of($class, '\\serviform\\IElement')) {
 			$item = new $class;
 			$item->config($options);
 			return $item;
 		} else {
-			throw new Exception('Wrong class: ' . $class);
+			throw new \serviform\Exception('Wrong class: ' . $class);
 		}
 	}
 
@@ -40,7 +42,7 @@ class Factory
 			unset($options['type']);
 			return self::initElement($type, $options);
 		} else {
-			throw new Exception('Wrong field type');
+			throw new \serviform\Exception('Wrong field type');
 		}
 	}
 }
