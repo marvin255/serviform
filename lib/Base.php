@@ -1,0 +1,226 @@
+<?php
+
+namespace serviform;
+
+/**
+ * Base element class
+ */
+abstract class Base implements IElement
+{
+	/**
+	 * @var mixed
+	 */
+	protected $_value = null;
+	/**
+	 * @var string
+	 */
+	protected $_name = '';
+	/**
+	 * @var \serviform\IElement
+	 */
+	protected $_parent = null;
+	/**
+	 * @var array
+	 */
+	protected $_attributes = array();
+	/**
+	 * @var array
+	 */
+	protected $_errors = array();
+	/**
+	 * @var string
+	 */
+	protected $_label = '';
+
+
+
+	/**
+	 * @return string
+	 */
+	abstract public function getInput();
+
+
+
+	/**
+	 * @param \serviform\IElement $parent
+	 */
+	public function setParent(\serviform\IElement $parent)
+	{
+		$this->_parent = $parent;
+	}
+
+	/**
+	 * @return \serviform\IElement
+	 */
+	public function getParent()
+	{
+		return $this->_parent;
+	}
+
+
+
+	/**
+	 * @param mixed $value
+	 */
+	public function setValue($value)
+	{
+		$this->_value = $value;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getValue()
+	{
+		return $this->_value;
+	}
+
+
+
+	/**
+	 * @param string $name
+	 * @param mixed $value
+	 */
+	public function setAttribute($name, $value)
+	{
+		$this->_attributes[$name] = $value;
+	}
+
+	/**
+	 * @param array $attributes
+	 */
+	public function setAttributes(array $attributes)
+	{
+		foreach ($attributes as $name => $value) {
+			$this->setAttribute($name, $value);
+		}
+	}
+
+	/**
+	 * @param string $name
+	 * @return mixed
+	 */
+	public function getAttribute($name)
+	{
+		return isset($this->_attributes[$name]) ? $this->_attributes[$name] : null;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getAttributes()
+	{
+		return $this->_attributes;
+	}
+
+
+
+	/**
+	 * @param string $name
+	 */
+	public function setName($name)
+	{
+		$this->_name = trim($name);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getName()
+	{
+		return $this->_name;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getFullName()
+	{
+		$return = array();
+		$parent = $this->getParent();
+		if ($parent) {
+			$return = $parent->getFullName();
+		}
+		$return[] = $this->getName();
+		return $return;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getNameChainString()
+	{
+		$names = $this->getFullName();
+		$return = array_shift($names);
+		if (!empty($names)) {
+			$return .= '[' . implode('][', $names) . ']';
+		}
+		return $return;
+	}
+
+
+
+	/**
+	 * @param string $error
+	 */
+	public function addError($error)
+	{
+		$this->_errors[] = trim($error);
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getErrors()
+	{
+		return $this->_errors;
+	}
+
+	/**
+	 * @return null
+	 */
+	public function clearErrors()
+	{
+		$this->_errors = array();
+	}
+
+
+
+	/**
+	 * @param string $label
+	 */
+	public function setLabel($label)
+	{
+		$this->_label = trim($label);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLabel()
+	{
+		return $this->_label;
+	}
+
+
+
+	/**
+	 * @param array $options
+	 */
+	public function config(array $options)
+	{
+		$properties = array();
+		$reflect = new \ReflectionObject($this);
+		foreach ($reflect->getProperties(\ReflectionProperty::IS_PUBLIC) as $prop) {
+			$properties[$prop->getName()] = true;
+		}
+		foreach ($options as $name => $value) {
+			$setter = 'set' . ucfirst($name);
+			if (isset($properties[$name])) {
+				$this->$name = $value;
+			} elseif (method_exists($this, $setter)) {
+				$this->$setter($value);
+			}
+		}
+	}
+}
