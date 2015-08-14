@@ -13,6 +13,54 @@ class Form extends \serviform\BaseRenderable
 	 * @var array поля формы
 	 */
 	protected $_elements = array();
+	/**
+	 * @var array
+	 */
+	protected $_itemAttributes = null;
+
+
+
+	/**
+	 * @return string
+	 */
+	public function getInput()
+	{
+		$res = parent::getInput();
+		if ($res !== null) return $res;
+
+		$return = '';
+		$elements = $this->getElements();
+		$itemAttributes = $this->getItemAttributes();
+		foreach ($elements as $el) {
+			$label = Html::tag('label', array(), Html::clearText($el->getLabel()));
+			$input = $el->getInput();
+			$return .= Html::tag('div', $itemAttributes, "{$label}{$input}");
+		}
+
+		$tag = $this->getParent() ? 'div' : 'form';
+		return Html::tag($tag, $this->getAttributes(), $return);
+	}
+
+
+
+	/**
+	 * @param array $values
+	 */
+	public function loadData(array $values = null)
+	{
+		$values = $values ? $values : $_REQUEST;
+		$arName = $this->getFullName();
+		foreach ($arName as $name) {
+			if (isset($values[$name])) {
+				$values = $values[$name];
+			} else {
+				$values = array();
+			}
+		}
+		if (is_array($values)) {
+			$this->setValue($values);
+		}
+	}
 
 
 
@@ -119,21 +167,18 @@ class Form extends \serviform\BaseRenderable
 
 
 	/**
-	 * @param array $values
+	 * @param array $element
 	 */
-	public function loadData(array $values = null)
+	public function setItemAttributes(array $element)
 	{
-		$values = $values ? $values : $_REQUEST;
-		$arName = $this->getFullName();
-		foreach ($arName as $name) {
-			if (isset($values[$name])) {
-				$values = $values[$name];
-			} else {
-				$values = array();
-			}
-		}
-		if (is_array($values)) {
-			$this->setValue($values);
-		}
+		$this->_itemAttributes = $element;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getItemAttributes()
+	{
+		return $this->_itemAttributes;
 	}
 }
