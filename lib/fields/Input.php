@@ -14,12 +14,16 @@ class Input extends \serviform\BaseRenderable
 	 */
 	public function getInput()
 	{
+		$res = parent::getInput();
+		if ($res !== null) return $res;
+
 		$attrubutes = $this->getAttributes();
 		$attrubutes['value'] = $this->getValue();
 		$attrubutes['name'] = $this->getNameChainString();
 		if (empty($attrubutes['type'])) {
 			$attrubutes['type'] = 'text';
 		}
+
 		return Html::tag('input', $attrubutes, false);
 	}
 }

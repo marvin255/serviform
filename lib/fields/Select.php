@@ -20,6 +20,9 @@ class Select extends \serviform\BaseList
 	 */
 	public function getInput()
 	{
+		$res = parent::getInput();
+		if ($res !== null) return $res;
+
 		$list = $this->getList();
 		if (!empty($this->prompt)) {
 			$oldList = $list;
@@ -41,6 +44,7 @@ class Select extends \serviform\BaseList
 			}
 			$content .= Html::tag('option', $optionOptions, Html::clearText($optionContent));
 		}
+
 		return Html::tag('select', $options, $content);
 	}
 

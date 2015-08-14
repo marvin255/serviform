@@ -25,6 +25,9 @@ class Checkbox extends \serviform\BaseRenderable
 	 */
 	public function getInput()
 	{
+		$res = parent::getInput();
+		if ($res !== null) return $res;
+
 		$value = $this->getValue();
 		$options = $this->getAttributes();
 		$options['name'] = $this->getNameChainString();
@@ -36,6 +39,7 @@ class Checkbox extends \serviform\BaseRenderable
 		$option = Html::tag('input', $options, false);
 		$disableOptions = array('type' => 'hidden', 'name' => $options['name'], 'value' => $this->falseValue);
 		$disableOption = Html::tag('input', $disableOptions, false);
+		
 		return $disableOption . $option;
 	}
 }

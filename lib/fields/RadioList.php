@@ -25,6 +25,9 @@ class RadioList extends \serviform\BaseList
 	 */
 	public function getInput()
 	{
+		$res = parent::getInput();
+		if ($res !== null) return $res;
+
 		$list = $this->getList();
 		$value = $this->getValue();
 		$options = $this->getAttributes();
@@ -47,6 +50,7 @@ class RadioList extends \serviform\BaseList
 			$labelOptions['for'] = $optionOptions['id'];
 			$content .= Html::tag('label', $labelOptions, $option . Html::clearText($optionContent));
 		}
+
 		return $content;
 	}
 

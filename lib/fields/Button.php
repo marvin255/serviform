@@ -21,7 +21,11 @@ class Button extends \serviform\BaseRenderable
 	 */
 	public function getInput()
 	{
+		$res = parent::getInput();
+		if ($res !== null) return $res;
+
 		$options = $this->getAttributes();
+		
 		return Html::tag(
 			'button', 
 			$options, 
