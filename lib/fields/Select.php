@@ -7,17 +7,12 @@ use \serviform\helpers\Html;
 /**
  * Select class
  */
-class Select extends \serviform\BaseRenderable
+class Select extends \serviform\BaseList
 {
 	/**
 	 * @var string
 	 */
 	public $prompt = null;
-	/**
-	 * @var array
-	 */
-	protected $_list = array();
-
 
 
 	/**
@@ -47,38 +42,6 @@ class Select extends \serviform\BaseRenderable
 			$content .= Html::tag('option', $optionOptions, Html::clearText($optionContent));
 		}
 		return Html::tag('select', $options, $content);
-	}
-
-
-
-	/**
-	 * @param array $list
-	 */
-	public function setList(array $list)
-	{
-		$this->_list = $list;
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getList()
-	{
-		return $this->_list;
-	}
-
-
-
-	/**
-	 * @return string
-	 */
-	public function getNameChainString()
-	{
-		$return = parent::getNameChainString();
-		if ($this->isMultiple()) {
-			$return .= '[]';
-		}
-		return $return;
 	}
 
 

@@ -120,7 +120,11 @@ abstract class Base implements IElement
 	 */
 	public function setName($name)
 	{
-		$this->_name = trim($name);
+		if (is_array($name)) {
+			$this->_name = array_map('trim', $name);
+		} else {
+			$this->_name = trim($name);
+		}
 	}
 
 	/**
@@ -141,7 +145,12 @@ abstract class Base implements IElement
 		if ($parent) {
 			$return = $parent->getFullName();
 		}
-		$return[] = $this->getName();
+		$name = $this->getName();
+		if (is_array($name)) {
+			$return = array_merge($return, $name);
+		} else {
+			$return[] = $this->getName();
+		}
 		return $return;
 	}
 
