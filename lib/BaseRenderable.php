@@ -21,7 +21,7 @@ abstract class BaseRenderable extends Base
 	{
 		$return = null;
 		$template = $this->getTemplate();
-		if ($template === null) {
+		if ($template !== null) {
 			if (is_callable($template)) {
 				$return = call_user_func($template, $this);
 			} elseif (file_exists($template)) {

@@ -10,13 +10,13 @@ use \serviform\helpers\Html;
 class Form extends \serviform\BaseRenderable
 {
 	/**
-	 * @var array поля формы
+	 * @var array
 	 */
 	protected $_elements = array();
 	/**
 	 * @var array
 	 */
-	protected $_itemAttributes = null;
+	protected $_buttons = array();
 
 
 
@@ -25,20 +25,10 @@ class Form extends \serviform\BaseRenderable
 	 */
 	public function getInput()
 	{
-		$res = parent::getInput();
-		if ($res !== null) return $res;
-
-		$return = '';
-		$elements = $this->getElements();
-		$itemAttributes = $this->getItemAttributes();
-		foreach ($elements as $el) {
-			$label = Html::tag('label', array(), Html::clearText($el->getLabel()));
-			$input = $el->getInput();
-			$return .= Html::tag('div', $itemAttributes, "{$label}{$input}");
+		if ($this->getTemplate() === null) {
+			$this->setTemplate(__DIR__ . '/../views/bootstrap.php');
 		}
-
-		$tag = $this->getParent() ? 'div' : 'form';
-		return Html::tag($tag, $this->getAttributes(), $return);
+		return parent::getInput();
 	}
 
 
@@ -123,6 +113,30 @@ class Form extends \serviform\BaseRenderable
 
 
 	/**
+	 * @param array $bttons
+	 */
+	public function setButtons(array $buttons)
+	{
+		foreach ($buttons as $name => $button) {
+			$config = $button;
+			$config['parent'] = $this;
+			$config['name'] = $name;
+			$btn = $this->createElement($config);
+			$this->_buttons[$name] = $btn;
+		}
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getButtons()
+	{
+		return $this->_buttons;
+	}
+
+
+
+	/**
 	 * @param array $value
 	 */
 	public function setValue($value)
@@ -162,23 +176,5 @@ class Form extends \serviform\BaseRenderable
 			}
 		}
 		return $return;
-	}
-
-
-
-	/**
-	 * @param array $element
-	 */
-	public function setItemAttributes(array $element)
-	{
-		$this->_itemAttributes = $element;
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getItemAttributes()
-	{
-		return $this->_itemAttributes;
 	}
 }
