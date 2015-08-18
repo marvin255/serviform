@@ -148,8 +148,8 @@ abstract class Base implements IElement
 		$name = $this->getName();
 		if (is_array($name)) {
 			$return = array_merge($return, $name);
-		} else {
-			$return[] = $this->getName();
+		} elseif ($name !== '') {
+			$return[] = $name;
 		}
 		return $return;
 	}
