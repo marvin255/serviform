@@ -5,8 +5,12 @@ namespace serviform;
 /**
  * Base element class
  */
-abstract class Base implements IElement
+abstract class FieldBase implements IElement
 {
+	use \serviform\traits\Configurable;
+	use \serviform\traits\Renderable;
+
+
 	/**
 	 * @var mixed
 	 */
@@ -33,12 +37,10 @@ abstract class Base implements IElement
 	protected $_label = '';
 
 
-
 	/**
 	 * @return string
 	 */
 	abstract public function getInput();
-
 
 
 	/**
@@ -58,7 +60,6 @@ abstract class Base implements IElement
 	}
 
 
-
 	/**
 	 * @param mixed $value
 	 */
@@ -74,7 +75,6 @@ abstract class Base implements IElement
 	{
 		return $this->_value;
 	}
-
 
 
 	/**
@@ -112,7 +112,6 @@ abstract class Base implements IElement
 	{
 		return $this->_attributes;
 	}
-
 
 
 	/**
@@ -168,7 +167,6 @@ abstract class Base implements IElement
 	}
 
 
-
 	/**
 	 * @param string $error
 	 */
@@ -194,7 +192,6 @@ abstract class Base implements IElement
 	}
 
 
-
 	/**
 	 * @param string $label
 	 */
@@ -209,27 +206,5 @@ abstract class Base implements IElement
 	public function getLabel()
 	{
 		return $this->_label;
-	}
-
-
-
-	/**
-	 * @param array $options
-	 */
-	public function config(array $options)
-	{
-		$properties = array();
-		$reflect = new \ReflectionObject($this);
-		foreach ($reflect->getProperties(\ReflectionProperty::IS_PUBLIC) as $prop) {
-			$properties[$prop->getName()] = true;
-		}
-		foreach ($options as $name => $value) {
-			$setter = 'set' . ucfirst($name);
-			if (isset($properties[$name])) {
-				$this->$name = $value;
-			} elseif (method_exists($this, $setter)) {
-				$this->$setter($value);
-			}
-		}
 	}
 }

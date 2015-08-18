@@ -7,18 +7,16 @@ use \serviform\helpers\Html;
 /**
  * Form class
  */
-class Form extends \serviform\Base
+class Form extends \serviform\FieldBase implements \serviform\IValidatable, \serviform\IChildable
 {
-	use \serviform\traits\Renderable;
 	use \serviform\traits\Childable;
-
+	use \serviform\traits\Validateable;
 
 
 	/**
 	 * @var array
 	 */
 	protected $_buttons = array();
-
 
 
 	/**

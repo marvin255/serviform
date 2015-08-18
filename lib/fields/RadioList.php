@@ -7,18 +7,15 @@ use \serviform\helpers\Html;
 /**
  * List of radio buttons class
  */
-class RadioList extends \serviform\Base
+class RadioList extends \serviform\FieldBase
 {
-	use \serviform\traits\Renderable;
 	use \serviform\traits\Listable;
-
 
 
 	/**
 	 * @var array
 	 */
 	protected $_labelOptions = array();
-
 
 
 	/**
@@ -54,7 +51,6 @@ class RadioList extends \serviform\Base
 
 		return $content;
 	}
-
 
 
 	/**

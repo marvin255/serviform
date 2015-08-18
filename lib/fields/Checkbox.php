@@ -7,12 +7,8 @@ use \serviform\helpers\Html;
 /**
  * Single checkbox class
  */
-class Checkbox extends \serviform\Base
+class Checkbox extends \serviform\FieldBase
 {
-	use \serviform\traits\Renderable;
-
-
-
 	/**
 	 * @var string
 	 */

@@ -7,9 +7,8 @@ use \serviform\helpers\Html;
 /**
  * Select class
  */
-class Select extends \serviform\Base
+class Select extends \serviform\FieldBase
 {
-	use \serviform\traits\Renderable;
 	use \serviform\traits\Listable;
 
 

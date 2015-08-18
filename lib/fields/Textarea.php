@@ -7,12 +7,8 @@ use \serviform\helpers\Html;
 /**
  * Textarea class
  */
-class Textarea extends \serviform\Base
+class Textarea extends \serviform\FieldBase
 {
-	use \serviform\traits\Renderable;
-
-
-
 	/**
 	 * @return string
 	 */

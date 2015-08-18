@@ -7,12 +7,8 @@ use \serviform\helpers\Html;
 /**
  * Button class
  */
-class Button extends \serviform\BaseRenderable
+class Button extends \serviform\FieldBase
 {
-	use \serviform\traits\Renderable;
-
-
-
 	/**
 	 * @var bool
 	 */

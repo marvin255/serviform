@@ -7,12 +7,8 @@ use \serviform\helpers\Html;
 /**
  * Input class
  */
-class Input extends \serviform\Base
+class Input extends \serviform\FieldBase
 {
-	use \serviform\traits\Renderable;
-
-
-
 	/**
 	 * @return string
 	 */

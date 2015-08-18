@@ -3,9 +3,9 @@
 namespace serviform\helpers;
 
 /**
- * Factory
+ * Factory for validators
  */
-class Factory
+class FactoryValidators
 {
 	/**
 	 * @param string $type
@@ -17,10 +17,10 @@ class Factory
 		if (strpos($type, '\\') !== false) {
 			$class = $type;
 		} elseif (strpos($type, '.') !== false) {
-			$class = '\\serviform\\fields\\' . implode('\\', explode('.', trim($type, "\r\n\t .")));
+			$class = '\\serviform\\validators\\' . implode('\\', explode('.', trim($type, "\r\n\t .")));
 		} else {
 			$name = ucfirst(trim($type));
-			$class = "\\serviform\\fields\\{$name}";
+			$class = "\\serviform\\validators\\{$name}";
 		}
 		if (is_subclass_of($class, '\\serviform\\IElement')) {
 			$item = new $class;

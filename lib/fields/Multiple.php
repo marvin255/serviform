@@ -7,11 +7,10 @@ use \serviform\helpers\Html;
 /**
  * Multiple elements class
  */
-class Multiple extends \serviform\Base
+class Multiple extends \serviform\FieldBase
 {
 	use \serviform\traits\Renderable;
 	use \serviform\traits\Childable;
-
 
 
 	/**
@@ -30,7 +29,6 @@ class Multiple extends \serviform\Base
 	 * @var array
 	 */
 	protected $_itemAttributes = null;
-
 
 
 	/**
