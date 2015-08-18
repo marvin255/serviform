@@ -7,8 +7,12 @@ use \serviform\helpers\Html;
 /**
  * Select class
  */
-class Select extends \serviform\BaseList
+class Select extends \serviform\Base
 {
+	use \serviform\traits\Renderable;
+	use \serviform\traits\Listable;
+
+
 	/**
 	 * @var string
 	 */
@@ -20,7 +24,7 @@ class Select extends \serviform\BaseList
 	 */
 	public function getInput()
 	{
-		$res = parent::getInput();
+		$res = $this->renderTemplate();
 		if ($res !== null) return $res;
 
 		$list = $this->getList();

@@ -7,8 +7,12 @@ use \serviform\helpers\Html;
 /**
  * Single checkbox class
  */
-class Checkbox extends \serviform\BaseRenderable
+class Checkbox extends \serviform\Base
 {
+	use \serviform\traits\Renderable;
+
+
+
 	/**
 	 * @var string
 	 */
@@ -25,7 +29,7 @@ class Checkbox extends \serviform\BaseRenderable
 	 */
 	public function getInput()
 	{
-		$res = parent::getInput();
+		$res = $this->renderTemplate();
 		if ($res !== null) return $res;
 
 		$value = $this->getValue();

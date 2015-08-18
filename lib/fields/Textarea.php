@@ -7,14 +7,18 @@ use \serviform\helpers\Html;
 /**
  * Textarea class
  */
-class Textarea extends \serviform\BaseRenderable
+class Textarea extends \serviform\Base
 {
+	use \serviform\traits\Renderable;
+
+
+
 	/**
 	 * @return string
 	 */
 	public function getInput()
 	{
-		$res = parent::getInput();
+		$res = $this->renderTemplate();
 		if ($res !== null) return $res;
 
 		$attrubutes = $this->getAttributes();

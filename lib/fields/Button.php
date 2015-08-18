@@ -9,6 +9,10 @@ use \serviform\helpers\Html;
  */
 class Button extends \serviform\BaseRenderable
 {
+	use \serviform\traits\Renderable;
+
+
+
 	/**
 	 * @var bool
 	 */
@@ -21,7 +25,7 @@ class Button extends \serviform\BaseRenderable
 	 */
 	public function getInput()
 	{
-		$res = parent::getInput();
+		$res = $this->renderTemplate();
 		if ($res !== null) return $res;
 
 		$options = $this->getAttributes();

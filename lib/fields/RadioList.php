@@ -7,12 +7,13 @@ use \serviform\helpers\Html;
 /**
  * List of radio buttons class
  */
-class RadioList extends \serviform\BaseList
+class RadioList extends \serviform\Base
 {
-	/**
-	 * @var bool
-	 */
-	public $multiple = false;
+	use \serviform\traits\Renderable;
+	use \serviform\traits\Listable;
+
+
+
 	/**
 	 * @var array
 	 */
@@ -25,7 +26,7 @@ class RadioList extends \serviform\BaseList
 	 */
 	public function getInput()
 	{
-		$res = parent::getInput();
+		$res = $this->renderTemplate();
 		if ($res !== null) return $res;
 
 		$list = $this->getList();
@@ -70,15 +71,5 @@ class RadioList extends \serviform\BaseList
 	public function getLabelOptions()
 	{
 		return $this->_labelOptions;
-	}
-
-
-
-	/**
-	 * @return bool
-	 */
-	protected function isMultiple()
-	{
-		return $this->multiple ? true : false;
 	}
 }
