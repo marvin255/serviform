@@ -38,8 +38,11 @@ class RadioList extends \serviform\FieldBase
 			$optionOptions['type'] = $isMultiple ? 'checkbox' : 'radio';
 			$optionOptions['id'] = Html::toId($options['name'] . '_' . $optionValue);
 			if (
-				(!$isMultiple && $optionValue == $value)
-				|| ($isMultiple && is_array($value) && in_array($optionValue, $value))
+				$value !== null
+				&& (
+					(!$isMultiple && $optionValue == $value) 
+					|| ($isMultiple && is_array($value) && in_array($optionValue, $value))
+				)
 			){
 				$optionOptions['checked'] = 'checked';
 			}
