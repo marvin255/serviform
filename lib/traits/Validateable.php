@@ -7,6 +7,9 @@ namespace serviform\traits;
  */
 trait Validateable
 {
+	use \serviform\traits\Childable;
+
+
 	/**
 	 * @var array
 	 */
@@ -28,13 +31,11 @@ trait Validateable
 			$res = $validator->validate();
 			if ($res === false && $return === true) $return = false;
 		}
-		if ($this instanceof \serviform\IChildable) {
-			$elements = $this->getElements();
-			foreach ($elements as $el) {
-				if (!($el instanceof \serviform\IValidateable)) continue;
-				$res = $el->validate();
-				if ($res === false && $return === true) $return = false;
-			}
+		$elements = $this->getElements();
+		foreach ($elements as $el) {
+			if (!($el instanceof \serviform\IValidateable)) continue;
+			$res = $el->validate();
+			if ($res === false && $return === true) $return = false;
 		}
 		return $return;
 	}

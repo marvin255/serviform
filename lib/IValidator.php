@@ -14,12 +14,12 @@ interface IValidator
 
 
 	/**
-	 * @param \serviform\IElement $parent
+	 * @param \serviform\IValidateable $parent
 	 */
-	public function setParent(\serviform\IElement $parent);
+	public function setParent(\serviform\IValidateable $parent);
 
 	/**
-	 * @return \serviform\IElement
+	 * @return \serviform\IValidateable
 	 */
 	public function getParent();
 

@@ -40,8 +40,12 @@ class Select extends \serviform\FieldBase
 		foreach ($list as $optionValue => $optionContent) {
 			$optionOptions = array('value' => $optionValue);
 			if (
-				(!$isMultiple && $optionValue == $value) 
-				|| ($isMultiple && is_array($value) && in_array($optionValue, $value))
+				$optionValue !== ''
+				&& $value !== null
+				&& (
+					(!$isMultiple && $optionValue == $value) 
+					|| ($isMultiple && is_array($value) && in_array($optionValue, $value))
+				)
 			){
 				$optionOptions['selected'] = 'selected';
 			}

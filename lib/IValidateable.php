@@ -5,7 +5,7 @@ namespace serviform;
 /**
  * Validateable element interface
  */
-interface IValidatable
+interface IValidateable extends IChildable
 {
 	/**
 	 * @return bool

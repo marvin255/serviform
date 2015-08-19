@@ -7,10 +7,9 @@ use \serviform\helpers\Html;
 /**
  * Multiple elements class
  */
-class Multiple extends \serviform\FieldBase
+class Multiple extends \serviform\FieldBase implements \serviform\IValidateable
 {
-	use \serviform\traits\Renderable;
-	use \serviform\traits\Childable;
+	use \serviform\traits\Validateable;
 
 
 	/**

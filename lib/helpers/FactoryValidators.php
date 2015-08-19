@@ -22,7 +22,7 @@ class FactoryValidators
 			$name = ucfirst(trim($type));
 			$class = "\\serviform\\validators\\{$name}";
 		}
-		if (is_subclass_of($class, '\\serviform\\IElement')) {
+		if (is_subclass_of($class, '\\serviform\\IValidator')) {
 			$item = new $class;
 			$item->config($options);
 			return $item;

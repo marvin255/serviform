@@ -7,9 +7,8 @@ use \serviform\helpers\Html;
 /**
  * Form class
  */
-class Form extends \serviform\FieldBase implements \serviform\IValidatable, \serviform\IChildable
+class Form extends \serviform\FieldBase implements \serviform\IValidateable
 {
-	use \serviform\traits\Childable;
 	use \serviform\traits\Validateable;
 
 
