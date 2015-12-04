@@ -10,7 +10,7 @@ class Required extends \serviform\ValidatorBase
 	/**
 	 * @var string
 	 */
-	public $message = 'Field is required';
+	public $errorMessage = 'Field is required';
 
 
 	/**
