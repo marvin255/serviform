@@ -3,14 +3,14 @@
 namespace serviform\validators;
 
 /**
- * Require validator class
+ * Filter validator class
  */
-class Required extends \serviform\ValidatorBase
+class Filter extends \serviform\ValidatorBase
 {
 	/**
 	 * @var string
 	 */
-	public $errorMessage = 'Field is required';
+	public $filter = null;
 
 
 	/**
@@ -20,6 +20,9 @@ class Required extends \serviform\ValidatorBase
 	 */
 	protected function vaidateValue($value, $element)
 	{
-		return $value !== null && $value !== '';
+		if ($this->filter)
+			call_user_func_array($this->filter, [$value, $element]);
+		}
+		return true;
 	}
 }

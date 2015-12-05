@@ -43,7 +43,7 @@ abstract class ValidatorBase implements IValidator
 			$element = $parent->getElement($elementName);
 			if ($element !== null) {
 				$value = $element->getValue();
-				$res = $this->vaidateValue($value);
+				$res = $this->vaidateValue($value, $element);
 				if ($res === false) {
 					$return = false;
 					$element->addError($this->errorMessage);
