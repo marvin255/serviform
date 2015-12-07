@@ -24,7 +24,7 @@ class Regexp extends \serviform\ValidatorBase
 	 */
 	protected function vaidateValue($value, $element)
 	{
-		if ($this->regexp)
+		if ($this->regexp) {
 			return (bool) preg_match('/^' . $this->regexp . '$/', $value);
 		}
 		return true;
