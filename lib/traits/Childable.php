@@ -53,6 +53,16 @@ trait Childable
 	}
 
 	/**
+	 * @return array
+	 */
+	public function clearErrors()
+	{
+		foreach ($this->getElements() as $element) {
+			$element->clearErrors();
+		}
+	}
+
+	/**
 	 * @param array $elements
 	 */
 	public function setElements(array $elements)
