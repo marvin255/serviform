@@ -20,7 +20,7 @@ class Filter extends \serviform\ValidatorBase
 	 */
 	protected function vaidateValue($value, $element)
 	{
-		if ($this->filter)
+		if ($this->filter) {
 			call_user_func_array($this->filter, [$value, $element]);
 		}
 		return true;
