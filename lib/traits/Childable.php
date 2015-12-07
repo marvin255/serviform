@@ -89,7 +89,8 @@ trait Childable
 	 */
 	public function getElement($name)
 	{
-		return isset($this->_elements[$name]) ? $this->_elements[$name] : null;
+		$elements = $this->getElements();
+		return isset($elements[$name]) ? $elements[$name] : null;
 	}
 
 	/**
