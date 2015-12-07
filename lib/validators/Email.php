@@ -20,7 +20,7 @@ class Email extends \serviform\ValidatorBase
 	 */
 	protected function vaidateValue($value, $element)
 	{
-		if ($value !== null && $value !== '')
+		if ($value !== null && $value !== '') {
 			return (bool) preg_match('/^[^@]+@[0-9\-a-zA-Z_]+\.[a-zA-Z]{2,6}$/', $value);
 		}
 		return true;
