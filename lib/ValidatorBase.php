@@ -28,7 +28,7 @@ abstract class ValidatorBase implements IValidator
 	 * @param mixed $value
 	 * @return bool
 	 */
-	abstract protected function vaidateValue($value);
+	abstract protected function vaidateValue($value, $element);
 
 
 	/**
