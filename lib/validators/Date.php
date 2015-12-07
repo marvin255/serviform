@@ -24,7 +24,7 @@ class Date extends \serviform\ValidatorBase
 	 */
 	protected function vaidateValue($value, $element)
 	{
-		if ($value !== null && $value !== '')
+		if ($value !== null && $value !== '') {
 			if (($time = strtotime($value)) !== false) {
 				if ($this->convertToformat !== null) {
 					$element->setValue(date($this->convertToformat, $time));
