@@ -20,6 +20,6 @@ class Required extends \serviform\ValidatorBase
 	 */
 	protected function vaidateValue($value, $element)
 	{
-		return $value !== null && $value !== '';
+		return $value !== null && trim($value) !== '';
 	}
 }
