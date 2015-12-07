@@ -20,7 +20,7 @@ class Tel extends \serviform\ValidatorBase
 	 */
 	protected function vaidateValue($value, $element)
 	{
-		if ($value !== null && $value !== '')
+		if ($value !== null && $value !== '') {
 			return (bool) preg_match('/^\+7\(9\d{2}\)\d{3}\-\d{2}\-\d{2}$/', $value);
 		}
 		return true;
