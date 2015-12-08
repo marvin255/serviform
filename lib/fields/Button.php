@@ -25,6 +25,9 @@ class Button extends \serviform\FieldBase
 		if ($res !== null) return $res;
 
 		$options = $this->getAttributes();
+		$options['name'] = $this->getNameChainString();
+		$value = $this->getValue();
+		if ($value !== null) $options['value'] = $value;
 		
 		return Html::tag(
 			'button', 
