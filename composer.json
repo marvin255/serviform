@@ -1,6 +1,6 @@
 {
 	"name": "marvin255/serviform",
-	"description": "Component for buildings form in php",
+	"description": "Component for forms building in php",
 	"type": "library",
 	"keywords": ["php", "forms"],
 	"license": "MIT",
