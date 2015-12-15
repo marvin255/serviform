@@ -22,7 +22,7 @@ class Filter extends \serviform\ValidatorBase
 	{
 		if ($this->filter) {
 			if (is_callable($this->filter)) {
-				call_user_func_array($this->filter, [$value, $element]);				
+				return call_user_func_array($this->filter, [$value, $element]);				
 			} else {
 				$f = $this->filter;
 				$element->setValue($f($element->getValue()));
