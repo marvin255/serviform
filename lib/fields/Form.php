@@ -30,6 +30,23 @@ class Form extends \serviform\FieldBase implements \serviform\IValidateable
 	}
 
 	/**
+	 * @return string
+	 */
+	public function getBeginTag()
+	{
+		$attrubutes = $this->getAttributes();
+		return Html::tag('form', $attrubutes, true);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getEndTag()
+	{
+		return '</form>';
+	}
+
+	/**
 	 * @param array $values
 	 */
 	public function loadData(array $values = null)
