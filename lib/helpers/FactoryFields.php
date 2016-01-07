@@ -42,7 +42,7 @@ class FactoryFields
 			unset($options['type']);
 			return self::initElement($type, $options);
 		} else {
-			throw new \serviform\Exception('Wrong field type');
+			throw new \serviform\Exception('Wrong field type ' . $options['type']);
 		}
 	}
 }
