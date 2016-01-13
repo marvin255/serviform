@@ -16,6 +16,16 @@ class BxPicture extends \serviform\FieldBase
 	public $options = array();
 
 
+	public function setValue($value)
+	{
+		if (isset($_REQUEST[$this->getNameChainString() . '_del']) && $_REQUEST[$this->getNameChainString() . '_del'] == 'Y') {
+			parent::setValue('delete');
+		} else {
+			parent::setValue($value);
+		}
+	}
+
+
 	/**
 	 * @return string
 	 */
