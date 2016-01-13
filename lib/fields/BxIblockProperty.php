@@ -30,12 +30,15 @@ class BxIblockProperty extends \serviform\FieldBase
 		IncludeModuleLangFile($_SERVER['DOCUMENT_ROOT'] . BX_ROOT . '/modules/iblock/admin/iblock_element_edit_compat.php');
 		$APPLICATION->AddHeadScript('/bitrix/js/iblock/iblock_edit.js');
 
+		$value = $this->getValue();
+		if (!is_array($value)) $value = array($value);
+
 		ob_start();
 		ob_implicit_flush(false);
 		\_ShowPropertyField(
 			$this->getNameChainString(),
 			$this->fieldParams,
-			$this->getValue()
+			$value
 		);
 		$return = ob_get_clean();
 
