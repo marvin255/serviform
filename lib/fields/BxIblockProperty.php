@@ -37,6 +37,13 @@ class BxIblockProperty extends \serviform\FieldBase
 			$this->fieldParams,
 			$this->getValue()
 		);
-		return ob_get_clean();
+		$return = ob_get_clean();
+
+		if (empty($this->fieldParams['MULTIPLE']) || $this->fieldParams['MULTIPLE'] !== 'Y') {
+			$return = preg_replace('/name="(.+)\[\]"/', 'name="$1"', $return);
+			$return = preg_replace('/name="(.+)\[n[^\[\]]+\]"/', 'name="$1"', $return);
+		}
+
+		return $return;
 	}
 }
