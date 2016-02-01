@@ -42,11 +42,37 @@ class BxIblockProperty extends \serviform\FieldBase
 		);
 		$return = ob_get_clean();
 
-		if (empty($this->fieldParams['MULTIPLE']) || $this->fieldParams['MULTIPLE'] !== 'Y') {
+		if ($this->fieldParams['USER_TYPE'] === 'map_yandex') {
+			$return = preg_replace(
+				'/name="point_map_yandex_' . $this->fieldParams['CODE'] . '_' . $this->fieldParams['ID'] . '__([A-Za-z0-1]+)_([A-Za-z0-1]+)"/', 
+				'name="' . $this->getNameChainString() . '[$1][$2]"',
+				$return
+			);
+		} elseif (empty($this->fieldParams['MULTIPLE']) || $this->fieldParams['MULTIPLE'] !== 'Y') {
 			$return = preg_replace('/name="(.+)\[\]"/', 'name="$1"', $return);
 			$return = preg_replace('/name="(.+)\[n[^\[\]]+\]"/', 'name="$1"', $return);
 		}
 
 		return $return;
+	}
+
+	public function setValue($value)
+	{
+		if ($this->fieldParams['USER_TYPE'] === 'map_yandex') {
+			if (is_array($value)) {
+				$first = reset($value);
+				if (isset($first['lat'])) {
+					$new = array();
+					foreach ($value as $val) {
+						$new[] = floatval($val['lat']) . ',' . floatval($val['lon']);
+					}
+					$value = $new;
+				}
+				$this->fieldParams['~VALUE'] = $value;
+			} else {
+				$this->fieldParams['~VALUE'] = array($value);
+			}
+		}
+		return parent::setValue($value);
 	}
 }
