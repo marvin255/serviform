@@ -7,7 +7,7 @@ use \serviform\helpers\Html;
 /**
  * Html text class
  */
-class Html extends \serviform\FieldBase
+class HtmlText extends \serviform\FieldBase
 {
 	/**
 	 * @return string
