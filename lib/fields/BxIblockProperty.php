@@ -75,4 +75,20 @@ class BxIblockProperty extends \serviform\FieldBase
 		}
 		return parent::setValue($value);
 	}
+
+	public function getValue()
+	{
+		if ($this->fieldParams['PROPERTY_TYPE'] == 'F' && !empty($_FILES[$this->getName()])) {
+			$res = [];
+			foreach ($_FILES[$this->getName()] as $property => $ar) {
+				foreach ($ar as $key => $value) {
+					$res["n{$key}"][$property] = $value;
+				}
+			}
+			$res = empty($this->fieldParams['MULTIPLE']) || $this->fieldParams['MULTIPLE'] !== 'Y' ? reset($res) : $res;
+			return $res;
+		} else {
+			return parent::getValue();			
+		}
+	}
 }
