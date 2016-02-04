@@ -63,6 +63,7 @@ class Form extends \serviform\FieldBase implements \serviform\IValidateable
 		if (is_array($values)) {
 			$this->setValue($values);
 		}
+		return !empty($values);
 	}
 
 	/**
