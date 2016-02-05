@@ -51,6 +51,7 @@ class Form extends \serviform\FieldBase implements \serviform\IValidateable
 	 */
 	public function loadData(array $values = null)
 	{
+		$valueSet = false;
 		$values = $values ? $values : $_REQUEST;
 		$arName = $this->getFullName();
 		foreach ($arName as $name) {
@@ -62,8 +63,15 @@ class Form extends \serviform\FieldBase implements \serviform\IValidateable
 		}
 		if (is_array($values)) {
 			$this->setValue($values);
+			$elements = $this->getElements();
+			foreach ($values as $key => $v) {
+				if (isset($elements[$key])) {
+					$valueSet = true;
+					break;
+				}
+			}
 		}
-		return !empty($values);
+		return $valueSet;
 	}
 
 	/**
