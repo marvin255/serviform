@@ -52,7 +52,7 @@ class Form extends \serviform\FieldBase implements \serviform\IValidateable
 	public function loadData(array $values = null)
 	{
 		$valueSet = false;
-		$values = $values ? $values : $_REQUEST;
+		$values = is_array($values) ? $values : $_REQUEST;
 		$arName = $this->getFullName();
 		foreach ($arName as $name) {
 			if (isset($values[$name])) {
