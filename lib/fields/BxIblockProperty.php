@@ -78,7 +78,9 @@ class BxIblockProperty extends \serviform\FieldBase
 
 	public function getValue()
 	{
-		if ($this->fieldParams['PROPERTY_TYPE'] == 'F' && !empty($_FILES[$this->getName()])) {
+		if ($this->fieldParams['PROPERTY_TYPE'] == 'F' && isset($_REQUEST[$this->getName() . '_del'][0]) && $_REQUEST[$this->getName() . '_del'][0] == 'Y') {
+			return ['del' => 'Y'];
+		} elseif ($this->fieldParams['PROPERTY_TYPE'] == 'F' && !empty($_FILES[$this->getName()])) {
 			$res = [];
 			foreach ($_FILES[$this->getName()] as $property => $ar) {
 				foreach ($ar as $key => $value) {
