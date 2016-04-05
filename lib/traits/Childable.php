@@ -19,9 +19,25 @@ trait Childable
 	public function setValue($value)
 	{
 		if (!is_array($value)) return;
-		foreach ($value as $key => $value) {
-			$element = $this->getElement($key);
-			if ($element) $element->setValue($value);
+		if ($this->getUseFlatNames()) {
+			$flatDelimiter = $this->getFlatNamesDelimiter();
+			$elements = $this->getElements();
+			foreach ($elements as $el) {
+				$name = $el->getName();
+				$set = isset($value[$name]) ? $value[$name] : null;
+				if ($set === null) {
+					foreach ($value as $key => $v) {
+						if (strpos($key, $name . $flatDelimiter) !== 0) continue;
+						$set[substr($key, strlen($name . $flatDelimiter))] = $v;
+					}
+				}
+				if ($set !== null) $el->setValue($set);
+			}
+		} else {
+			foreach ($value as $key => $value) {
+				$element = $this->getElement($key);
+				if ($element) $element->setValue($value);
+			}
 		}
 	}
 
