@@ -35,6 +35,14 @@ abstract class FieldBase implements IElement
 	 * @var string
 	 */
 	protected $_label = '';
+	/**
+	 * @var bool
+	 */
+	protected $_useFlatNames = false;
+	/**
+	 * @var string
+	 */
+	protected $_flatNamesDelimiter = '___';
 
 
 	/**
@@ -161,7 +169,11 @@ abstract class FieldBase implements IElement
 		$names = $this->getFullName();
 		$return = array_shift($names);
 		if (!empty($names)) {
-			$return .= '[' . implode('][', $names) . ']';
+			if ($this->getUseFlatNames()) {
+				$return .= $this->getFlatNamesDelimiter() . implode($this->getFlatNamesDelimiter(), $names);
+			} else {
+				$return .= '[' . implode('][', $names) . ']';
+			}
 		}
 		return $return;
 	}
@@ -206,5 +218,41 @@ abstract class FieldBase implements IElement
 	public function getLabel()
 	{
 		return $this->_label;
+	}
+
+
+	/**
+	 * @param bool $useFlatNames
+	 */
+	public function setUseFlatNames($useFlatNames)
+	{
+		$this->_useFlatNames = (bool) $useFlatNames;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function getUseFlatNames()
+	{
+		$parent = $this->getParent();
+		return $parent ? $parent->getUseFlatNames() : $this->_useFlatNames;
+	}
+
+
+	/**
+	 * @param string $delimiter
+	 */
+	public function setFlatNamesDelimiter($delimiter)
+	{
+		$this->_flatNamesDelimiter = trim($delimiter);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getFlatNamesDelimiter()
+	{
+		$parent = $this->getParent();
+		return $parent ? $parent->getFlatNamesDelimiter() : $this->_flatNamesDelimiter;
 	}
 }
