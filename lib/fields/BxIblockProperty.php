@@ -89,6 +89,15 @@ class BxIblockProperty extends \serviform\FieldBase
 			}
 			$res = empty($this->fieldParams['MULTIPLE']) || $this->fieldParams['MULTIPLE'] !== 'Y' ? reset($res) : $res;
 			return $res;
+		} elseif ($this->fieldParams['PROPERTY_TYPE'] == 'N') {
+			$val = parent::getValue();
+			if (is_array($val)) {
+				foreach ($val as $key => $v)
+					$val[$key] = (float) str_replace(',', '.', $v);
+			} else {
+				$val = (float) str_replace(',', '.', $val);
+			}
+			return $val;
 		} else {
 			return parent::getValue();
 		}

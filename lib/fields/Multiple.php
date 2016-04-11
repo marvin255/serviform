@@ -100,15 +100,15 @@ class Multiple extends \serviform\FieldBase implements \serviform\IValidateable
 	public function setValue($value)
 	{
 		if (!is_array($value)) return;
+		$i = -1;
 		if ($this->getUseFlatNames()) {
 			$flatDelimiter = $this->getFlatNamesDelimiter();
-			$i = 0;
 			$curr = null;
 			$set = array();
 			foreach ($value as $key => $v) {
 				if (preg_match('/^(\d+)' . preg_quote($flatDelimiter) . '(.+)$/', $key, $matches)) {
 					if (intval($matches[1]) !== $curr) {
-						if ($curr !== null) $i++;
+						$i++;
 						$curr = intval($matches[0]);
 					}
 					$set[$i][$matches[2]] = $v;
@@ -119,6 +119,12 @@ class Multiple extends \serviform\FieldBase implements \serviform\IValidateable
 				$this->setElement($key, null);
 				$this->getElement($key)->setValue($v);
 			}
+		}
+		foreach ($value as $key => $v) {
+			if (!is_numeric($key)) continue;
+			$i++;
+			$this->setElement($i, null);
+			$this->getElement($i)->setValue($v);
 		}
 		$this->traitSetValue($value);
 	}
