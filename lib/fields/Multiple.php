@@ -72,12 +72,21 @@ class Multiple extends \serviform\FieldBase implements \serviform\IValidateable
 		$max = (int) $this->max;
 		$elements = $this->_elements;
 		if (!$max || count($elements) <= $max) {
-			$config = $this->getMultiplier();
-			$config['parent'] = $this;
-			$config['name'] = $name;
-			$element = $this->createElement($config);
+			$element = $this->returnElement($name);
 			$this->_elements[$name] = $element;
 		}
+	}
+
+	/**
+	 * @param string $name
+	 * @return \serviform\IElement
+	 */
+	public function returnElement($name)
+	{
+		$config = $this->getMultiplier();
+		$config['parent'] = $this;
+		$config['name'] = $name;
+		return $this->createElement($config);
 	}
 
 	/**

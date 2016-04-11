@@ -44,7 +44,7 @@ class BxIblockProperty extends \serviform\FieldBase
 
 		if ($this->fieldParams['USER_TYPE'] === 'map_yandex') {
 			$return = preg_replace(
-				'/name="point_map_yandex_' . $this->fieldParams['CODE'] . '_' . $this->fieldParams['ID'] . '__([A-Za-z0-1]+)_([A-Za-z0-1]+)"/', 
+				'/name="point_map_yandex_' . $this->fieldParams['CODE'] . '_' . $this->fieldParams['ID'] . '__([A-Za-z0-1]+)_([A-Za-z0-1]+)"/',
 				'name="' . $this->getNameChainString() . '[$1][$2]"',
 				$return
 			);
@@ -90,7 +90,7 @@ class BxIblockProperty extends \serviform\FieldBase
 			$res = empty($this->fieldParams['MULTIPLE']) || $this->fieldParams['MULTIPLE'] !== 'Y' ? reset($res) : $res;
 			return $res;
 		} else {
-			return parent::getValue();			
+			return parent::getValue();
 		}
 	}
 }
