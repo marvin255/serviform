@@ -9,7 +9,9 @@ use \serviform\helpers\Html;
  */
 class Multiple extends \serviform\FieldBase implements \serviform\IValidateable
 {
-	use \serviform\traits\Validateable;
+	use \serviform\traits\Validateable {
+        setValue as traitSetValue;
+    }
 
 
 	/**
@@ -65,29 +67,62 @@ class Multiple extends \serviform\FieldBase implements \serviform\IValidateable
 
 	/**
 	 * @param string $name
-	 * @param array|\serviform\interfaces\FormComponent $element
+	 * @param array $element
 	 */
 	public function setElement($name, $element)
 	{
 		$max = (int) $this->max;
 		$elements = $this->_elements;
 		if (!$max || count($elements) <= $max) {
-			$element = $this->returnElement($name);
+			$element = $this->returnElement($name, $element);
 			$this->_elements[$name] = $element;
 		}
 	}
 
 	/**
 	 * @param string $name
+	 * @param array $element
 	 * @return \serviform\IElement
 	 */
-	public function returnElement($name)
+	public function returnElement($name, $element)
 	{
-		$config = $this->getMultiplier();
+		$element = is_array($element) ? $element : array();
+		$config = array_merge($this->getMultiplier(), $element);
 		$config['parent'] = $this;
 		$config['name'] = $name;
 		return $this->createElement($config);
 	}
+
+
+	/**
+	 * @param array $value
+	 */
+	public function setValue($value)
+	{
+		if (!is_array($value)) return;
+		if ($this->getUseFlatNames()) {
+			$flatDelimiter = $this->getFlatNamesDelimiter();
+			$i = 0;
+			$curr = null;
+			$set = array();
+			foreach ($value as $key => $v) {
+				if (preg_match('/^(\d+)' . preg_quote($flatDelimiter) . '(.+)$/', $key, $matches)) {
+					if (intval($matches[1]) !== $curr) {
+						if ($curr !== null) $i++;
+						$curr = intval($matches[0]);
+					}
+					$set[$i][$matches[2]] = $v;
+					unset($value[$key]);
+				}
+			}
+			foreach ($set as $key => $v) {
+				$this->setElement($key, null);
+				$this->getElement($key)->setValue($v);
+			}
+		}
+		$this->traitSetValue($value);
+	}
+
 
 	/**
 	 * @param array $element
