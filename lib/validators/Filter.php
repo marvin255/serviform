@@ -21,11 +21,11 @@ class Filter extends \serviform\ValidatorBase
 	protected function vaidateValue($value, $element)
 	{
 		if ($this->filter) {
-			if (is_callable($this->filter)) {
-				return call_user_func_array($this->filter, [$value, $element]);				
-			} else {
+			if (is_string($this->filter)) {
 				$f = $this->filter;
 				$element->setValue($f($element->getValue()));
+			} elseif (is_callable($this->filter)) {
+				return call_user_func_array($this->filter, [$value, $element]);
 			}
 		}
 		return true;
