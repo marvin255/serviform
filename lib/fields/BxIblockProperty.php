@@ -31,7 +31,12 @@ class BxIblockProperty extends \serviform\FieldBase
 		$APPLICATION->AddHeadScript('/bitrix/js/iblock/iblock_edit.js');
 
 		$value = $this->getValue();
-		if (!is_array($value)) $value = array($value);
+		if ($this->fieldParams['USER_TYPE'] && !is_array($value)) {
+			$value = array(0 => array('VALUE' => $value, 'DESCRIPTION' => null));
+			$this->fieldParams['~VALUE'] = $this->fieldParams['VALUE'] = $value;
+		} elseif (!is_array($value)) {
+			$value = array($value);
+		}
 
 		ob_start();
 		ob_implicit_flush(false);
@@ -51,6 +56,7 @@ class BxIblockProperty extends \serviform\FieldBase
 		} elseif (empty($this->fieldParams['MULTIPLE']) || $this->fieldParams['MULTIPLE'] !== 'Y') {
 			$return = preg_replace('/name="(.+)\[\]"/', 'name="$1"', $return);
 			$return = preg_replace('/name="(.+)\[n[^\[\]]+\]"/', 'name="$1"', $return);
+			$return = preg_replace('/name="PROP.+\[VALUE\]"/', 'name="' . $this->getNameChainString() . '[0]"', $return);
 		}
 
 		return $return;
