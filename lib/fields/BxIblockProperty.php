@@ -57,6 +57,7 @@ class BxIblockProperty extends \serviform\FieldBase
 			$return = preg_replace('/name="(.+)\[\]"/', 'name="$1"', $return);
 			$return = preg_replace('/name="(.+)\[n[^\[\]]+\]"/', 'name="$1"', $return);
 			$return = preg_replace('/name="PROP.+\[VALUE\]"/', 'name="' . $this->getNameChainString() . '[0]"', $return);
+			$return = preg_replace('/(BX\.calendar\(.*)PROP.+\[VALUE\]/', '$1' . $this->getNameChainString() . '[0]', $return);
 		}
 
 		return $return;
