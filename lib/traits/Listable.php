@@ -40,12 +40,11 @@ trait Listable
 	{
 		$items = array_keys($this->getList());
 		if (!$this->isMultiple()) {
-			if (in_array($value, $items)) parent::setValue($value);
+			parent::setValue($value);
 		} elseif (is_array($value)) {
 			$toSet = array();
-			foreach ($value as $val)
-				if (in_array($val, $items)) $toSet[] = $val;
-			parent::setValue($toSet); 
+			foreach ($value as $val) $toSet[] = $val;
+			parent::setValue($toSet);
 		}
 	}
 
