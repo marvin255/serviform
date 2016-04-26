@@ -34,6 +34,8 @@ class BxIblockProperty extends \serviform\FieldBase
 		if ($this->fieldParams['USER_TYPE'] && !is_array($value)) {
 			$value = array(0 => array('VALUE' => $value, 'DESCRIPTION' => null));
 			$this->fieldParams['~VALUE'] = $this->fieldParams['VALUE'] = $value;
+		} elseif ($this->fieldParams['USER_TYPE'] === 'HTML' && isset($value['TEXT'])) {
+			$this->fieldParams['~VALUE'] = $this->fieldParams['VALUE'] = array($value);
 		} elseif (!is_array($value)) {
 			$value = array($value);
 		}
@@ -56,12 +58,12 @@ class BxIblockProperty extends \serviform\FieldBase
 		} elseif ($this->fieldParams['USER_TYPE'] === 'HTML') {
 			$return = preg_replace(
 				'/name="PROP_' . $this->fieldParams['ID'] . '__(n?\d+)__VALUE__TEXT_"/',
-				'name="' . $this->getNameChainString() . '[$1][TEXT]"',
+				'name="' . $this->getNameChainString() . '[TEXT]"',
 				$return
 			);
 			$return = preg_replace(
 				'/name="PROP_' . $this->fieldParams['ID'] . '__(n?\d+)__VALUE__TYPE_"/',
-				'name="' . $this->getNameChainString() . '[$1][TYPE]"',
+				'name="' . $this->getNameChainString() . '[TYPE]"',
 				$return
 			);
 		} elseif (empty($this->fieldParams['MULTIPLE']) || $this->fieldParams['MULTIPLE'] !== 'Y') {
