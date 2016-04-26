@@ -55,13 +55,13 @@ class BxIblockProperty extends \serviform\FieldBase
 			);
 		} elseif ($this->fieldParams['USER_TYPE'] === 'HTML') {
 			$return = preg_replace(
-				'/name="PROP_' . $this->fieldParams['ID'] . '__n?\d+__VALUE__TEXT_"/',
-				'name="' . $this->getNameChainString() . '[TEXT]"',
+				'/name="PROP_' . $this->fieldParams['ID'] . '__(n?\d+)__VALUE__TEXT_"/',
+				'name="' . $this->getNameChainString() . '[$1][TEXT]"',
 				$return
 			);
 			$return = preg_replace(
-				'/name="PROP_' . $this->fieldParams['ID'] . '__n?\d+__VALUE__TYPE_"/',
-				'name="' . $this->getNameChainString() . '[TYPE]"',
+				'/name="PROP_' . $this->fieldParams['ID'] . '__(n?\d+)__VALUE__TYPE_"/',
+				'name="' . $this->getNameChainString() . '[$1][TYPE]"',
 				$return
 			);
 		} elseif (empty($this->fieldParams['MULTIPLE']) || $this->fieldParams['MULTIPLE'] !== 'Y') {
