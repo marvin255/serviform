@@ -26,6 +26,12 @@ class HtmlTest extends PHPUnit_Framework_TestCase
                 false,
                 '<br>'
             ],
+            'self closing tag' => [
+                'br',
+                null,
+                true,
+                '<br>'
+            ],
             'tag with params' => [
                 'div',
                 ['data-param-1' => 1, 'data-param-2' => 2],
