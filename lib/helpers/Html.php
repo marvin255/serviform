@@ -16,7 +16,7 @@ class Html
 	public static function tag($tag, $htmlOptions = null, $content = null)
 	{
 		$return = '';
-		$tag = self::clearAttribute(trim($tag));
+		$tag = self::toId(trim($tag));
 		if ($tag) {
 			$attributes = self::createAttributes($htmlOptions);
 			$return = '<' . $tag . (!empty($attributes) ? ' ' . $attributes : '');
@@ -37,7 +37,7 @@ class Html
 	 */
 	public static function closeTag($tag)
 	{
-		return '</' . self::clearAttribute(trim($tag)) . '>';
+		return '</' . self::toId($tag) . '>';
 	}
 
 	/**
@@ -46,7 +46,7 @@ class Html
 	 */
 	public static function toId($string)
 	{
-		$return = strtolower(trim(self::clearAttribute(str_replace(array('[', ']'), '_', trim($string))), '_'));
+		$return = strtolower(self::clearAttributeKey(str_replace(array('[', ']'), '_', $string)));
 		return $return;
 	}
 
@@ -75,7 +75,7 @@ class Html
 	 */
 	public static function clearAttribute($string)
 	{
-		return htmlspecialchars($string);
+		return self::clearText($string);
 	}
 
 	/**
@@ -85,12 +85,26 @@ class Html
 	public static function clearAttributeKey($string)
 	{
 		$return = str_replace(
-			array('=', '"', "'", '<', '>'),
+			array(
+				'=',
+				'"',
+				"'",
+				'<',
+				'>',
+				'&',
+				' ',
+				'(',
+				')',
+				"\t",
+				"\n",
+				"\r",
+				"\0",
+				"\x0B"
+			),
 			'_',
 			$string
 		);
-		$return = htmlspecialchars(trim($return));
-		return $return;
+		return trim($return);
 	}
 
 	/**
@@ -99,6 +113,6 @@ class Html
 	 */
 	public static function clearText($string)
 	{
-		return htmlspecialchars($string);
+		return htmlspecialchars($string, ENT_QUOTES);
 	}
 }
