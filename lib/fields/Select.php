@@ -34,6 +34,11 @@ class Select extends \serviform\FieldBase
 		}
 		$value = $this->getValue();
 		$options = $this->getAttributes();
+		if ($this->isMultiple()) {
+			$options['multiple'] = 'multiple';
+		} else {
+			unset($options['multiple']);
+		}
 		$options['name'] = $this->getNameChainString();
 		$isMultiple = $this->isMultiple();
 		$content = '';
@@ -43,7 +48,7 @@ class Select extends \serviform\FieldBase
 				$optionValue !== ''
 				&& $value !== null
 				&& (
-					(!$isMultiple && $optionValue == $value) 
+					(!$isMultiple && $optionValue == $value)
 					|| ($isMultiple && is_array($value) && in_array($optionValue, $value))
 				)
 			){
@@ -53,16 +58,5 @@ class Select extends \serviform\FieldBase
 		}
 
 		return Html::tag('select', $options, $content);
-	}
-
-
-
-	/**
-	 * @return bool
-	 */
-	protected function isMultiple()
-	{
-		$multiple = $this->getAttribute('multiple');
-		return $multiple !== null;
 	}
 }
