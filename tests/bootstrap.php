@@ -6,3 +6,4 @@ if (file_exists($composerAutoloaderPath)) {
 }
 
 require __DIR__ . '/cases/Field.php';
+require __DIR__ . '/cases/FieldList.php';

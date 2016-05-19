@@ -34,30 +34,15 @@ trait Listable
 	}
 
 	/**
-	 * @param mixed $value
-	 */
-	public function setValue($value)
-	{
-		$items = array_keys($this->getList());
-		if (!$this->isMultiple()) {
-			parent::setValue($value);
-		} elseif (is_array($value)) {
-			$toSet = array();
-			foreach ($value as $val) $toSet[] = $val;
-			parent::setValue($toSet);
-		}
-	}
-
-	/**
 	 * @return mixed
 	 */
 	public function getValue()
 	{
 		$value = parent::getValue();
 		if ($this->isMultiple()) {
-			return is_array($value) ? $value : array();
+			return is_array($value) ? $value : array($value);
 		} else {
-			return $value;
+			return is_array($value) ? reset($value) : $value;
 		}
 	}
 

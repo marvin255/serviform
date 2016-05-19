@@ -40,7 +40,7 @@ class RadioList extends \serviform\FieldBase
 			if (
 				$value !== null
 				&& (
-					(!$isMultiple && $optionValue == $value) 
+					(!$isMultiple && $optionValue == $value)
 					|| ($isMultiple && is_array($value) && in_array($optionValue, $value))
 				)
 			){
