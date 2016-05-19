@@ -1,17 +1,7 @@
 <?php
 
-class InputTest extends PHPUnit_Framework_TestCase
+class InputTest extends \tests\cases\Field
 {
-    /**
-     * @dataProvider getInputProvider
-     */
-    public function testGetInput($options, $expected)
-    {
-        $field = new \serviform\fields\Input;
-        $field->config($options);
-        $this->assertEquals($expected, $field->getInput());
-    }
-
     public function getInputProvider()
     {
         return [
@@ -49,5 +39,11 @@ class InputTest extends PHPUnit_Framework_TestCase
                 '<input type="&quot; onclick=&quot;alert(&#039;xss&#039;)&quot; data-param=&quot;" value="" name="test">'
             ],
         ];
+    }
+
+
+    protected function getField()
+    {
+        return new \serviform\fields\Input;
     }
 }
