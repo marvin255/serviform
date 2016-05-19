@@ -5,30 +5,31 @@ class ButtonTest extends \tests\cases\Field
     public function getInputProvider()
     {
         return [
-            /*
             'simple field' => [
                 [
                     'name' => 'test',
+                    'label' => 'label',
                 ],
-                '<input value="" name="test" type="text">'
+                '<button name="test">label</button>'
             ],
             'field with attributes' => [
                 [
                     'attributes' => [
-                        'type' => 'email',
+                        'type' => 'submit',
                         'class' => 'test',
                         'data-param' => 1,
                     ],
                     'name' => 'test',
                 ],
-                '<input type="email" class="test" data-param="1" value="" name="test">'
+                '<button type="submit" class="test" data-param="1" name="test"></button>'
             ],
-            'xss in value' => [
+            'xss in label' => [
                 [
                     'name' => 'test',
-                    'value' => '" onclick="alert(\'xss\')" data-param="',
+                    'label' => '" onclick="alert(\'xss\')" data-param="',
+                    'allowHtmlContent' => false,
                 ],
-                '<input value="&quot; onclick=&quot;alert(&#039;xss&#039;)&quot; data-param=&quot;" name="test" type="text">'
+                '<button name="test">&quot; onclick=&quot;alert(&#039;xss&#039;)&quot; data-param=&quot;</button>'
             ],
             'xss in attribute' => [
                 [
@@ -37,17 +38,26 @@ class ButtonTest extends \tests\cases\Field
                     ],
                     'name' => 'test',
                 ],
-                '<input type="&quot; onclick=&quot;alert(&#039;xss&#039;)&quot; data-param=&quot;" value="" name="test">'
+                '<button type="&quot; onclick=&quot;alert(&#039;xss&#039;)&quot; data-param=&quot;" name="test"></button>'
             ],
-            */
+            'allow html in label' => [
+                [
+                    'name' => 'test',
+                    'label' => '" onclick="alert(\'xss\')" data-param="',
+                    'allowHtmlContent' => true,
+                ],
+                '<button name="test">" onclick="alert(\'xss\')" data-param="</button>'
+            ]
         ];
     }
 
-    public function testConfigValue()
+    public function testConfigAllowHtmlContent()
     {
         $field = $this->getField();
-        $field->config(['value' => 'test']);
-        $this->assertEquals('test', $field->getValue());
+        $field->config(['allowHtmlContent' => true]);
+        $this->assertEquals(true, $field->allowHtmlContent);
+        $field->config(['allowHtmlContent' => false]);
+        $this->assertEquals(false, $field->allowHtmlContent);
     }
 
     protected function getField()
