@@ -9,10 +9,7 @@ use \serviform\helpers\Html;
  */
 class Multiple extends \serviform\FieldBase implements \serviform\IValidateable
 {
-	use \serviform\traits\Validateable {
-        setValue as traitSetValue;
-    }
-
+	use \serviform\traits\Validateable;
 
 	/**
 	 * @var int
@@ -91,42 +88,6 @@ class Multiple extends \serviform\FieldBase implements \serviform\IValidateable
 		$config['parent'] = $this;
 		$config['name'] = $name;
 		return $this->createElement($config);
-	}
-
-
-	/**
-	 * @param array $value
-	 */
-	public function setValue($value)
-	{
-		if (!is_array($value)) return;
-		$i = -1;
-		if ($this->getUseFlatNames()) {
-			$flatDelimiter = $this->getFlatNamesDelimiter();
-			$curr = null;
-			$set = array();
-			foreach ($value as $key => $v) {
-				if (preg_match('/^(\d+)' . preg_quote($flatDelimiter) . '(.+)$/', $key, $matches)) {
-					if (intval($matches[1]) !== $curr) {
-						$i++;
-						$curr = intval($matches[0]);
-					}
-					$set[$i][$matches[2]] = $v;
-					unset($value[$key]);
-				}
-			}
-			foreach ($set as $key => $v) {
-				$this->setElement($key, null);
-				$this->getElement($key)->setValue($v);
-			}
-		}
-		foreach ($value as $key => $v) {
-			if (!is_numeric($key)) continue;
-			$i++;
-			$this->setElement($i, null);
-			$this->getElement($i)->setValue($v);
-		}
-		$this->traitSetValue($value);
 	}
 
 
