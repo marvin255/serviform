@@ -31,6 +31,7 @@ trait Childable
 	public function getValue()
 	{
 		$return = array();
+		if (!$this->getElements()) return $return;
 		foreach ($this->getElements() as $element) {
 			$return[$element->getName()] = $element->getValue();
 		}
@@ -74,14 +75,21 @@ trait Childable
 
 	/**
 	 * @param string $name
-	 * @param array|\serviform\interfaces\FormComponent $element
+	 * @param array|\serviform\IElement $element
 	 */
 	public function setElement($name, $element)
 	{
-		$config = $element;
-		$config['parent'] = $this;
-		$config['name'] = $name;
-		$element = $this->createElement($config);
+		if (is_array($element)) {
+			$config = $element;
+			$config['parent'] = $this;
+			$config['name'] = $name;
+			$element = $this->createElement($config);
+		} elseif ($element instanceof \serviform\IElement) {
+			$element->setName($name);
+			$element->setParent($this);
+		} else {
+			throw new \serviform\Exception('Wrong child type');
+		}
 		$this->_elements[$name] = $element;
 	}
 

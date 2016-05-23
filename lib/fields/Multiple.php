@@ -3,13 +3,20 @@
 namespace serviform\fields;
 
 use \serviform\helpers\Html;
+use \serviform\traits\Validateable;
 
 /**
  * Multiple elements class
  */
 class Multiple extends \serviform\FieldBase implements \serviform\IValidateable
 {
-	use \serviform\traits\Validateable;
+	use Validateable {
+		setElement as protected traitSetElement;
+		getElement as protected traitGetElement;
+		getElements as protected traitGetElements;
+		createElement as protected traitCreateElement;
+	}
+
 
 	/**
 	 * @var int
@@ -47,19 +54,38 @@ class Multiple extends \serviform\FieldBase implements \serviform\IValidateable
 		return Html::tag('div', $this->getAttributes(), $return);
 	}
 
+
 	/**
 	 * @return array
 	 */
 	public function getElements()
 	{
-		$count = count($this->_elements);
+		$elements = $this->traitGetElements();
+		$count = count($elements);
 		$min = (int) $this->min;
 		if ($count < $min) {
-			for ($i = 0; $i < $min; $i++) {
-				$this->setElement($i, array());
-			}
+			for ($i = 0; $i < $min; $i++) $this->setElement($i, []);
+			return $this->traitGetElements();
+		} else {
+			return $elements;
 		}
-		return $this->_elements;
+	}
+
+	/**
+	 * @param string $name
+	 * @return \serviform\interfaces\FormComponent|null
+	 */
+	public function getElement($name)
+	{
+		$element = $this->traitGetElement($name);
+		if ($element) return $element;
+		$name = (int) $name;
+		if ($name >= 0 && ($this->max === null || $name < intval($this->max))) {
+			$this->setElement($name, []);
+			return $this->traitGetElement($name);
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -68,26 +94,26 @@ class Multiple extends \serviform\FieldBase implements \serviform\IValidateable
 	 */
 	public function setElement($name, $element)
 	{
-		$max = (int) $this->max;
-		$elements = $this->_elements;
-		if (!$max || count($elements) <= $max) {
-			$element = $this->returnElement($name, $element);
-			$this->_elements[$name] = $element;
+		$name = (int) $name;
+		if ($name >= 0 && ($this->max === null || $name < intval($this->max))) {
+			$this->traitSetElement($name, $element);
 		}
 	}
+
 
 	/**
 	 * @param string $name
 	 * @param array $element
 	 * @return \serviform\IElement
-	 */
-	public function returnElement($name, $element)
+	*/
+	protected function createElement($element)
 	{
 		$element = is_array($element) ? $element : array();
-		$config = array_merge($this->getMultiplier(), $element);
+		$multiplier = $this->getMultiplier();
+		if (!$multiplier) throw new \serviform\Exception('No multiplier set');
+		$config = array_merge($multiplier, $element);
 		$config['parent'] = $this;
-		$config['name'] = $name;
-		return $this->createElement($config);
+		return $this->traitCreateElement($config);
 	}
 
 
