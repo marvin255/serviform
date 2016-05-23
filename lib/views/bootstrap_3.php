@@ -3,7 +3,6 @@
 	use \serviform\helpers\Html;
 
 	$els = $this->getElements();
-	$buttons = $this->getButtons();
 
 	$tag = $this->getParent() ? 'div' : 'form';
 	$this->setAttribute('class', $this->getAttribute('class') . ' form-horizontal');
@@ -43,15 +42,5 @@
 			<?php endif; ?>
 		</div>
 	<?php endforeach; ?>
-
-	<?php if (!empty($buttons)): ?>
-		<div class="form-group">
-			<div class="col-sm-offset-2 col-sm-10">
-				<?php 
-					foreach ($this->getButtons() as $btn) echo $btn->getInput();
-				?>
-			</div>
-		</div>
-	<?php endif; ?>
 
 <?php echo Html::closeTag($tag); ?>

@@ -18,7 +18,7 @@ class Form extends \serviform\FieldBase implements \serviform\IValidateable
 	public function getInput()
 	{
 		if ($this->getTemplate() === null) {
-			$this->setTemplate(__DIR__ . '/../views/bootstrap.php');
+			$this->setTemplate(__DIR__ . '/../views/bootstrap_3.php');
 		}
 		return $this->renderTemplate();
 	}
