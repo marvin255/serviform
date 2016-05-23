@@ -13,12 +13,6 @@ class Form extends \serviform\FieldBase implements \serviform\IValidateable
 
 
 	/**
-	 * @var array
-	 */
-	protected $_buttons = array();
-
-
-	/**
 	 * @return string
 	 */
 	public function getInput()
@@ -72,27 +66,5 @@ class Form extends \serviform\FieldBase implements \serviform\IValidateable
 			}
 		}
 		return $valueSet;
-	}
-
-	/**
-	 * @param array $bttons
-	 */
-	public function setButtons(array $buttons)
-	{
-		foreach ($buttons as $name => $button) {
-			$config = $button;
-			$config['parent'] = $this;
-			$config['name'] = $name;
-			$btn = $this->createElement($config);
-			$this->_buttons[$name] = $btn;
-		}
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getButtons()
-	{
-		return $this->_buttons;
 	}
 }
