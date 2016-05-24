@@ -12,12 +12,10 @@ class FactoryValidators
 	 * @param array $options
 	 * @return \serviform\IElement
 	 */
-	public static function initElement($type, array $options = array())
+	protected static function initElement($type, array $options = array())
 	{
 		if (strpos($type, '\\') !== false) {
 			$class = $type;
-		} elseif (strpos($type, '.') !== false) {
-			$class = '\\serviform\\validators\\' . implode('\\', explode('.', trim($type, "\r\n\t .")));
 		} else {
 			$name = ucfirst(trim($type));
 			$class = "\\serviform\\validators\\{$name}";

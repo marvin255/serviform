@@ -13,7 +13,15 @@ abstract class ValidatorBase implements IValidator
 	/**
 	 * @var string
 	 */
-	public $errorMessage = 'Error';
+	public $message = 'Field "#label#" is invalid';
+	/**
+	 * @var bool
+	 */
+	public $skipOnError = false;
+	/**
+	 * @var callable
+	 */
+	public $when = null;
 	/**
 	 * @var \serviform\IValidateable
 	 */
@@ -41,18 +49,70 @@ abstract class ValidatorBase implements IValidator
 		$parent = $this->getParent();
 		foreach ($elementNames as $elementName) {
 			$element = $parent->getElement($elementName);
-			if ($element !== null) {
-				$value = $element->getValue();
-				$res = $this->vaidateValue($value, $element);
-				if ($res === false) {
-					$return = false;
-					$element->addError($this->errorMessage);
-				}
-			} else {
-				throw new Exception('Wrong validated field name');
+			if ($element === null) throw new Exception('Wrong validated field name');
+			if ($this->isValidationNeeded($element)) {
+				$res = $this->validateElement($element);
+				if ($res === false) $return = false;
 			}
 		}
 		return $return;
+	}
+
+	/**
+	 * @param \serviform\IElement $element
+	 * @return bool
+	 */
+	protected function isValidationNeeded(\serviform\IElement $element)
+	{
+		return
+			(
+				!$this->skipOnError
+				|| !$element->getErrors()
+			) && (
+				!is_callable($this->when)
+				|| call_user_func_array($this->when, [$this, $element])
+			);
+	}
+
+	/**
+	 * @param \serviform\IElement $element
+	 * @return bool
+	 */
+	protected function validateElement(\serviform\IElement $element)
+	{
+		$value = $element->getValue();
+		$res = $this->vaidateValue($value, $element);
+		if ($res === false) {
+			$element->addError($this->createErrorMessage($element));
+		}
+		return $res;
+	}
+
+	/**
+	 * @param \serviform\IElement $element
+	 * @return string
+	 */
+	protected function createErrorMessage(\serviform\IElement $element)
+	{
+		$replaces = [
+			'#label#' => $element->getLabel(),
+			'#value#' => $element->getValue(),
+			'#name#' => $element->getName(),
+		];
+		return str_replace(
+			array_keys($replaces),
+			array_values($replaces),
+			$this->message
+		);
+	}
+
+	/**
+	 * @param mixed $value
+	 * @return boolean
+	 */
+	protected function isEmpty($value)
+	{
+		return $value === null || $value === '' || $value === [];
 	}
 
 

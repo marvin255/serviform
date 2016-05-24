@@ -10,7 +10,7 @@ class Required extends \serviform\ValidatorBase
 	/**
 	 * @var string
 	 */
-	public $errorMessage = 'Field is required';
+	public $message = 'Field "#label#" is required';
 
 
 	/**
@@ -20,6 +20,6 @@ class Required extends \serviform\ValidatorBase
 	 */
 	protected function vaidateValue($value, $element)
 	{
-		return $value !== null && trim($value) !== '';
+		return !$this->isEmpty($value);
 	}
 }
