@@ -15,7 +15,7 @@ class Compare extends \serviform\ValidatorBase
 	 * @var string
 	 */
 	public $compareAttribute = null;
-    /**
+	/**
 	 * @var mixed
 	 */
 	public $compareValue = null;
@@ -28,35 +28,35 @@ class Compare extends \serviform\ValidatorBase
 	 */
 	protected function vaidateValue($value, $element)
 	{
-        $toTest = $this->compareValue;
-        if ($this->compareAttribute) {
-            $testElement = $element->getParent()->getElement($this->compareAttribute);
-            if (!$testElement) throw new \serviform\Exception('Wrong attribute');
-            $toTest = $testElement->getValue();
-        }
+		$toTest = $this->compareValue;
+		if ($this->compareAttribute) {
+			$testElement = $element->getParent()->getElement($this->compareAttribute);
+			if (!$testElement) throw new \serviform\Exception('Wrong attribute');
+			$toTest = $testElement->getValue();
+		}
 		switch ($this->operator) {
-            case '!=':
-                return $value != $toTest;
-                break;
-            case '!==':
-                return $value !== $toTest;
-                break;
-            case '>':
-                return $value > $toTest;
-                break;
-            case '>=':
-                return $value >= $toTest;
-                break;
-            case '<':
-                return $value < $toTest;
-                break;
-            case '<=':
-                return $value <= $toTest;
-                break;
-            case '==':
-            default:
-                return $value == $toTest;
-                break;
-        }
+			case '!=':
+				return $value != $toTest;
+			break;
+			case '!==':
+				return $value !== $toTest;
+			break;
+			case '>':
+				return $value > $toTest;
+			break;
+			case '>=':
+				return $value >= $toTest;
+			break;
+			case '<':
+				return $value < $toTest;
+			break;
+			case '<=':
+				return $value <= $toTest;
+			break;
+			case '==':
+			default:
+				return $value == $toTest;
+			break;
+		}
 	}
 }

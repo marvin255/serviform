@@ -7,10 +7,10 @@ namespace serviform\validators;
  */
 class DefaultValue extends \serviform\ValidatorBase
 {
-    /**
-     * @var mixed
-     */
-    public $value = '';
+	/**
+	 * @var mixed
+	 */
+	public $value = '';
 
 
 	/**
@@ -21,8 +21,8 @@ class DefaultValue extends \serviform\ValidatorBase
 	protected function vaidateValue($value, $element)
 	{
 		if ($this->isEmpty($value)) {
-            $element->setValue($this->value);
-        }
-        return true;
+			$element->setValue($this->value);
+		}
+		return true;
 	}
 }
