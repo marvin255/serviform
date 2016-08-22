@@ -46,6 +46,25 @@ trait Validateable
 	}
 
 	/**
+	 * Sets validators' data to elements in needed
+	 */
+	public function setValidatorsData()
+	{
+		$validators = $this->getValidators();
+		foreach ($validators as $validator) {
+			if (!($validator instanceof \serviform\IValidatorWithData)) continue;
+			$validator->setValidatorData();
+		}
+		$elements = $this->getElements();
+		foreach ($elements as $el) {
+			if (!($el instanceof \serviform\IValidateable)) {
+				continue;
+			}
+			$el->setValidatorsData();
+		}
+	}
+
+	/**
 	 * @return array
 	 */
 	public function getValidators()
