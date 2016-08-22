@@ -45,7 +45,7 @@ class SteppedTest extends \tests\cases\Field
 			'child' => 'test',
 			'child3' => 'test3',
 		]]);
-		$this->assertEquals(['child' => 'test', 'child2' => null], $field->getValue());
+		$this->assertEquals(['child' => 'test', 'child2' => null, 'stepped_current_step' => 0], $field->getValue());
 	}
 
 
@@ -64,11 +64,12 @@ class SteppedTest extends \tests\cases\Field
 	{
 		$field = $this->getField();
 		$elements = $field->getElements();
-		$this->assertEquals(2, count($elements));
+		$this->assertEquals(3, count($elements));
 		foreach ($elements as $element) {
 			$this->assertInstanceOf('\serviform\IElement', $element);
 			$this->assertEquals($field, $element->getParent());
 		}
+		$this->assertArrayHasKey('stepped_current_step', $elements);
 	}
 
 
@@ -107,7 +108,7 @@ class SteppedTest extends \tests\cases\Field
 	{
 		$field = $this->getField();
 		$field->setValue(['child' => 'test', 'child3' => 'test1']);
-		$this->assertEquals(['child' => 'test', 'child2' => null], $field->getValue());
+		$this->assertEquals(['child' => 'test', 'child2' => null, 'stepped_current_step' => 0], $field->getValue());
 	}
 
 
@@ -116,14 +117,14 @@ class SteppedTest extends \tests\cases\Field
 	{
 		$field = $this->getField();
 		$field->config(['value' => ['child' => 'test', 1 => 'test1']]);
-		$this->assertEquals(['child' => 'test', 'child2' => null], $field->getValue());
+		$this->assertEquals(['child' => 'test', 'child2' => null, 'stepped_current_step' => 0], $field->getValue());
 	}
 
 
 
 	protected function getField()
 	{
-		$field = new \serviform\fields\FormStepped;
+		$field = new \serviform\fields\Stepped;
 		$field->config([
 			'elements' => [
 				'child' => [
@@ -138,7 +139,14 @@ class SteppedTest extends \tests\cases\Field
 						'class' => 'child'
 					],
 				],
-			]
+			],
+			'steps' => [
+				0 => [
+					'title' => 'Test title',
+					'description' => 'Test description',
+					'elements' => ['child', 'child2'],
+				],
+			],
 		]);
 		return $field;
 	}

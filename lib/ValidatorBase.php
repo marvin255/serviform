@@ -42,12 +42,13 @@ abstract class ValidatorBase implements IValidator
 	/**
 	 * @return bool
 	 */
-	public function validate()
+	public function validate(array $elements = null)
 	{
 		$return = true;
 		$elementNames = $this->getElements();
 		$parent = $this->getParent();
 		foreach ($elementNames as $elementName) {
+			if (!empty($elements) && !in_array($elementName, $elements)) continue;
 			$element = $parent->getElement($elementName);
 			if ($element === null) throw new Exception('Wrong validated field name');
 			if ($this->isValidationNeeded($element)) {

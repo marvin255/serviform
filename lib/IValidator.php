@@ -10,7 +10,7 @@ interface IValidator
 	/**
 	 * @return bool
 	 */
-	public function validate();
+	public function validate(array $elements = null);
 
 
 	/**

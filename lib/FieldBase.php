@@ -9,6 +9,7 @@ abstract class FieldBase implements IElement
 {
 	use \serviform\traits\Configurable;
 	use \serviform\traits\Renderable;
+	use \serviform\traits\Attributable;
 
 
 	/**
@@ -23,10 +24,6 @@ abstract class FieldBase implements IElement
 	 * @var \serviform\IElement
 	 */
 	protected $_parent = null;
-	/**
-	 * @var array
-	 */
-	protected $_attributes = array();
 	/**
 	 * @var array
 	 */
@@ -74,43 +71,6 @@ abstract class FieldBase implements IElement
 	public function getValue()
 	{
 		return $this->_value;
-	}
-
-
-	/**
-	 * @param string $name
-	 * @param mixed $value
-	 */
-	public function setAttribute($name, $value)
-	{
-		$this->_attributes[$name] = $value;
-	}
-
-	/**
-	 * @param array $attributes
-	 */
-	public function setAttributes(array $attributes)
-	{
-		foreach ($attributes as $name => $value) {
-			$this->setAttribute($name, $value);
-		}
-	}
-
-	/**
-	 * @param string $name
-	 * @return mixed
-	 */
-	public function getAttribute($name)
-	{
-		return isset($this->_attributes[$name]) ? $this->_attributes[$name] : null;
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getAttributes()
-	{
-		return $this->_attributes;
 	}
 
 

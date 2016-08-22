@@ -23,17 +23,22 @@ trait Validateable
 	/**
 	 * @return bool
 	 */
-	public function validate()
+	public function validate(array $toValidate = null)
 	{
 		$return = true;
 		$validators = $this->getValidators();
 		foreach ($validators as $validator) {
-			$res = $validator->validate();
+			$res = $validator->validate($elements);
 			if ($res === false && $return === true) $return = false;
 		}
 		$elements = $this->getElements();
 		foreach ($elements as $el) {
-			if (!($el instanceof \serviform\IValidateable)) continue;
+			if (
+				(!empty($toValidate) && !in_array($el->getName(), $toValidate))
+				|| !($el instanceof \serviform\IValidateable)
+			){
+				continue;
+			}
 			$res = $el->validate();
 			if ($res === false && $return === true) $return = false;
 		}

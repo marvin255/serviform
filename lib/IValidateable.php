@@ -10,7 +10,7 @@ interface IValidateable extends IChildable
 	/**
 	 * @return bool
 	 */
-	public function validate();
+	public function validate(array $toValidate = null);
 
 
 	/**
