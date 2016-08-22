@@ -12,7 +12,7 @@ trait Attributable
 	 */
 	protected $_attributes = array();
 
-	
+
 	/**
 	 * @param string $name
 	 * @param mixed $value
@@ -38,7 +38,8 @@ trait Attributable
 	 */
 	public function getAttribute($name)
 	{
-		return isset($this->_attributes[$name]) ? $this->_attributes[$name] : null;
+		$attributes = $this->getAttributes();
+		return isset($attributes[$name]) ? $attributes[$name] : null;
 	}
 
 	/**
