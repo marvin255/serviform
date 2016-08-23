@@ -35,10 +35,12 @@ trait Renderable
 
 	/**
 	 * @param mixed $template
+	 * @return mixed
 	 */
 	public function setTemplate($template)
 	{
 		$this->_template = $template;
+		return $this;
 	}
 
 	/**
