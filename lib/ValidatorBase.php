@@ -45,16 +45,34 @@ abstract class ValidatorBase implements IValidator
 	public function validate(array $elements = null)
 	{
 		$return = true;
-		$elementNames = $this->getElements();
-		$parent = $this->getParent();
-		foreach ($elementNames as $elementName) {
-			if (!empty($elements) && !in_array($elementName, $elements)) continue;
-			$element = $parent->getElement($elementName);
-			if ($element === null) throw new Exception('Wrong validated field name');
+		$arElements = $this->getFieldsToValidate($elements);
+		foreach ($arElements as $element) {
 			if ($this->isValidationNeeded($element)) {
 				$res = $this->validateElement($element);
 				if ($res === false) $return = false;
 			}
+		}
+		return $return;
+	}
+
+	/**
+	 * @param array $fieldsToValidate
+	 */
+	protected function getFieldsToValidate(array $fieldsToValidate = null)
+	{
+		$return = [];
+		$elementNames = $this->getElements();
+		$parent = $this->getParent();
+		foreach ($elementNames as $elementName) {
+			if (
+				!empty($fieldsToValidate)
+				&& !in_array($elementName, $fieldsToValidate)
+			){
+				continue;
+			}
+			$element = $parent->getElement($elementName);
+			if ($element === null) throw new Exception('Wrong validated field name');
+			$return[] = $element;
 		}
 		return $return;
 	}
