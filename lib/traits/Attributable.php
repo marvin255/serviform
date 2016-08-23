@@ -25,6 +25,18 @@ trait Attributable
 	}
 
 	/**
+	 * @param string $name
+	 * @param mixed $value
+	 * @return mixed
+	 */
+	public function addToAttribute($name, $value)
+	{
+		$attr = $this->getAttribute($name);
+		$this->setAttribute($name, $attr . $value);
+		return $this;
+	}
+
+	/**
 	 * @param array $attributes
 	 * @return mixed
 	 */
