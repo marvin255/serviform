@@ -19,6 +19,10 @@ abstract class ValidatorBase implements IValidator
 	 */
 	public $skipOnError = false;
 	/**
+	 * @var bool
+	 */
+	public $skipOnEmpty = false;
+	/**
 	 * @var callable
 	 */
 	public $when = null;
@@ -87,6 +91,9 @@ abstract class ValidatorBase implements IValidator
 			(
 				!$this->skipOnError
 				|| !$element->getErrors()
+			) && (
+				!$this->skipOnEmpty
+				|| !$this->isEmpty($element->getValue())
 			) && (
 				!is_callable($this->when)
 				|| call_user_func_array($this->when, [$this, $element])
