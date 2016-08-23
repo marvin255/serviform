@@ -16,20 +16,24 @@ trait Attributable
 	/**
 	 * @param string $name
 	 * @param mixed $value
+	 * @return mixed
 	 */
 	public function setAttribute($name, $value)
 	{
 		$this->_attributes[$name] = $value;
+		return $this;
 	}
 
 	/**
 	 * @param array $attributes
+	 * @return mixed
 	 */
 	public function setAttributes(array $attributes)
 	{
 		foreach ($attributes as $name => $value) {
 			$this->setAttribute($name, $value);
 		}
+		return $this;
 	}
 
 	/**
