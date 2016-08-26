@@ -42,8 +42,12 @@ class Select extends \serviform\FieldBase
 		$options['name'] = $this->getNameChainString();
 		$isMultiple = $this->isMultiple();
 		$content = '';
+		$listItemsOptions = $this->getListItemsOptions();
 		foreach ($list as $optionValue => $optionContent) {
-			$optionOptions = array('value' => $optionValue);
+			$optionOptions = isset($listItemsOptions[$optionValue]) && is_array($listItemsOptions[$optionValue])
+				? $listItemsOptions[$optionValue]
+				: [];
+			$optionOptions['value'] = $optionValue;
 			if (
 				$optionValue !== ''
 				&& $value !== null

@@ -15,6 +15,10 @@ trait Listable
 	 * @var array
 	 */
 	protected $_list = array();
+	/**
+	 * @var array
+	 */
+	protected $_listItemsOptions = array();
 
 
 	/**
@@ -32,6 +36,24 @@ trait Listable
 	{
 		return $this->_list;
 	}
+
+
+	/**
+	 * @param array $list
+	 */
+	public function setListItemsOptions(array $list)
+	{
+		$this->_listItemsOptions = $list;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getListItemsOptions()
+	{
+		return $this->_listItemsOptions;
+	}
+
 
 	/**
 	 * @return mixed
