@@ -38,7 +38,7 @@ class FormGrouped extends \serviform\fields\Form
 	 * @param string $groupKey
 	 * @param array $group
 	 */
-	public function setGroup($groupKey, array $group)
+	protected function setGroup($groupKey, array $group)
 	{
 		if (empty($group['elements']) || !is_array($group['elements'])) {
 			throw new InvalidArgumentException('Parameters elements should be an array');
