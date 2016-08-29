@@ -75,4 +75,11 @@ abstract class FieldList extends Field
 		$field->config(['multiple' => true]);
 		$this->assertEquals(true, $field->multiple);
 	}
+
+	public function testConfigListItemOptions()
+	{
+		$field = $this->getField();
+		$field->config(['listItemsOptions' => ['test' => 'test']]);
+		$this->assertEquals(['test' => 'test'], $field->getListItemsOptions());
+	}
 }

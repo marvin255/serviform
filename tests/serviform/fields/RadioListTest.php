@@ -51,6 +51,19 @@ class RadioListTest extends \tests\cases\FieldList
 				],
 				'<label class="label" for="test_v"><input name="test" value="v" type="radio" id="test_v" checked="checked">l</label><label class="label" for="test_v1"><input name="test" value="v1" type="radio" id="test_v1">l1</label>'
 			],
+			'list items options' => [
+				[
+					'name' => 'test',
+					'list' => ['v' => 'l', 'v1' => 'l1'],
+					'value' => 'v',
+					'multiple' => false,
+					'listItemsOptions' => [
+						'v' => ['data-test' => 'test'],
+						'v1' => ['data-test-1' => 'test-1'],
+					],
+				],
+				'<label for="test_v"><input name="test" data-test="test" value="v" type="radio" id="test_v" checked="checked">l</label><label for="test_v1"><input name="test" data-test-1="test-1" value="v1" type="radio" id="test_v1">l1</label>'
+			],
 		];
 	}
 

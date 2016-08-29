@@ -43,6 +43,17 @@ class SelectTest extends \tests\cases\FieldList
 				],
 				'<select class="&quot; onclick=&quot;alert(&#039;xss&#039;)&quot; data-param=&quot;" name="test"><option value="v">l</option><option value="v1">l1</option></select>'
 			],
+			'list items options' => [
+				[
+					'name' => 'test',
+					'list' => ['v' => 'l', 'v1' => 'l1'],
+					'listItemsOptions' => [
+						'v' => ['data-test' => 'test'],
+						'v1' => ['data-test-1' => 'test-1'],
+					],
+				],
+				'<select name="test"><option data-test="test" value="v">l</option><option data-test-1="test-1" value="v1">l1</option></select>'
+			],
 		];
 	}
 

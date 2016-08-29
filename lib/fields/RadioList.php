@@ -32,8 +32,11 @@ class RadioList extends \serviform\FieldBase
 		$options['name'] = $this->getNameChainString();
 		$isMultiple = $this->multiple;
 		$content = '';
+		$listItemsOptions = $this->getListItemsOptions();
 		foreach ($list as $optionValue => $optionContent) {
-			$optionOptions = $options;
+			$optionOptions = isset($listItemsOptions[$optionValue]) && is_array($listItemsOptions[$optionValue])
+				? array_merge($options, $listItemsOptions[$optionValue])
+				: $options;
 			$optionOptions['value'] = $optionValue;
 			$optionOptions['type'] = $isMultiple ? 'checkbox' : 'radio';
 			$optionOptions['id'] = Html::toId($options['name'] . '_' . $optionValue);
