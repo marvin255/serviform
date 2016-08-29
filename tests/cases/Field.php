@@ -74,6 +74,17 @@ abstract class Field extends \PHPUnit_Framework_TestCase
 		);
 	}
 
+	public function testAddToAttribute()
+	{
+		$field = $this->getField();
+		$field->setAttributes(['data-1' => 1, 'data-2' => 2]);
+		$field->addToAttribute('data-1', ' 2');
+		$this->assertEquals(
+			['data-1' => '1 2', 'data-2' => 2],
+			$field->getAttributes()
+		);
+	}
+
 
 
 	public function testSetName()
