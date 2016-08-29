@@ -16,8 +16,12 @@ class FactoryFields
 	{
 		if (strpos($type, '\\') !== false) {
 			$class = $type;
-		} elseif ($class = self::getFieldDescription($type)) {
-			$class = $class['type'];
+		} elseif ($description = self::getFieldDescription($type)) {
+			$class = $description['type'];
+			unset($description['type']);
+			$options = array_merge($options, $description);
+		} else {
+			$class = $type;
 		}
 		if (is_subclass_of($class, '\\serviform\\IElement')) {
 			$item = new $class;
