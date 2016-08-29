@@ -37,4 +37,37 @@ class FactoryFieldsTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals('name', $field->getName());
 		$this->assertEquals('value', $field->getValue());
 	}
+
+
+
+	public function testSetFieldDescription()
+	{
+		\serviform\helpers\FactoryFields::setFieldDescription(
+			'input',
+			[
+				'type' => '\serviform\fields\Button'
+			]
+		);
+		$field = \serviform\helpers\FactoryFields::init([
+			'type' => 'input',
+			'name' => 'name',
+			'value' => 'value',
+		]);
+		$this->assertInstanceOf('\serviform\fields\Button', $field);
+	}
+
+	public function testGetFieldDescription()
+	{
+		\serviform\helpers\FactoryFields::setFieldDescription(
+			'input',
+			[
+				'type' => '\serviform\fields\Button',
+				'label' => 'test',
+			]
+		);
+		$this->assertEquals(
+			['type' => '\serviform\fields\Button', 'label' => 'test'],
+			\serviform\helpers\FactoryFields::getFieldDescription('input')
+		);
+	}
 }
