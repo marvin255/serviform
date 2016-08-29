@@ -64,7 +64,7 @@ class FactoryFields
 	 * @param string $namespace
 	 * @param array $options
 	 */
-	public function setFieldDescription($name, array $options)
+	public static function setFieldDescription($name, array $options)
 	{
 		if (empty($options['type']) || !class_exists($options['type'])) {
 			throw new \serviform\Exception('Class does not exist');
@@ -76,7 +76,7 @@ class FactoryFields
 	 * @param string $name
 	 * @return array
 	 */
-	public function getFieldDescription($name)
+	public static function getFieldDescription($name)
 	{
 		return isset(self::$_descriptions[$name]) ? self::$_descriptions[$name] : null;
 	}
