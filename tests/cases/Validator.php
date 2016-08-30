@@ -21,15 +21,6 @@ abstract class Validator extends \PHPUnit_Framework_TestCase
 		$field = new \serviform\fields\Form;
 		$validator->setParent($field);
 		$this->assertEquals($field, $validator->getParent());
-
-		$catch = false;
-		try {
-			$field = new \serviform\fields\Input;
-			$validator->setParent($field);
-		} catch (\Exception $e) {
-			$catch = true;
-		}
-		$this->assertEquals(true, $catch);
 	}
 
 	public function testConfigParent()
@@ -46,14 +37,6 @@ abstract class Validator extends \PHPUnit_Framework_TestCase
 		$validator = $this->getValidator();
 		$validator->setElements(['test1', 'test2']);
 		$this->assertEquals(['test1', 'test2'], $validator->getElements());
-
-		$catch = false;
-		try {
-			$validator->setElements(1);
-		} catch (\Exception $e) {
-			$catch = true;
-		}
-		$this->assertEquals(true, $catch);
 	}
 
 	public function testConfigElements()
