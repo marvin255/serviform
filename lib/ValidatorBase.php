@@ -51,7 +51,7 @@ abstract class ValidatorBase implements IValidator
 		$return = true;
 		$arElements = $this->getFieldsToValidate($elements);
 		foreach ($arElements as $element) {
-			if ($this->isValidationNeeded($element)) {
+			if ($this->isValidationNeeded($element, $elements)) {
 				$res = $this->validateElement($element);
 				if ($res === false) $return = false;
 			}
@@ -85,7 +85,7 @@ abstract class ValidatorBase implements IValidator
 	 * @param \serviform\IElement $element
 	 * @return bool
 	 */
-	protected function isValidationNeeded(\serviform\IElement $element)
+	protected function isValidationNeeded(\serviform\IElement $element, $elements)
 	{
 		return
 			(
@@ -97,6 +97,9 @@ abstract class ValidatorBase implements IValidator
 			) && (
 				!is_callable($this->when)
 				|| call_user_func_array($this->when, [$this, $element])
+			) && (
+				empty($elements)
+				|| in_array($element->getName(), $elements)
 			);
 	}
 
