@@ -12,6 +12,10 @@ class Regexp extends \serviform\ValidatorBase
 	 */
 	public $regexp = null;
 	/**
+	 * @var string
+	 */
+	public $modifiers = 'i';
+	/**
 	 * @var array
 	 */
 	protected $patterns = [
@@ -32,7 +36,7 @@ class Regexp extends \serviform\ValidatorBase
 		if (isset($this->patterns[$this->regexp])) {
 			return (bool) preg_match($this->patterns[$this->regexp], $value);
 		} elseif ($this->regexp) {
-			return (bool) preg_match('/^' . $this->regexp . '$/', $value);
+			return (bool) preg_match('/^' . $this->regexp . '$/' . $this->modifiers, $value);
 		}
 		return true;
 	}
