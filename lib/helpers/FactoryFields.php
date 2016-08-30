@@ -19,7 +19,7 @@ class FactoryFields
 		} elseif ($description = self::getFieldDescription($type)) {
 			$class = $description['type'];
 			unset($description['type']);
-			$options = array_merge($options, $description);
+			$options = array_merge($description, $options);
 		} else {
 			$class = $type;
 		}

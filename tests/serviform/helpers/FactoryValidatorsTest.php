@@ -26,7 +26,6 @@ class FactoryValidatorsTest extends PHPUnit_Framework_TestCase
 	}
 
 
-
 	public function testConfigOnInit()
 	{
 		$field = \serviform\helpers\FactoryValidators::init([
@@ -34,5 +33,37 @@ class FactoryValidatorsTest extends PHPUnit_Framework_TestCase
 			'operator' => '>=',
 		]);
 		$this->assertEquals('>=', $field->operator);
+	}
+
+
+	public function testSetValidatorDescription()
+	{
+		\serviform\helpers\FactoryValidators::setValidatorDescription(
+			'regexp',
+			[
+				'type' => '\serviform\validators\Regexp',
+				'regexp' => '[0-9]+',
+			]
+		);
+		$field = \serviform\helpers\FactoryValidators::init([
+			'type' => 'regexp',
+		]);
+		$this->assertInstanceOf('\serviform\validators\Regexp', $field);
+		$this->assertEquals('[0-9]+', $field->regexp);
+	}
+
+	public function testGetValidatorDescription()
+	{
+		\serviform\helpers\FactoryValidators::setValidatorDescription(
+			'regexp',
+			[
+				'type' => '\serviform\validators\Regexp',
+				'regexp' => '[0-9]+',
+			]
+		);
+		$this->assertEquals(
+			['type' => '\serviform\validators\Regexp', 'regexp' => '[0-9]+'],
+			\serviform\helpers\FactoryValidators::getValidatorDescription('regexp')
+		);
 	}
 }
