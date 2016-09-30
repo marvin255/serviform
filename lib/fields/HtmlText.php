@@ -2,23 +2,25 @@
 
 namespace serviform\fields;
 
-use \serviform\helpers\Html;
+use serviform\helpers\Html;
 
 /**
- * Html text class
+ * Html text class.
  */
 class HtmlText extends \serviform\FieldBase
 {
-	/**
-	 * @return string
-	 */
-	public function getInput()
-	{
-		$res = $this->renderTemplate();
-		if ($res !== null) return $res;
+    /**
+     * @return string
+     */
+    public function getInput()
+    {
+        $res = $this->renderTemplate();
+        if ($res !== null) {
+            return $res;
+        }
 
-		$attrubutes = $this->getAttributes();
+        $attrubutes = $this->getAttributes();
 
-		return Html::tag('div', $attrubutes, $this->getValue());
-	}
+        return Html::tag('div', $attrubutes, $this->getValue());
+    }
 }

@@ -3,40 +3,37 @@
 namespace serviform;
 
 /**
- * Validator interface
+ * Validator interface.
  */
 interface IValidator
 {
-	/**
-	 * @return bool
-	 */
-	public function validate(array $elements = null);
+    /**
+     * @return bool
+     */
+    public function validate(array $elements = null);
 
+    /**
+     * @param \serviform\IValidateable $parent
+     */
+    public function setParent(\serviform\IValidateable $parent);
 
-	/**
-	 * @param \serviform\IValidateable $parent
-	 */
-	public function setParent(\serviform\IValidateable $parent);
+    /**
+     * @return \serviform\IValidateable
+     */
+    public function getParent();
 
-	/**
-	 * @return \serviform\IValidateable
-	 */
-	public function getParent();
+    /**
+     * @param array $elements
+     */
+    public function setElements(array $elements);
 
+    /**
+     * @return array
+     */
+    public function getElements();
 
-	/**
-	 * @param array $elements
-	 */
-	public function setElements(array $elements);
-
-	/**
-	 * @return array
-	 */
-	public function getElements();
-
-
-	/**
-	 * @param array $options
-	 */
-	public function config(array $options);
+    /**
+     * @param array $options
+     */
+    public function config(array $options);
 }

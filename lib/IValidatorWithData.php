@@ -3,12 +3,12 @@
 namespace serviform;
 
 /**
- * Validator that's sets data to fields
+ * Validator that's sets data to fields.
  */
 interface IValidatorWithData
 {
-	/**
-	 * Sets data to fields
-	 */
-	public function setValidatorData();
+    /**
+     * Sets data to fields.
+     */
+    public function setValidatorData();
 }

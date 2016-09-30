@@ -3,168 +3,160 @@
 namespace serviform;
 
 /**
- * Base element class
+ * Base element class.
  */
 abstract class FieldBase implements IElement
 {
-	use \serviform\traits\Configurable;
-	use \serviform\traits\Renderable;
-	use \serviform\traits\Attributable;
+    use \serviform\traits\Configurable;
+    use \serviform\traits\Renderable;
+    use \serviform\traits\Attributable;
 
+    /**
+     * @var mixed
+     */
+    protected $_value = null;
+    /**
+     * @var string
+     */
+    protected $_name = '';
+    /**
+     * @var \serviform\IElement
+     */
+    protected $_parent = null;
+    /**
+     * @var array
+     */
+    protected $_errors = array();
+    /**
+     * @var string
+     */
+    protected $_label = '';
 
-	/**
-	 * @var mixed
-	 */
-	protected $_value = null;
-	/**
-	 * @var string
-	 */
-	protected $_name = '';
-	/**
-	 * @var \serviform\IElement
-	 */
-	protected $_parent = null;
-	/**
-	 * @var array
-	 */
-	protected $_errors = array();
-	/**
-	 * @var string
-	 */
-	protected $_label = '';
+    /**
+     * @return string
+     */
+    abstract public function getInput();
 
+    /**
+     * @param \serviform\IElement $parent
+     */
+    public function setParent(\serviform\IElement $parent)
+    {
+        $this->_parent = $parent;
+    }
 
-	/**
-	 * @return string
-	 */
-	abstract public function getInput();
+    /**
+     * @return \serviform\IElement
+     */
+    public function getParent()
+    {
+        return $this->_parent;
+    }
 
+    /**
+     * @param mixed $value
+     */
+    public function setValue($value)
+    {
+        $this->_value = $value;
+    }
 
-	/**
-	 * @param \serviform\IElement $parent
-	 */
-	public function setParent(\serviform\IElement $parent)
-	{
-		$this->_parent = $parent;
-	}
+    /**
+     * @return mixed
+     */
+    public function getValue()
+    {
+        return $this->_value;
+    }
 
-	/**
-	 * @return \serviform\IElement
-	 */
-	public function getParent()
-	{
-		return $this->_parent;
-	}
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        if (is_array($name)) {
+            $this->_name = array_map('trim', $name);
+        } else {
+            $this->_name = trim($name);
+        }
+    }
 
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->_name;
+    }
 
-	/**
-	 * @param mixed $value
-	 */
-	public function setValue($value)
-	{
-		$this->_value = $value;
-	}
+    /**
+     * @return array
+     */
+    public function getFullName()
+    {
+        $return = array();
+        $parent = $this->getParent();
+        if ($parent) {
+            $return = $parent->getFullName();
+        }
+        $name = $this->getName();
+        if (is_array($name)) {
+            $return = array_merge($return, $name);
+        } elseif ($name !== '') {
+            $return[] = $name;
+        }
 
-	/**
-	 * @return mixed
-	 */
-	public function getValue()
-	{
-		return $this->_value;
-	}
+        return $return;
+    }
 
+    /**
+     * @return string
+     */
+    public function getNameChainString()
+    {
+        $names = $this->getFullName();
+        $return = array_shift($names);
+        if (!empty($names)) {
+            $return .= '['.implode('][', $names).']';
+        }
 
-	/**
-	 * @param string $name
-	 */
-	public function setName($name)
-	{
-		if (is_array($name)) {
-			$this->_name = array_map('trim', $name);
-		} else {
-			$this->_name = trim($name);
-		}
-	}
+        return $return;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getName()
-	{
-		return $this->_name;
-	}
+    /**
+     * @param string $error
+     */
+    public function addError($error)
+    {
+        $this->_errors[] = trim($error);
+    }
 
-	/**
-	 * @return array
-	 */
-	public function getFullName()
-	{
-		$return = array();
-		$parent = $this->getParent();
-		if ($parent) {
-			$return = $parent->getFullName();
-		}
-		$name = $this->getName();
-		if (is_array($name)) {
-			$return = array_merge($return, $name);
-		} elseif ($name !== '') {
-			$return[] = $name;
-		}
-		return $return;
-	}
+    /**
+     * @return array
+     */
+    public function getErrors()
+    {
+        return $this->_errors;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getNameChainString()
-	{
-		$names = $this->getFullName();
-		$return = array_shift($names);
-		if (!empty($names)) {
-			$return .= '[' . implode('][', $names) . ']';
-		}
-		return $return;
-	}
+    public function clearErrors()
+    {
+        $this->_errors = array();
+    }
 
+    /**
+     * @param string $label
+     */
+    public function setLabel($label)
+    {
+        $this->_label = trim($label);
+    }
 
-	/**
-	 * @param string $error
-	 */
-	public function addError($error)
-	{
-		$this->_errors[] = trim($error);
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getErrors()
-	{
-		return $this->_errors;
-	}
-
-	/**
-	 * @return null
-	 */
-	public function clearErrors()
-	{
-		$this->_errors = array();
-	}
-
-
-	/**
-	 * @param string $label
-	 */
-	public function setLabel($label)
-	{
-		$this->_label = trim($label);
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getLabel()
-	{
-		return $this->_label;
-	}
+    /**
+     * @return string
+     */
+    public function getLabel()
+    {
+        return $this->_label;
+    }
 }

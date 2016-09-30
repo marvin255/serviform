@@ -1,25 +1,29 @@
 <?php
 
-	use \serviform\helpers\Html;
+    use \serviform\helpers\Html;
 
-	$els = $this->getElements();
+    $els = $this->getElements();
 
-	$tag = $this->getParent() ? 'div' : 'form';
-	$this->setAttribute('class', $this->getAttribute('class') . ' form-horizontal');
+    $tag = $this->getParent() ? 'div' : 'form';
+    $this->setAttribute('class', $this->getAttribute('class').' form-horizontal');
 
-	echo Html::tag($tag, $this->getAttributes(), false);
+    echo Html::tag($tag, $this->getAttributes(), false);
 
-	foreach ($els as $key => $el) {
-		if ($el->getAttribute('type') !== 'hidden') continue;
-		echo $el->getInput();
-		unset($els[$key]);
-	}
+    foreach ($els as $key => $el) {
+        if ($el->getAttribute('type') !== 'hidden') {
+            continue;
+        }
+        echo $el->getInput();
+        unset($els[$key]);
+    }
 ?>
 
 	<?php foreach ($els as $el):
-		$errors = $el->getErrors();
-	?>
-		<div class="form-group<?php if (!empty($errors)) echo ' has-error'; ?>">
+        $errors = $el->getErrors();
+    ?>
+		<div class="form-group<?php if (!empty($errors)) {
+        echo ' has-error';
+    } ?>">
 			<?php if ($el instanceof \serviform\fields\Checkbox): ?>
 				<div class="col-sm-offset-2 col-sm-10">
 					<div class="checkbox">
