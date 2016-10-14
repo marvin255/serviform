@@ -57,6 +57,40 @@ class FormTest extends \tests\cases\Field
             'child3' => 'test3',
         ]]);
         $this->assertEquals(['child' => 'test', 'child2' => null], $field->getValue());
+        $field->setElements([
+            'child' => [
+                'type' => 'form',
+                'elements' => [
+                    'child_child_1' => [
+                        'type' => 'input',
+                    ],
+                    'child_child_2' => [
+                        'type' => 'input',
+                    ],
+                ],
+            ],
+            'child2' => [
+                'type' => 'form',
+                'elements' => [
+                    'child2_child_1' => [
+                        'type' => 'input',
+                    ],
+                    'child2_child_2' => [
+                        'type' => 'input',
+                    ],
+                ],
+            ],
+        ]);
+        $field->getElement('child2')->loadData(['form' => [
+            'child' => [
+                'child_child_1' => 'test',
+                'child_child_2' => 'test_2',
+            ],
+        ]]);
+        $this->assertEquals([
+            'child2_child_1' => null,
+            'child2_child_2' => null,
+        ], $field->getElement('child2')->getValue());
     }
 
     public function testGetElement()
