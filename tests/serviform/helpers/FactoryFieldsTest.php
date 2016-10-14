@@ -36,6 +36,34 @@ class FactoryFieldsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('value', $field->getValue());
     }
 
+    /**
+     * @expectedException \serviform\Exception
+     */
+    public function testInitBadType()
+    {
+        $field = \serviform\helpers\FactoryFields::init([
+            'type' => '\Bad\Class',
+        ]);
+    }
+
+    /**
+     * @expectedException \serviform\Exception
+     */
+    public function testInitBadTypeWithoutNamespace()
+    {
+        $field = \serviform\helpers\FactoryFields::init([
+            'type' => 'BadClass',
+        ]);
+    }
+
+    /**
+     * @expectedException \serviform\Exception
+     */
+    public function testInitNoType()
+    {
+        $field = \serviform\helpers\FactoryFields::init([]);
+    }
+
     public function testSetFieldDescription()
     {
         \serviform\helpers\FactoryFields::setFieldDescription(
@@ -67,5 +95,23 @@ class FactoryFieldsTest extends PHPUnit_Framework_TestCase
             ['type' => '\serviform\fields\Button', 'label' => 'test'],
             \serviform\helpers\FactoryFields::getFieldDescription('input')
         );
+    }
+
+    /**
+     * @expectedException \serviform\Exception
+     */
+    public function testSetFieldDescriptionBadType()
+    {
+        $field = \serviform\helpers\FactoryFields::setFieldDescription('input', [
+            'type' => '\Bad\Class',
+        ]);
+    }
+
+    /**
+     * @expectedException \serviform\Exception
+     */
+    public function testSetFieldDescriptionNoType()
+    {
+        $field = \serviform\helpers\FactoryFields::setFieldDescription('input', []);
     }
 }
