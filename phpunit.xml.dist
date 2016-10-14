@@ -11,4 +11,12 @@
             <directory>tests/serviform/</directory>
         </testsuite>
     </testsuites>
+
+    <filter>
+        <blacklist>
+              <directory>tests/cases</directory>
+              <directory>tests/files</directory>
+              <directory>lib/views</directory>
+        </blacklist>
+    </filter>
 </phpunit>

@@ -34,7 +34,7 @@ class HtmlTest extends PHPUnit_Framework_TestCase
             ],
             'tag with params' => [
                 'div',
-                ['data-param-1' => 1, 'data-param-2' => 2],
+                ['data-param-1' => 1, 'data-param-2' => 2, '' => 'empty_key'],
                 'test',
                 '<div data-param-1="1" data-param-2="2">test</div>',
             ],
