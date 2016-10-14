@@ -77,6 +77,18 @@ abstract class Validator extends \PHPUnit_Framework_TestCase
         $this->assertEquals($when, $validator->when);
     }
 
+    /**
+     * @expectedException \serviform\Exception
+     */
+    public function testWrongFieldNameException()
+    {
+        $validator = $this->getValidator();
+        $form = $this->getTestForm();
+        $validator->setParent($form);
+        $validator->setElements(['input3', 'input2']);
+        $validator->validate();
+    }
+
     protected function getTestForm()
     {
         $form = new \serviform\fields\Form();

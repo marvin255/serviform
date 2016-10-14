@@ -103,8 +103,7 @@ abstract class ValidatorBase implements IValidator
                 !is_callable($this->when)
                 || call_user_func_array($this->when, [$this, $element])
             ) && (
-                empty($elements)
-                || in_array($element->getName(), $elements)
+                empty($elements) || in_array($element->getName(), $elements)
             );
     }
 
