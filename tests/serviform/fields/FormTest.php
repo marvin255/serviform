@@ -42,6 +42,12 @@ class FormTest extends \tests\cases\Field
         $this->assertEquals("test_template\n", $field->getInput());
     }
 
+    public function testGetInputFordefaultTemplate()
+    {
+        $field = $this->getField();
+        $this->assertStringStartsWith('<form class=" form-horizontal">', $field->getInput());
+    }
+
     public function testLoadData()
     {
         $field = $this->getField();
