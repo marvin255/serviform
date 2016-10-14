@@ -48,6 +48,13 @@ class ButtonTest extends \tests\cases\Field
                 ],
                 '<button name="test">" onclick="alert(\'xss\')" data-param="</button>',
             ],
+            'xss in value' => [
+                [
+                    'name' => 'test',
+                    'value' => '" onclick="alert(\'xss\')" data-param="',
+                ],
+                '<button name="test" value="&quot; onclick=&quot;alert(&#039;xss&#039;)&quot; data-param=&quot;"></button>',
+            ],
             'template' => [
                 [
                     'template' => __DIR__.'/../../files/template.php',
