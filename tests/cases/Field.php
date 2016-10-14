@@ -150,6 +150,17 @@ abstract class Field extends \PHPUnit_Framework_TestCase
         $this->assertEquals('test', $field->getLabel());
     }
 
+    public function testRenderTemplate()
+    {
+        $field = $this->getField();
+        $field->setTemplate(function ($field) {
+            return 'test_callable';
+        });
+        $this->assertEquals('test_callable', $field->renderTemplate());
+        $field->setTemplate(__DIR__.'/../files/template.php');
+        $this->assertEquals("test_template\n", $field->renderTemplate());
+    }
+
     public function testConfigValue()
     {
         $field = $this->getField();
@@ -190,5 +201,12 @@ abstract class Field extends \PHPUnit_Framework_TestCase
         $field2 = $this->getField();
         $field->config(['parent' => $field2]);
         $this->assertEquals($field2, $field->getParent());
+    }
+
+    public function testConfigTemplate()
+    {
+        $field = $this->getField();
+        $field->config(['template' => 'test']);
+        $this->assertEquals('test', $field->getTemplate());
     }
 }

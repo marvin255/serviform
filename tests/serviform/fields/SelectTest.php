@@ -54,6 +54,12 @@ class SelectTest extends \tests\cases\FieldList
                 ],
                 '<select name="test"><option data-test="test" value="v">l</option><option data-test-1="test-1" value="v1">l1</option></select>',
             ],
+            'template' => [
+                [
+                    'template' => __DIR__.'/../../files/template.php',
+                ],
+                "test_template\n"
+            ],
         ];
     }
 

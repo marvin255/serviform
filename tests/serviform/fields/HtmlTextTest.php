@@ -23,6 +23,12 @@ class HtmlTextTest extends \tests\cases\Field
                 ],
                 '<div class="test" data-param="1">test</div>',
             ],
+            'template' => [
+                [
+                    'template' => __DIR__.'/../../files/template.php',
+                ],
+                "test_template\n"
+            ],
         ];
     }
 

@@ -35,6 +35,13 @@ class FormTest extends \tests\cases\Field
         ];
     }
 
+    public function testGetInputFromTemplate()
+    {
+        $field = $this->getField();
+        $field->setTemplate(__DIR__.'/../../files/template.php');
+        $this->assertEquals("test_template\n", $field->getInput());
+    }
+
     public function testLoadData()
     {
         $field = $this->getField();

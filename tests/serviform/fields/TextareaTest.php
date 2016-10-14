@@ -37,6 +37,12 @@ class TextareaTest extends \tests\cases\Field
                 ],
                 '<textarea data-param="&quot; onclick=&quot;alert(&#039;xss&#039;)&quot; data-param=&quot;" name="test"></textarea>',
             ],
+            'template' => [
+                [
+                    'template' => __DIR__.'/../../files/template.php',
+                ],
+                "test_template\n"
+            ],
         ];
     }
 

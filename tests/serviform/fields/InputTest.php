@@ -38,6 +38,12 @@ class InputTest extends \tests\cases\Field
                 ],
                 '<input type="&quot; onclick=&quot;alert(&#039;xss&#039;)&quot; data-param=&quot;" value="" name="test">',
             ],
+            'template' => [
+                [
+                    'template' => __DIR__.'/../../files/template.php',
+                ],
+                "test_template\n"
+            ],
         ];
     }
 

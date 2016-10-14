@@ -31,6 +31,12 @@ class FileTest extends \tests\cases\Field
                 ],
                 '<input class="&quot; onclick=&quot;alert(&#039;xss&#039;)&quot; data-param=&quot;" type="file" value="" name="test">',
             ],
+            'template' => [
+                [
+                    'template' => __DIR__.'/../../files/template.php',
+                ],
+                "test_template\n"
+            ],
         ];
     }
 

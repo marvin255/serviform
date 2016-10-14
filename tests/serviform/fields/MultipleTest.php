@@ -22,6 +22,12 @@ class MultipleTest extends \tests\cases\Field
                 ],
                 '<div><div class="&quot; onclick=&quot;&quot; param=&quot;"><input class="multiplier" value="" name="test[0]" type="text"></div></div>',
             ],
+            'template' => [
+                [
+                    'template' => __DIR__.'/../../files/template.php',
+                ],
+                "test_template\n"
+            ],
         ];
     }
 

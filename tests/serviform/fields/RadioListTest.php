@@ -64,6 +64,12 @@ class RadioListTest extends \tests\cases\FieldList
                 ],
                 '<label for="test_v"><input name="test" data-test="test" value="v" type="radio" id="test_v" checked="checked">l</label><label for="test_v1"><input name="test" data-test-1="test-1" value="v1" type="radio" id="test_v1">l1</label>',
             ],
+            'template' => [
+                [
+                    'template' => __DIR__.'/../../files/template.php',
+                ],
+                "test_template\n"
+            ],
         ];
     }
 
