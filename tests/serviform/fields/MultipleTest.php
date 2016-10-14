@@ -31,6 +31,16 @@ class MultipleTest extends \tests\cases\Field
         ];
     }
 
+    /**
+     * @expectedException \serviform\Exception
+     */
+    public function testNoMultiplierException()
+    {
+        $field = $this->getField();
+        $field->setMultiplier([]);
+        $field->getInput();
+    }
+
     public function testGetElement()
     {
         $field = $this->getField();
