@@ -46,6 +46,15 @@ class CheckboxTest extends \tests\cases\Field
                 ],
                 '<input type="hidden" name="test" value="0"><input class="&quot; onclick=&quot;alert(&#039;xss&#039;)&quot; data-param=&quot;" name="test" value="1" type="checkbox">',
             ],
+            'checked input' => [
+                [
+                    'name' => 'test',
+                    'value' => 1,
+                    'trueValue' => 1,
+                    'falseValue' => 0,
+                ],
+                '<input type="hidden" name="test" value="0"><input name="test" value="1" type="checkbox" checked="checked">',
+            ],
             'template' => [
                 [
                     'template' => __DIR__.'/../../files/template.php',
