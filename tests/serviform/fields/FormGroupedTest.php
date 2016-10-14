@@ -10,7 +10,6 @@ class FormGroupedTest extends FormTest
     public function testGetGroups()
     {
         $field = $this->getfield();
-
         $field->setGroups([
             ['label' => 'test', 'elements' => ['child']],
         ]);
@@ -18,22 +17,46 @@ class FormGroupedTest extends FormTest
             [['label' => 'test', 'elements' => ['child' => []]]],
             $field->getGroups()
         );
+        $field->setGroups([
+            ['label' => 'test', 'elements' => ['child' => ['key' => 'value']]],
+        ]);
+        $this->assertEquals(
+            [['label' => 'test', 'elements' => ['child' => ['key' => 'value']]]],
+            $field->getGroups()
+        );
+    }
 
-        try {
-            $field->setGroups([
-                ['label' => 'test', 'elements' => ['unexisted_child']],
-            ]);
-        } catch (\Exception $e) {
-            $this->assertInstanceOf('\InvalidArgumentException', $e);
-        }
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testUnexistedChildInGroupSetting()
+    {
+        $field = $this->getfield();
+        $field->setGroups([
+            ['label' => 'test', 'elements' => ['unexisted_child']],
+        ]);
+    }
 
-        try {
-            $field->setGroups([
-                ['label' => 'test'],
-            ]);
-        } catch (\Exception $e) {
-            $this->assertInstanceOf('\InvalidArgumentException', $e);
-        }
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testUnexistedChildKeyInGroupSetting()
+    {
+        $field = $this->getfield();
+        $field->setGroups([
+            ['label' => 'test', 'elements' => ['unexisted_child' => ['key' => 'value']]],
+        ]);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testUnexistedElementsParamInGroupSetting()
+    {
+        $field = $this->getfield();
+        $field->setGroups([
+            ['label' => 'test'],
+        ]);
     }
 
     protected function getField()
