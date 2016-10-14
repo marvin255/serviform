@@ -45,8 +45,8 @@ class Range extends \serviform\ValidatorBase
             }
 
             return $this->not ? !$res : $res;
+        } else {
+            throw new \serviform\Exception('Range param must be instance of an array or Traversable');
         }
-
-        return true;
     }
 }

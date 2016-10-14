@@ -95,6 +95,20 @@ class RangeTest extends \tests\cases\Validator
         );
     }
 
+    /**
+     * @expectedException \serviform\Exception
+     */
+    public function testWrongRangeTypeException()
+    {
+        $validator = $this->getValidator();
+        $validator->message = 'test validator error';
+        $validator->range = 'wrong type';
+        $form = $this->getTestForm();
+        $validator->setParent($form);
+        $validator->setElements(['input1', 'input2']);
+        $validator->validate();
+    }
+
     public function testSkipOnError()
     {
         $validator = $this->getValidator();

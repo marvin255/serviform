@@ -36,29 +36,31 @@ class Compare extends \serviform\ValidatorBase
             }
             $toTest = $testElement->getValue();
         }
+        $return = false;
         switch ($this->operator) {
             case '!=':
-                return $value != $toTest;
+                $return = $value != $toTest;
             break;
             case '!==':
-                return $value !== $toTest;
+                $return = $value !== $toTest;
             break;
             case '>':
-                return $value > $toTest;
+                $return = $value > $toTest;
             break;
             case '>=':
-                return $value >= $toTest;
+                $return = $value >= $toTest;
             break;
             case '<':
-                return $value < $toTest;
+                $return = $value < $toTest;
             break;
             case '<=':
-                return $value <= $toTest;
+                $return = $value <= $toTest;
             break;
             case '==':
             default:
-                return $value == $toTest;
+                $return = $value == $toTest;
             break;
         }
+        return $return;
     }
 }

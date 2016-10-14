@@ -37,8 +37,8 @@ class Regexp extends \serviform\ValidatorBase
             return (bool) preg_match($this->patterns[$this->regexp], $value);
         } elseif ($this->regexp) {
             return (bool) preg_match('/^'.$this->regexp.'$/'.$this->modifiers, $value);
+        } else {
+            throw new \serviform\Exception('Regexp param can not be empty');
         }
-
-        return true;
     }
 }

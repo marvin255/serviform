@@ -95,6 +95,20 @@ class RegexpTest extends \tests\cases\Validator
         );
     }
 
+    /**
+     * @expectedException \serviform\Exception
+     */
+    public function testWrongRegexpException()
+    {
+        $validator = $this->getValidator();
+        $validator->message = 'test validator error';
+        $validator->regexp = null;
+        $form = $this->getTestForm();
+        $validator->setParent($form);
+        $validator->setElements(['input1', 'input2']);
+        $validator->validate();
+    }
+
     public function testSkipOnError()
     {
         $validator = $this->getValidator();

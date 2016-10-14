@@ -210,6 +210,20 @@ class CompareTest extends \tests\cases\Validator
         );
     }
 
+    /**
+     * @expectedException \serviform\Exception
+     */
+    public function testWrongAttributeNameException()
+    {
+        $validator = $this->getValidator();
+        $validator->operator = '==';
+        $validator->compareAttribute = 'wrong attributr';
+        $form = $this->getTestForm();
+        $validator->setParent($form);
+        $validator->setElements(['input1', 'input2']);
+        $validator->validate();
+    }
+
     public function testSkipOnError()
     {
         $validator = $this->getValidator();
