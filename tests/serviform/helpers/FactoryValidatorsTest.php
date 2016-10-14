@@ -34,6 +34,34 @@ class FactoryValidatorsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('>=', $field->operator);
     }
 
+    /**
+     * @expectedException \serviform\Exception
+     */
+    public function testInitBadType()
+    {
+        $field = \serviform\helpers\FactoryValidators::init([
+            'type' => '\Bad\Class',
+        ]);
+    }
+
+    /**
+     * @expectedException \serviform\Exception
+     */
+    public function testInitBadTypeWithoutNamespace()
+    {
+        $field = \serviform\helpers\FactoryValidators::init([
+            'type' => 'BadClass',
+        ]);
+    }
+
+    /**
+     * @expectedException \serviform\Exception
+     */
+    public function testInitNoType()
+    {
+        $field = \serviform\helpers\FactoryValidators::init([]);
+    }
+
     public function testSetValidatorDescription()
     {
         \serviform\helpers\FactoryValidators::setValidatorDescription(
@@ -63,5 +91,23 @@ class FactoryValidatorsTest extends PHPUnit_Framework_TestCase
             ['type' => '\serviform\validators\Regexp', 'regexp' => '[0-9]+'],
             \serviform\helpers\FactoryValidators::getValidatorDescription('regexp')
         );
+    }
+
+    /**
+     * @expectedException \serviform\Exception
+     */
+    public function testSetFieldDescriptionBadType()
+    {
+        $field = \serviform\helpers\FactoryValidators::setValidatorDescription('input', [
+            'type' => '\Bad\Class',
+        ]);
+    }
+
+    /**
+     * @expectedException \serviform\Exception
+     */
+    public function testSetFieldDescriptionNoType()
+    {
+        $field = \serviform\helpers\FactoryValidators::setValidatorDescription('input', []);
     }
 }
