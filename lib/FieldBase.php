@@ -74,11 +74,7 @@ abstract class FieldBase implements IElement
      */
     public function setName($name)
     {
-        if (is_array($name)) {
-            $this->_name = array_map('trim', $name);
-        } else {
-            $this->_name = trim($name);
-        }
+        $this->_name = trim($name);
     }
 
     /**
@@ -100,9 +96,7 @@ abstract class FieldBase implements IElement
             $return = $parent->getFullName();
         }
         $name = $this->getName();
-        if (is_array($name)) {
-            $return = array_merge($return, $name);
-        } elseif ($name !== '') {
+        if ($name !== '') {
             $return[] = $name;
         }
 
