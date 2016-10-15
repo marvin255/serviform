@@ -65,6 +65,15 @@ class MultipleTest extends \tests\cases\Field
         }
     }
 
+    /**
+     * @expectedException \serviform\Exception
+     */
+    public function testSetWrongChildType()
+    {
+        $field = $this->getField();
+        $field->setElement('wrong_element', 11);
+    }
+
     public function testUnsetElements()
     {
         $field = $this->getField();
