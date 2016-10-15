@@ -34,11 +34,10 @@ trait Childable
     public function getValue()
     {
         $return = array();
-        if (!$this->getElements()) {
-            return $return;
-        }
-        foreach ($this->getElements() as $element) {
-            $return[$element->getName()] = $element->getValue();
+        if ($this->getElements()) {
+            foreach ($this->getElements() as $element) {
+                $return[$element->getName()] = $element->getValue();
+            }
         }
 
         return $return;
