@@ -26,7 +26,7 @@ trait Validateable
         $return = true;
         $validators = $this->getValidators();
         foreach ($validators as $validator) {
-            $res = $validator->validate($elements);
+            $res = $validator->validate($toValidate);
             if ($res === false && $return === true) {
                 $return = false;
             }

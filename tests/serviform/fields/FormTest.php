@@ -178,11 +178,83 @@ class FormTest extends \tests\cases\Field
         $field->setValue(1111);
     }
 
+    public function testGetValidators()
+    {
+        $field = $this->getField();
+        $field->setRules([
+            [['child'], 'required'],
+            [['child2'], 'filter', 'filter' => 'trim'],
+        ]);
+        $validators = $field->getValidators();
+        $this->assertEquals(2, count($validators));
+        foreach ($validators as $validator) {
+            $this->assertInstanceOf('\serviform\IValidator', $validator);
+            $this->assertEquals($field, $validator->getParent());
+        }
+    }
+
+    public function testValidate()
+    {
+        $rules = [
+            [['child'], 'required', 'message' => 'test_error'],
+            [['child2'], 'filter', 'filter' => 'trim'],
+        ];
+        $values = ['child' => '', 'child2' => '  test  '];
+
+        $field = $this->getField();
+        $field->setRules($rules);
+        $field->setValue(['child' => '11', 'child2' => '  test  ']);
+        $res = $field->validate();
+        $this->assertEquals($res, true);
+        $this->assertEquals([], $field->getErrors());
+        $this->assertEquals(['child' => '11', 'child2' => 'test'], $field->getValue());
+
+        $field = $this->getField();
+        $field->setRules($rules);
+        $field->setValue($values);
+        $res = $field->validate();
+        $this->assertEquals($res, false);
+        $this->assertEquals(['child' => ['test_error']], $field->getErrors());
+        $this->assertEquals(['child' => '', 'child2' => 'test'], $field->getValue());
+
+        $field = $this->getField();
+        $field->setRules($rules);
+        $field->setValue($values);
+        $res = $field->validate(['child']);
+        $this->assertEquals($res, false);
+        $this->assertEquals(['child' => ['test_error']], $field->getErrors());
+        $this->assertEquals(['child' => '', 'child2' => '  test  '], $field->getValue());
+
+        $field = $this->getField();
+        $field->setRules($rules);
+        $field->setValue(['child' => '11', 'child2' => '  test  ']);
+        $field->setElement('form', [
+            'type' => 'form',
+            'elements' => [
+                'inner' => ['type' => 'input'],
+            ],
+            'rules' => [
+                [['inner'], 'required', 'message' => 'test_error'],
+            ],
+        ]);
+        $res = $field->validate();
+        $this->assertEquals($res, false);
+        $this->assertEquals(['form' => ['inner' => ['test_error']]], $field->getErrors());
+        $this->assertEquals(['child' => '11', 'child2' => 'test', 'form' => ['inner' => '']], $field->getValue());
+    }
+
     public function testConfigValue()
     {
         $field = $this->getField();
         $field->config(['value' => ['child' => 'test', 1 => 'test1']]);
         $this->assertEquals(['child' => 'test', 'child2' => null], $field->getValue());
+    }
+
+    public function testConfigRules()
+    {
+        $field = $this->getField();
+        $field->config(['rules' => ['rule1' => [], 'rule1' => []]]);
+        $this->assertEquals(['rule1' => [], 'rule1' => []], $field->getRules());
     }
 
     protected function getField()
