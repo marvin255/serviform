@@ -65,6 +65,15 @@ class MultipleTest extends \tests\cases\Field
         }
     }
 
+    public function testUnsetElements()
+    {
+        $field = $this->getField();
+        $field->unsetElement(1);
+        $elements = $field->getElements();
+        $this->assertEquals(1, count($elements));
+        $this->assertArrayHasKey(0, $elements);
+    }
+
     public function testAddError()
     {
         $field = $this->getField();

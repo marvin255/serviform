@@ -114,6 +114,15 @@ class FormTest extends \tests\cases\Field
         }
     }
 
+    public function testUnsetElements()
+    {
+        $field = $this->getField();
+        $field->unsetElement('child');
+        $elements = $field->getElements();
+        $this->assertEquals(1, count($elements));
+        $this->assertArrayHasKey('child2', $elements);
+    }
+
     public function testAddError()
     {
         $field = $this->getField();
