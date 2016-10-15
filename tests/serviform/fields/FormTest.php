@@ -160,6 +160,15 @@ class FormTest extends \tests\cases\Field
         $this->assertEquals(['child' => 'test', 'child2' => null], $field->getValue());
     }
 
+    /**
+     * @expectedException \serviform\Exception
+     */
+    public function testSetNotArrayValue()
+    {
+        $field = $this->getField();
+        $field->setValue(1111);
+    }
+
     public function testConfigValue()
     {
         $field = $this->getField();
