@@ -243,6 +243,37 @@ class FormTest extends \tests\cases\Field
         $this->assertEquals(['child' => '11', 'child2' => 'test', 'form' => ['inner' => '']], $field->getValue());
     }
 
+    public function testSetValidatorsData()
+    {
+        $rules = [
+            [['child'], '\ValidatorWithData'],
+            [['child'], 'required'],
+        ];
+
+        $field = $this->getField();
+        $field->setRules($rules);
+        $field->setValidatorsData();
+        $input = $field->getElement('child')->getAttributes();
+        $this->assertEquals(['class' => 'child', 'ValidatorWithData' => 'set'], $input);
+
+        $field = $this->getField();
+        $field->setRules($rules);
+        $field->setElement('form', [
+            'type' => 'form',
+            'elements' => [
+                'inner' => ['type' => 'input'],
+            ],
+            'rules' => [
+                [['inner'], '\ValidatorWithData'],
+            ],
+        ]);
+        $field->setValidatorsData();
+        $input = $field->getElement('child')->getAttributes();
+        $this->assertEquals(['class' => 'child', 'ValidatorWithData' => 'set'], $input);
+        $input = $field->getElement('form')->getElement('inner')->getAttributes();
+        $this->assertEquals(['ValidatorWithData' => 'set'], $input);
+    }
+
     public function testConfigValue()
     {
         $field = $this->getField();
