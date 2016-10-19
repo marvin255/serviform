@@ -9,6 +9,7 @@ Serviform
 Form constructor for php.
 
 
+
 Installation
 ------------
 
@@ -28,4 +29,44 @@ Download library archive and extract to project. Make sure that `Autoloader.php`
 
 ```php
 require_once 'lib/Autoloader.php';
+```
+
+
+
+Usage
+-----
+
+Use `\serviform\helpers\FactoryFields` to create form. For each element you must specify an array with required `type` key or set an object that implements `\serviform\IElement` interface. Same is for rules. For each rule you must specify an array with required `type` key or set an object that implements `\serviform\IValidator`.
+
+```php
+$form = \serviform\helpers\FactoryFields::init([
+    'type' => 'form',
+    'name' => 'form',
+    'elements' => [
+        'name' => [
+            'label' => 'Name',
+            'type' => 'input',
+            'attributes' => [
+                'class' => 'class',
+                'data-attribute' => 'some attribute',
+            ],
+        ],
+        'email' => [
+            'label' => 'Email',
+            'type' => 'input',
+        ],
+        'message' => [
+            'label' => 'Message',
+            'type' => 'textarea',
+        ],
+        'next' => [
+            'type' => 'button',
+            'label' => 'Send',
+        ],
+    ],
+    'rules' => [
+        [['text_1', 'email', 'message'], 'required'],
+        [['email'], 'regexp', 'regexp' => 'email'],
+    ],
+]);
 ```
