@@ -253,11 +253,3 @@ Redefine old type.
     'label' => 'Default label', // we can set any default setting for each of newly created fields
 ]);
 ```
-
-
-
-Builtin fields
---------------
-
-| Type | Parameter | Parameter type | Required | Description |
-|------|-----------|----------------|----------|-------------|
