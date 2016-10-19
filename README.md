@@ -41,7 +41,7 @@ Use `\serviform\helpers\FactoryFields` to create form. For each element you must
 ```php
 $form = \serviform\helpers\FactoryFields::init([
     'type' => 'form',
-    'name' => 'form',
+    'name' => 'feedback',
     'elements' => [
         'name' => [
             'label' => 'Name',
