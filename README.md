@@ -33,8 +33,8 @@ require_once 'lib/Autoloader.php';
 
 
 
-Usage
------
+Basic usage
+-----------
 
 Use `\serviform\helpers\FactoryFields` to create form. For each element you must specify an array with required `type` key or set an object that implements `\serviform\IElement` interface. Same is for rules. For each rule you must specify an array with required `type` key or set an object that implements `\serviform\IValidator`.
 
@@ -75,6 +75,12 @@ Load data to form. Validate form fields. And if all checks are passed do some ac
 
 ```php
 if ($form->loadData() && $form->validate()) {
-    //here is some action if form's data is valid, e.g. mail()
+    //here is some action if form's data is valid, e.g. mail() or redirect
 }
+```
+
+Render form.
+
+```php
+echo $form;
 ```
