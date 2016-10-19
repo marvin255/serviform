@@ -251,9 +251,6 @@ Redefine old type.
 \serviform\helpers\FactoryFields::setFieldDescription('input', [
     'type' => '\My\Awesome\Input', // we can set new class for builtin field types
     'label' => 'Default label', // we can set any default setting for each of newly created fields
-    'attributes' => [
-        'class' => 'form-control',
-    ],
 ]);
 ```
 
