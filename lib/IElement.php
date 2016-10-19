@@ -101,4 +101,9 @@ interface IElement extends \JsonSerializable
      * @param array $options
      */
     public function config(array $options);
+
+    /**
+     * @return string
+     */
+    public function __toString();
 }

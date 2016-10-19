@@ -170,4 +170,12 @@ abstract class FieldBase implements IElement
             'attributes' => $this->getAttributes(),
         ];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getInput();
+    }
 }

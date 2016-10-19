@@ -13,6 +13,13 @@ class FormTest extends \tests\cases\Field
         $this->assertEquals('</form>', $field->getEndTag());
     }
 
+    public function testToString()
+    {
+        $field = $this->getField();
+        $field->setTemplate(__DIR__.'/../../files/template.php');
+        $this->assertEquals("test_template\n", (string) $field);
+    }
+
     public function getInputProvider()
     {
         return [

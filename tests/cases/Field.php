@@ -22,6 +22,16 @@ abstract class Field extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $field->getInput());
     }
 
+    /**
+     * @dataProvider getInputProvider
+     */
+    public function testToString($options, $expected)
+    {
+        $field = $this->getField();
+        $field->config($options);
+        $this->assertEquals($expected, (string) $field);
+    }
+
     public function testSetParent()
     {
         $field = $this->getField();
