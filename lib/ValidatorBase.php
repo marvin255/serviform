@@ -77,7 +77,7 @@ abstract class ValidatorBase implements IValidator
             }
             $element = $parent->getElement($elementName);
             if ($element === null) {
-                throw new Exception('Wrong validated field name');
+                throw new Exception('Wrong validated field name: '.$elementName);
             }
             $return[] = $element;
         }
