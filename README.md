@@ -36,7 +36,7 @@ require_once 'lib/Autoloader.php';
 Basic usage
 -----------
 
-Use `\serviform\helpers\FactoryFields` to create form. For each element you must specify an array with required `type` key or set an object that implements `\serviform\IElement` interface. Same is for rules. For each rule you must specify an array with required `type` key or set an object that implements `\serviform\IValidator`.
+Use `\serviform\helpers\FactoryFields` to create form. For each element must be specified an array with required `type` key or set an object that implements `\serviform\IElement` interface. Same is for rules. For each rule must be specified an array with required `type` key or set an object that implements `\serviform\IValidator`.
 
 ```php
 $form = \serviform\helpers\FactoryFields::init([
@@ -71,7 +71,7 @@ $form = \serviform\helpers\FactoryFields::init([
 ]);
 ```
 
-Load data to form. Validate form fields. And if all checks are passed do some action.
+Load data to form. Validate form fields. If all checks are passed do some action.
 
 ```php
 if ($form->loadData() && $form->validate()) {
@@ -91,7 +91,7 @@ echo $form;
 Advanced usage
 --------------
 
-For stepped form or one form inserted to other form set new `form` element as an element of base form.
+To create stepped form or one form inserted to other form set new `form` element as an element of base form.
 
 ```php
 $form = \serviform\helpers\FactoryFields::init([
@@ -154,10 +154,3 @@ if ($form->loadData() && $form->validate()) {
 
 echo $form;
 ```
-
-
-
-Fields
-------
-
-All fields objects must implements `\serviform\IElement`
