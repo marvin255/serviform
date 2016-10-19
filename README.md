@@ -91,7 +91,7 @@ echo $form;
 Advanced usage
 --------------
 
-To create stepped form or insert one form to other form set new `form` element as an element of base form.
+To create stepped form or insert one form to other form set new `form` element as an element of base form. You can insert any form to any other form with no nesting limit.
 
 ```php
 $form = \serviform\helpers\FactoryFields::init([
