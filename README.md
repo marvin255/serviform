@@ -70,3 +70,11 @@ $form = \serviform\helpers\FactoryFields::init([
     ],
 ]);
 ```
+
+Load data to form. Validate form fields. And if all checks are passed do some action.
+
+```php
+if ($form->loadData() && $form->validate()) {
+    //here is some action if form's data is valid, e.g. mail()
+}
+```
