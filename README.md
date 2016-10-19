@@ -260,10 +260,12 @@ Base methods for each type:
 
 * `mixed getValue()` - returns element value,
 
-* `\serviform\IElement setAttribute(string $name, string $value)` - sets html tag attribute with name from $name parameter and value from $value parameter,
+* `\serviform\IElement setAttribute(string $name, string $value)` - sets html tag attribute with name from `$name` parameter and value from `$value` parameter,
 
 * `\serviform\IElement setAttributes(array $attributes)` - sets array of html tag attributes with name from key and value from value,
 
-* `string getAttribute(string $name)` - returns html tag attribute with name from $name parameter,
+* `string getAttribute(string $name)` - returns html tag attribute with name from `$name` parameter,
 
 * `array getAttributes()` - returns array of all html tag attributes,
+
+* `\serviform\IElement setName(string $name)` - sets `name` html tag attribute,
