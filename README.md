@@ -65,7 +65,7 @@ $form = \serviform\helpers\FactoryFields::init([
         ],
     ],
     'rules' => [
-        [['text_1', 'email', 'message'], 'required'],
+        [['name', 'email', 'message'], 'required'],
         [['email'], 'regexp', 'regexp' => 'email'],
     ],
 ]);
@@ -75,6 +75,8 @@ Load data to form. Validate form fields. And if all checks are passed do some ac
 
 ```php
 if ($form->loadData() && $form->validate()) {
+    //get data form form
+    $formData = $form->getValue();
     //here is some action if form's data is valid, e.g. mail() or redirect
 }
 ```
