@@ -13,7 +13,7 @@ Form constructor for php.
 Installation
 ------------
 
-**Via [Composer](https://getcomposer.org/doc/00-intro.md).**
+**Via [Composer](https://getcomposer.org/doc/00-intro.md)**
 
 Add code below into your composer.json in section `require`:
 
