@@ -225,3 +225,37 @@ echo $form;
 ```
 
 In that case form with address will be render three times with different `name` parameters.
+
+
+
+Fields
+------
+
+All fields must implement `\serviform\IElement`. To add new field type to factory or change old one use `\serviform\helpers\FactoryFields::setFieldDescription`.
+
+Add new field type.
+
+```php
+\serviform\helpers\FactoryFields::setFieldDescription('new_field_type', [
+    'type' => '\My\Awesome\Field', // required, string with the name of new type class that implements \serviform\IElement
+    'label' => 'Default label', // we can set any default setting for each of newly created fields
+    'attributes' => [
+        'class' => 'form-control',
+    ],
+]);
+```
+
+Redefine old type.
+
+```php
+\serviform\helpers\FactoryFields::setFieldDescription('input', [
+    'type' => '\My\Awesome\Input', // we can set new class for builtin field types
+    'label' => 'Default label', // we can set any default setting for each of newly created fields
+    'attributes' => [
+        'class' => 'form-control',
+    ],
+]);
+```
+
+| Type | Parameter | Parameter type | Required | Description |
+--------------------------------------------------------------
