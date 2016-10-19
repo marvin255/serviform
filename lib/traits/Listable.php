@@ -79,6 +79,19 @@ trait Listable
     }
 
     /**
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        $toJson = parent::jsonSerialize();
+        $toJson['list'] = $this->getList();
+        $toJson['listItemsOptions'] = $this->getListItemsOptions();
+        $toJson['multiple'] = (bool) $this->multiple;
+
+        return $toJson;
+    }
+
+    /**
      * @return bool
      */
     protected function isMultiple()

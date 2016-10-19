@@ -153,4 +153,21 @@ abstract class FieldBase implements IElement
     {
         return $this->_label;
     }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        $errors = $this->getErrors();
+
+        return [
+            'value' => $this->getValue(),
+            'name' => $this->getName(),
+            'fullName' => $this->getFullName(),
+            'errors' => $errors ? $errors : null,
+            'label' => $this->getLabel(),
+            'attributes' => $this->getAttributes(),
+        ];
+    }
 }

@@ -310,4 +310,26 @@ class FormTest extends \tests\cases\Field
 
         return $field;
     }
+
+    public function testJsonSerialize()
+    {
+        $field = $this->getField();
+        $field->setAttribute('data-test', 'test');
+        $field->addError('test');
+        $errors = $field->getErrors();
+        $elements = [];
+        foreach ($field->getelements() as $key => $element) {
+            $elements[$key] = $element->jsonSerialize();
+        }
+
+        $toTest = json_encode([
+            'name' => $field->getName(),
+            'fullName' => $field->getFullName(),
+            'errors' => $errors ? $errors : null,
+            'label' => $field->getLabel(),
+            'attributes' => $field->getAttributes(),
+            'elements' => $elements,
+        ]);
+        $this->assertEquals($toTest, json_encode($field));
+    }
 }

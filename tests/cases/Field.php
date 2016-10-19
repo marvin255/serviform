@@ -209,4 +209,22 @@ abstract class Field extends \PHPUnit_Framework_TestCase
         $field->config(['template' => 'test']);
         $this->assertEquals('test', $field->getTemplate());
     }
+
+    public function testJsonSerialize()
+    {
+        $field = $this->getField();
+        $field->setAttribute('data-test', 'test');
+        $field->addError('test');
+        $errors = $field->getErrors();
+
+        $toTest = json_encode([
+            'value' => $field->getValue(),
+            'name' => $field->getName(),
+            'fullName' => $field->getFullName(),
+            'errors' => $errors ? $errors : null,
+            'label' => $field->getLabel(),
+            'attributes' => $field->getAttributes(),
+        ]);
+        $this->assertEquals($toTest, json_encode($field));
+    }
 }

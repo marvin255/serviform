@@ -130,6 +130,22 @@ trait Childable
     }
 
     /**
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        $toJson = parent::jsonSerialize();
+        $elements = [];
+        foreach ($this->getelements() as $key => $element) {
+            $elements[$key] = $element->jsonSerialize();
+        }
+        $toJson['elements'] = $elements;
+        unset($toJson['value']);
+
+        return $toJson;
+    }
+
+    /**
      * @param array $options
      */
     protected function createElement(array $options)

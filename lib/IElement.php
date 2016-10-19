@@ -5,7 +5,7 @@ namespace serviform;
 /**
  * Element interface.
  */
-interface IElement
+interface IElement extends \JsonSerializable
 {
     /**
      * @return string

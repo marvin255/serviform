@@ -76,4 +76,26 @@ abstract class FieldList extends Field
         $field->config(['listItemsOptions' => ['test' => 'test']]);
         $this->assertEquals(['test' => 'test'], $field->getListItemsOptions());
     }
+
+    public function testJsonSerialize()
+    {
+        $field = $this->getField();
+        $field->setAttribute('data-test', 'test');
+        $field->addError('test');
+        $field->setList([1 => 'test', '2_test' => 'test']);
+        $errors = $field->getErrors();
+
+        $toTest = json_encode([
+            'value' => $field->getValue(),
+            'name' => $field->getName(),
+            'fullName' => $field->getFullName(),
+            'errors' => $errors ? $errors : null,
+            'label' => $field->getLabel(),
+            'attributes' => $field->getAttributes(),
+            'list' => $field->getList(),
+            'listItemsOptions' => $field->getListItemsOptions(),
+            'multiple' => $field->multiple,
+        ]);
+        $this->assertEquals($toTest, json_encode($field));
+    }
 }
