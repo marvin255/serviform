@@ -154,3 +154,74 @@ if ($form->loadData() && $form->validate()) {
 
 echo $form;
 ```
+
+To create form with duplicated fields there is no need to duplicate all their descriptions. Just use `multiple` field type.
+
+```php
+$form = \serviform\helpers\FactoryFields::init([
+    'type' => 'form',
+    'name' => 'feedback',
+    'elements' => [
+        'message' => [
+            'type' => 'form',
+            'elements' => [
+                'name' => [
+                    'label' => 'Name',
+                    'type' => 'input',
+                ],
+                'email' => [
+                    'label' => 'Email',
+                    'type' => 'input',
+                ],
+                'message' => [
+                    'label' => 'Message',
+                    'type' => 'textarea',
+                ],
+            ],
+            'rules' => [
+                [['name', 'email', 'message'], 'required'],
+                [['email'], 'regexp', 'regexp' => 'email'],
+            ],
+        ],
+        'address' => [
+            'type' => 'multiple',
+            'min' => 3,
+            'max' => 3,
+            'multiplier' => [
+                'type' => 'form',
+                'elements' => [
+                    'country' => [
+                        'label' => 'Country',
+                        'type' => 'input',
+                    ],
+                    'city' => [
+                        'label' => 'City',
+                        'type' => 'input',
+                    ],
+                    'street' => [
+                        'label' => 'Street',
+                        'type' => 'input',
+                    ],
+                ],
+                'rules' => [
+                    [['country', 'city', 'street'], 'required'],
+                ],
+            ],
+        ],
+        'send' => [
+            'type' => 'button',
+            'label' => 'Send',
+        ],
+    ],
+]);
+
+if ($form->loadData() && $form->validate()) {
+    //get data form form
+    $formData = $form->getValue();
+    //here is some action if form's data is valid, e.g. mail() or redirect
+}
+
+echo $form;
+```
+
+In that case form with address will be render three times with different `name` parameters.
