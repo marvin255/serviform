@@ -31,7 +31,7 @@
             <?php echo $el->getInput(); ?>
         <?php elseif ($el instanceof \serviform\fields\Checkbox): ?>
             <div class="form-group<?php if (!empty($errors)) echo ' has-error'; ?>">
-                <div class="col-sm-offset-2 col-sm-10">
+                <div class="col-sm-offset-3 col-sm-9">
                     <div class="checkbox">
                         <label>
                             <?php echo $el->getInput(); ?>
@@ -45,22 +45,22 @@
             </div>
         <?php elseif ($el instanceof \serviform\fields\Button): ?>
             <div class="form-group">
-                <div class="col-sm-10 col-sm-offset-2">
+                <div class="col-sm-9 col-sm-offset-3">
                     <?php echo $el->addToAttribute('class', ' btn')->getInput(); ?>
                 </div>
             </div>
         <?php elseif ($el instanceof \serviform\fields\HtmlText): ?>
             <div class="form-group">
-                <div class="col-sm-10 col-sm-offset-2">
+                <div class="col-sm-9 col-sm-offset-3">
                     <?php echo $el->getInput(); ?>
                 </div>
             </div>
         <?php else: ?>
             <div class="form-group<?php if (!empty($errors)) echo ' has-error'; ?>">
-                <label for="<?php echo Html::clearAttribute($el->getAttribute('id')); ?>" class="col-sm-2 control-label">
+                <label for="<?php echo Html::clearAttribute($el->getAttribute('id')); ?>" class="col-sm-3 control-label">
                     <?php echo Html::clearText($el->getLabel()); ?>
                 </label>
-                <div class="col-sm-10">
+                <div class="col-sm-9">
                     <?php echo $el->addToAttribute('class', ' form-control')->getInput(); ?>
                     <?php if (!empty($errors)): ?>
                         <span class="help-block"><?php echo implode(', ', $errors); ?></span>
