@@ -88,9 +88,9 @@ trait Validateable
     }
 
     /**
-     * @param array $name
+     * @param array $element
      */
-    public function setValidator($element)
+    public function setValidator(array $element)
     {
         if (is_array($element)) {
             $config = $element;

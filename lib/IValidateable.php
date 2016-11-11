@@ -21,4 +21,9 @@ interface IValidateable extends IChildable
      * @return array
      */
     public function getRules();
+
+    /**
+     * @param array $element
+     */
+    public function setValidator(array $element);
 }
