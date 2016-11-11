@@ -74,6 +74,7 @@ trait Childable
      */
     public function setElements(array $elements)
     {
+        $this->_elements = [];
         foreach ($elements as $name => $element) {
             $this->setElement($name, $element);
         }

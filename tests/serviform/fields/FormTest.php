@@ -121,6 +121,16 @@ class FormTest extends \tests\cases\Field
         }
     }
 
+    public function testSetElements()
+    {
+        $field = $this->getField();
+        $field->setElements([
+            'test' => ['type' => 'input'],
+        ]);
+        $elements = $field->getElements();
+        $this->assertEquals(1, count($elements));
+    }
+
     /**
      * @expectedException \serviform\Exception
      */
