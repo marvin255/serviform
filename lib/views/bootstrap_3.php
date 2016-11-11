@@ -49,6 +49,12 @@
                     <?php echo $el->addToAttribute('class', ' btn')->getInput(); ?>
                 </div>
             </div>
+        <?php elseif ($el instanceof \serviform\fields\HtmlText): ?>
+            <div class="form-group">
+                <div class="col-sm-10 col-sm-offset-2">
+                    <?php echo $el->getInput(); ?>
+                </div>
+            </div>
         <?php else: ?>
             <div class="form-group<?php if (!empty($errors)) echo ' has-error'; ?>">
                 <label for="<?php echo Html::clearAttribute($el->getAttribute('id')); ?>" class="col-sm-2 control-label">
