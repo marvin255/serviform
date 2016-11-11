@@ -83,8 +83,9 @@ trait Childable
     /**
      * @param string                    $name
      * @param array|\serviform\IElement $element
+     * @param int $position = null
      */
-    public function setElement($name, $element)
+    public function setElement($name, $element, $position = null)
     {
         if (is_array($element)) {
             $config = $element;
@@ -97,7 +98,20 @@ trait Childable
         } else {
             throw new \serviform\Exception('Wrong child type');
         }
-        $this->_elements[$name] = $element;
+        if ($position !== null && $position < count($this->_elements)) {
+            $newElements = [];
+            $i = 0;
+            foreach ($this->_elements as $key => $item) {
+                if ($i == $position) {
+                    $newElements[$name] = $element;
+                }
+                $newElements[$key] = $item;
+                $i++;
+            }
+            $this->_elements = $newElements;
+        } else {
+            $this->_elements[$name] = $element;
+        }
     }
 
     /**
