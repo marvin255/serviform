@@ -80,11 +80,27 @@ trait Validateable
                 $rule['type'] = trim($rule[1]);
                 $rule['elements'] = is_array($rule[0]) ? $rule[0] : null;
                 unset($rule[0], $rule[1]);
-                $this->_validators[] = $this->createValidator($rule);
+                $this->setValidator($rule);
             }
         }
 
         return $this->_validators;
+    }
+
+    /**
+     * @param array $name
+     */
+    public function setValidator($element)
+    {
+        if (is_array($element)) {
+            $config = $element;
+            $element = $this->createValidator($config);
+        } elseif ($element instanceof \serviform\IValidator) {
+            $element->setParent($this);
+        } else {
+            throw new \serviform\Exception('Wrong child type');
+        }
+        $this->_validators[] = $element;
     }
 
     /**
