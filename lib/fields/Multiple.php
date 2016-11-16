@@ -11,6 +11,7 @@ use serviform\traits\Validateable;
 class Multiple extends \serviform\FieldBase implements \serviform\IValidateable
 {
     use Validateable {
+        setValue as protected traitSetValue;
         setElement as protected traitSetElement;
         getElement as protected traitGetElement;
         getElements as protected traitGetElements;
@@ -71,6 +72,15 @@ class Multiple extends \serviform\FieldBase implements \serviform\IValidateable
         } else {
             return $elements;
         }
+    }
+
+    /**
+     * @param array $value
+     */
+    public function setValue($value)
+    {
+        $this->setElements([]);
+        $this->traitSetValue(array_values($value));
     }
 
     /**

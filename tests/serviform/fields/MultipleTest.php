@@ -121,6 +121,8 @@ class MultipleTest extends \tests\cases\Field
         $field = $this->getField();
         $field->setValue([0 => 'test', 1 => 'test1']);
         $this->assertEquals([0 => 'test', 1 => 'test1'], $field->getValue());
+        $field->setValue([1 => 'test1']);
+        $this->assertEquals([0 => 'test1'], $field->getValue());
     }
 
     public function testSetMultiplier()
