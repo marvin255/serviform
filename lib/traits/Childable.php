@@ -18,7 +18,7 @@ trait Childable
     public function setValue($value)
     {
         if (!is_array($value)) {
-            throw new \serviform\Exception('Value must be an array instance');
+            $value = [];
         }
         foreach ($value as $key => $value) {
             $element = $this->getElement($key);
