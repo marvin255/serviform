@@ -213,15 +213,11 @@ abstract class Field extends PHPUnit_Framework_TestCase
         $field->addError('test');
         $field->setValue('value');
         $field->setLabel('label');
+        $class = get_class($field);
+        $class = explode('\\', $class);
+        $class = end($class);
         $toTest = json_encode([
-            'type' => str_replace(
-                [
-                    '\\marvin255\\serviform\\fields\\',
-                    'marvin255\\serviform\\fields\\',
-                ],
-                '',
-                get_class($field)
-            ),
+            'type' => strtolower($class),
             'attributes' => $field->getAttributes(),
             'name' => $field->getName(),
             'fullName' => $field->getFullName(),

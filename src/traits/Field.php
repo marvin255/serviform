@@ -310,15 +310,11 @@ trait Field
      */
     public function jsonSerialize()
     {
+        $class = get_class($this);
+        $class = explode('\\', $class);
+        $class = end($class);
         return [
-            'type' => str_replace(
-                [
-                    '\\marvin255\\serviform\\fields\\',
-                    'marvin255\\serviform\\fields\\',
-                ],
-                '',
-                get_class($this)
-            ),
+            'type' => strtolower($class),
             'attributes' => $this->getAttributes(),
             'name' => $this->getName(),
             'fullName' => $this->getFullName(),

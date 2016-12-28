@@ -79,15 +79,11 @@ abstract class FieldWithList extends Field
         $field->setList([1, 2, 3]);
         $field->setIsMultiple(true);
         $field->getListItemsOptions([1, 2, 3]);
+        $class = get_class($field);
+        $class = explode('\\', $class);
+        $class = end($class);
         $toTest = json_encode([
-            'type' => str_replace(
-                [
-                    '\\marvin255\\serviform\\fields\\',
-                    'marvin255\\serviform\\fields\\',
-                ],
-                '',
-                get_class($field)
-            ),
+            'type' => strtolower($class),
             'attributes' => $field->getAttributes(),
             'name' => $field->getName(),
             'fullName' => $field->getFullName(),
