@@ -13,4 +13,16 @@ interface HasValidators
      * @return bool
      */
     public function validate(array $toValidate = null);
+
+    /**
+     * @param array $rules
+     *
+     * @return \marvin255\serviform\interfaces\HasValidators
+     */
+    public function setRules(array $rules);
+
+    /**
+     * @return array
+     */
+    public function getRules();
 }

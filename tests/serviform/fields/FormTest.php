@@ -2,10 +2,10 @@
 
 namespace marvin255\serviform\tests\serviform\fields;
 
-use marvin255\serviform\tests\cases\FieldWithChildren;
+use marvin255\serviform\tests\cases\FieldWithValidators;
 use marvin255\serviform\helpers\FactoryFields;
 
-class FormTest extends FieldWithChildren
+class FormTest extends FieldWithValidators
 {
     public function testLoadData()
     {

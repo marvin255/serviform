@@ -3,13 +3,14 @@
 namespace marvin255\serviform\fields;
 
 use marvin255\serviform\interfaces\Field as IField;
-use marvin255\serviform\traits\HasChildren as TField;
+use marvin255\serviform\traits\HasValidators as TField;
 use marvin255\serviform\interfaces\HasChildren;
+use marvin255\serviform\interfaces\HasValidators;
 
 /**
  * Form class.
  */
-class Form implements IField, HasChildren
+class Form implements IField, HasChildren, HasValidators
 {
     use TField;
 
