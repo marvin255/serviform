@@ -63,6 +63,7 @@ interface Validator extends JsonSerializable
      * @return string
      */
     public function getSkipOnError();
+
     /**
      * @param bool $value
      *

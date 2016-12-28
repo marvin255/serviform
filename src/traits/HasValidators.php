@@ -76,7 +76,7 @@ trait HasValidators
 
     /**
      * @param string $type
-     * @param array $options
+     * @param array  $options
      *
      * @return \marvin255\serviform\interfaces\Validator
      */
