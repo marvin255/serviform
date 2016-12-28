@@ -3,4 +3,5 @@ vendor
 composer.lock
 phpunit.xml
 logs
+metrics.html
 .php_cs.cache

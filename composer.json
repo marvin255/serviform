@@ -10,7 +10,8 @@
     "require-dev": {
         "phpunit/phpunit": "*",
         "friendsofphp/php-cs-fixer": "*",
-        "sebastian/phpcpd": "*"
+        "sebastian/phpcpd": "*",
+        "phpmetrics/phpmetrics": "*"
     },
     "autoload": {
         "psr-4": {
