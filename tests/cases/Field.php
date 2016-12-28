@@ -1,88 +1,142 @@
 <?php
 
-namespace tests\cases;
+namespace marvin255\serviform\tests\cases;
 
-/**
- * Base class to test form fields.
- */
-abstract class Field extends \PHPUnit_Framework_TestCase
+use PHPUnit_Framework_TestCase;
+
+abstract class Field extends PHPUnit_Framework_TestCase
 {
     /**
-     * Return object for field representation.
+     * @param array $options
+     *
+     * @return \marvin255\serviform\interfaces\Field
      */
-    abstract protected function getField();
+    abstract protected function getField(array $options);
 
-    /**
-     * @dataProvider getInputProvider
-     */
-    public function testGetInput($options, $expected)
+    protected $templateFile = null;
+
+    public function setUp()
     {
-        $field = $this->getField();
-        $field->config($options);
-        $this->assertEquals($expected, $field->getInput());
+        $this->templateFile = tempnam(sys_get_temp_dir(), mt_rand());
+        file_put_contents($this->templateFile, "<?php echo \"test template\";\r\n");
     }
 
-    /**
-     * @dataProvider getInputProvider
-     */
-    public function testToString($options, $expected)
+    public function tearDown()
+    {
+        unlink($this->templateFile);
+    }
+
+    public function getInputProvider()
+    {
+        $rand = mt_rand();
+
+        return [
+            'callback render' => [
+                [
+                    'template' => function ($field) use ($rand) {
+                        return $rand;
+                    },
+                ],
+                $rand,
+            ],
+            'template render' => [
+                [
+                    'template' => $this->templateFile,
+                ],
+                'test template',
+            ],
+        ];
+    }
+
+    public function testGetInput()
+    {
+        $data = $this->getInputProvider();
+        foreach ($data as $message => $value) {
+            $field = $this->getField($value[0]);
+            $this->assertEquals($value[1], $field->getInput(), $message);
+        }
+    }
+
+    public function testToString()
+    {
+        $data = $this->getInputProvider();
+        foreach ($data as $message => $value) {
+            $field = $this->getField($value[0]);
+            $this->assertEquals($value[1], (string) $field, $message);
+        }
+    }
+
+    public function testSetTemplate()
     {
         $field = $this->getField();
-        $field->config($options);
-        $this->assertEquals($expected, (string) $field);
+        $this->assertSame($field, $field->setTemplate(__DIR__));
+        $this->assertSame(__DIR__, $field->getTemplate());
     }
 
     public function testSetParent()
     {
         $field = $this->getField();
         $field2 = $this->getField();
-        $field->setParent($field2);
-        $this->assertEquals($field2, $field->getParent());
+        $this->assertSame($field, $field->setParent($field2));
+        $this->assertSame($field2, $field->getParent());
     }
 
     public function testSetValue()
     {
         $field = $this->getField();
-        $field->setValue('test');
-        $this->assertEquals('test', $field->getValue());
+        $this->assertSame($field, $field->setValue('test'));
+        $this->assertSame('test', $field->getValue());
     }
 
     public function testSetAttribute()
     {
         $field = $this->getField();
-        $field->setAttribute('data-1', 1);
-        $this->assertEquals(1, $field->getAttribute('data-1'));
-    }
-
-    public function testGetAttribute()
-    {
-        $field = $this->getField();
-        $field->setAttributes(['data-1' => 1, 'data-2' => 2]);
-        $field->setAttribute('data-3', 3);
-        $this->assertEquals(1, $field->getAttribute('data-1'));
-        $this->assertEquals(2, $field->getAttribute('data-2'));
-        $this->assertEquals(3, $field->getAttribute('data-3'));
-        $this->assertEquals(null, $field->getAttribute('data-4'));
-    }
-
-    public function testGetAttributes()
-    {
-        $field = $this->getField();
-        $field->setAttributes(['data-1' => 1, 'data-2' => 2]);
-        $field->setAttribute('data-3', 3);
-        $this->assertEquals(
-            ['data-1' => 1, 'data-2' => 2, 'data-3' => 3],
-            $field->getAttributes()
-        );
+        $this->assertSame($field, $field->setAttribute('data-1', 1));
+        $this->assertSame($field, $field->setAttribute('data-1', 2));
+        $this->assertSame($field, $field->setAttribute('data-2', '3'));
+        $this->assertSame(2, $field->getAttribute('data-1'));
+        $this->assertSame('3', $field->getAttribute('data-2'));
     }
 
     public function testAddToAttribute()
     {
         $field = $this->getField();
-        $field->setAttributes(['data-1' => 1, 'data-2' => 2]);
-        $field->addToAttribute('data-1', ' 2');
-        $this->assertEquals(
-            ['data-1' => '1 2', 'data-2' => 2],
+        $field->setAttribute('data-1', 1);
+        $this->assertSame($field, $field->addToAttribute('data-1', ' 2'));
+        $this->assertSame('1 2', $field->getAttribute('data-1'));
+    }
+
+    public function testSetAttributes()
+    {
+        $field = $this->getField();
+        $data = [
+            'data-1' => '1',
+            'data-2' => 2,
+        ];
+        $this->assertSame($field, $field->setAttributes($data));
+        $this->assertSame($data, $field->getAttributes());
+    }
+
+    public function testSetAttributesClearPreviousData()
+    {
+        $field = $this->getField();
+        $data = ['data-3' => 1, 'data-4' => 2, 'data-5' => '3'];
+        $field->setAttributes([
+            'data-1' => '1',
+            'data-2' => 2,
+        ]);
+        $field->setAttributes($data);
+        $this->assertSame($data, $field->getAttributes());
+    }
+
+    public function testGetAttributesWithSetAttribute()
+    {
+        $field = $this->getField();
+        $field->setAttribute('data-1', 1);
+        $field->setAttribute('data-2', 2);
+        $field->setAttribute('data-3', '3');
+        $this->assertSame(
+            ['data-1' => 1, 'data-2' => 2, 'data-3' => '3'],
             $field->getAttributes()
         );
     }
@@ -90,151 +144,91 @@ abstract class Field extends \PHPUnit_Framework_TestCase
     public function testSetName()
     {
         $field = $this->getField();
-        $field->setName('test');
-        $this->assertEquals('test', $field->getName());
+        $this->assertSame($field, $field->setName('test_name'));
+        $this->assertSame('test_name', $field->getName());
     }
 
     public function testGetFullName()
     {
         $field = $this->getField();
-        $field->setName('field');
-        $field1 = $this->getField();
-        $field1->setName('field1');
-        $field2 = $this->getField();
-        $field2->setName('field2');
-        $field1->setParent($field2);
-        $field->setParent($field1);
-        $this->assertEquals(
-            ['field2', 'field1', 'field'],
-            $field->getFullName()
-        );
+        $field->setName('child');
+        $this->assertSame(['child'], $field->getFullName());
+
+        $parent1 = $this->getField();
+        $parent1->setName('parent1');
+        $field->setParent($parent1);
+        $this->assertSame(['parent1', 'child'], $field->getFullName());
+
+        $parent2 = $this->getField();
+        $parent2->setName('parent2');
+        $parent1->setParent($parent2);
+        $this->assertSame(['parent2', 'parent1', 'child'], $field->getFullName());
     }
 
     public function testGetNameChainString()
     {
         $field = $this->getField();
-        $field->setName('field');
-        $field1 = $this->getField();
-        $field1->setName('field1');
-        $field2 = $this->getField();
-        $field2->setName('field2');
-        $field1->setParent($field2);
-        $field->setParent($field1);
-        $this->assertEquals(
-            'field2[field1][field]',
-            $field->getNameChainString()
-        );
+        $field->setName('child');
+        $this->assertSame('child', $field->getNameChainString());
+
+        $parent1 = $this->getField();
+        $parent1->setName('parent1');
+        $field->setParent($parent1);
+        $this->assertSame('parent1[child]', $field->getNameChainString());
+
+        $parent2 = $this->getField();
+        $parent2->setName('parent2');
+        $parent1->setParent($parent2);
+        $this->assertSame('parent2[parent1][child]', $field->getNameChainString());
     }
 
     public function testAddError()
     {
         $field = $this->getField();
-        $field->addError('test');
-        $this->assertEquals(['test'], $field->getErrors());
-    }
-
-    public function testGetErrors()
-    {
-        $field = $this->getField();
-        $field->addError('test 1');
-        $field->addError('test 2');
-        $field->addError('test 3');
-        $this->assertEquals(
-            ['test 1', 'test 2', 'test 3'],
-            $field->getErrors()
-        );
+        $this->assertSame($field, $field->addError('test error'));
+        $this->assertSame(['test error'], $field->getErrors());
     }
 
     public function testClearErrors()
     {
         $field = $this->getField();
-        $field->addError('test');
-        $field->clearErrors();
-        $this->assertEquals([], $field->getErrors());
+        $field->addError('test error');
+        $field->addError('test error 1');
+        $this->assertSame($field, $field->clearErrors());
+        $this->assertSame([], $field->getErrors());
     }
 
     public function testSetLabel()
     {
         $field = $this->getField();
-        $field->setLabel('test');
-        $this->assertEquals('test', $field->getLabel());
-    }
-
-    public function testRenderTemplate()
-    {
-        $field = $this->getField();
-        $field->setTemplate(function ($field) {
-            return 'test_callable';
-        });
-        $this->assertEquals('test_callable', $field->renderTemplate());
-        $field->setTemplate(__DIR__.'/../files/template.php');
-        $this->assertEquals("test_template\n", $field->renderTemplate());
-    }
-
-    public function testConfigValue()
-    {
-        $field = $this->getField();
-        $field->config(['value' => 'test']);
-        $this->assertEquals('test', $field->getValue());
-    }
-
-    public function testConfigAttributes()
-    {
-        $field = $this->getField();
-        $field->config(['attributes' => ['data-1' => 1, 'data-2' => 2]]);
-        $this->assertEquals(
-            ['data-1' => 1, 'data-2' => 2],
-            $field->getAttributes()
-        );
-        $this->assertEquals(1, $field->getAttribute('data-1'));
-        $this->assertEquals(2, $field->getAttribute('data-2'));
-        $this->assertEquals(null, $field->getAttribute('data-3'));
-    }
-
-    public function testConfigLabel()
-    {
-        $field = $this->getField();
-        $field->config(['label' => 'test']);
-        $this->assertEquals('test', $field->getLabel());
-    }
-
-    public function testConfigName()
-    {
-        $field = $this->getField();
-        $field->config(['name' => 'test']);
-        $this->assertEquals('test', $field->getName());
-    }
-
-    public function testConfigParent()
-    {
-        $field = $this->getField();
-        $field2 = $this->getField();
-        $field->config(['parent' => $field2]);
-        $this->assertEquals($field2, $field->getParent());
-    }
-
-    public function testConfigTemplate()
-    {
-        $field = $this->getField();
-        $field->config(['template' => 'test']);
-        $this->assertEquals('test', $field->getTemplate());
+        $this->assertSame($field, $field->setLabel('test label'));
+        $this->assertSame('test label', $field->getLabel());
     }
 
     public function testJsonSerialize()
     {
         $field = $this->getField();
         $field->setAttribute('data-test', 'test');
+        $field->setName('name');
         $field->addError('test');
-        $errors = $field->getErrors();
-
+        $field->setValue('value');
+        $field->setLabel('label');
         $toTest = json_encode([
-            'value' => $field->getValue(),
+            'type' => str_replace(
+                [
+                    '\\marvin255\\serviform\\fields\\',
+                    'marvin255\\serviform\\fields\\',
+                ],
+                '',
+                get_class($field)
+            ),
+            'attributes' => $field->getAttributes(),
             'name' => $field->getName(),
             'fullName' => $field->getFullName(),
-            'errors' => $errors ? $errors : null,
+            'errors' => $field->getErrors(),
+            'value' => $field->getValue(),
             'label' => $field->getLabel(),
-            'attributes' => $field->getAttributes(),
         ]);
-        $this->assertEquals($toTest, json_encode($field));
+        $this->assertSame($toTest, json_encode($field));
     }
 }

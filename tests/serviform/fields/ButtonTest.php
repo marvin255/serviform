@@ -1,10 +1,17 @@
 <?php
 
-class ButtonTest extends \tests\cases\Field
+namespace marvin255\serviform\tests\serviform\fields;
+
+use marvin255\serviform\tests\cases\Field;
+use marvin255\serviform\helpers\FactoryFields;
+
+class ButtonTest extends Field
 {
     public function getInputProvider()
     {
-        return [
+        $parent = parent::getInputProvider();
+
+        return array_merge($parent, [
             'simple field' => [
                 [
                     'name' => 'test',
@@ -35,10 +42,11 @@ class ButtonTest extends \tests\cases\Field
                 [
                     'attributes' => [
                         'type' => '" onclick="alert(\'xss\')" data-param="',
+                        'data" onclick="alert(\'xss\')" data-param="' => 'xss',
                     ],
                     'name' => 'test',
                 ],
-                '<button type="&quot; onclick=&quot;alert(&#039;xss&#039;)&quot; data-param=&quot;" name="test"></button>',
+                '<button type="&quot; onclick=&quot;alert(&#039;xss&#039;)&quot; data-param=&quot;" data--onclick--alert--xss----data-param="xss" name="test"></button>',
             ],
             'allow html in label' => [
                 [
@@ -52,29 +60,22 @@ class ButtonTest extends \tests\cases\Field
                 [
                     'name' => 'test',
                     'value' => '" onclick="alert(\'xss\')" data-param="',
+                    'allowHtmlContent' => false,
                 ],
                 '<button name="test" value="&quot; onclick=&quot;alert(&#039;xss&#039;)&quot; data-param=&quot;"></button>',
             ],
-            'template' => [
-                [
-                    'template' => __DIR__.'/../../files/template.php',
-                ],
-                "test_template\n"
-            ],
-        ];
+        ]);
     }
 
-    public function testConfigAllowHtmlContent()
+    /**
+     * @param array $options
+     *
+     * @return \marvin255\serviform\interfaces\Field
+     */
+    protected function getField(array $options = array())
     {
-        $field = $this->getField();
-        $field->config(['allowHtmlContent' => true]);
-        $this->assertEquals(true, $field->allowHtmlContent);
-        $field->config(['allowHtmlContent' => false]);
-        $this->assertEquals(false, $field->allowHtmlContent);
-    }
+        $type = '\\marvin255\\serviform\\fields\\Button';
 
-    protected function getField()
-    {
-        return new \serviform\fields\Button();
+        return FactoryFields::initElement($type, $options);
     }
 }

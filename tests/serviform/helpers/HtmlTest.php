@@ -1,17 +1,22 @@
 <?php
 
+namespace marvin255\serviform\tests\serviform\helpers;
+
+use PHPUnit_Framework_TestCase;
+use marvin255\serviform\helpers\Html;
+
 class HtmlTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @dataProvider tagProvider
+     * @dataProvider createTagProvider
      */
-    public function testTag($tag, $options, $content, $expected)
+    public function testCreateTag($tag, $options, $content, $expected)
     {
-        $res = \serviform\helpers\Html::tag($tag, $options, $content);
-        $this->assertEquals($expected, $res);
+        $res = Html::createTag($tag, $options, $content);
+        $this->assertSame($expected, $res);
     }
 
-    public function tagProvider()
+    public function createTagProvider()
     {
         return [
             'tag with content' => [
@@ -32,57 +37,75 @@ class HtmlTest extends PHPUnit_Framework_TestCase
                 true,
                 '<br>',
             ],
-            'tag with params' => [
+            'tag with attributes' => [
                 'div',
                 ['data-param-1' => 1, 'data-param-2' => 2, '' => 'empty_key'],
                 'test',
                 '<div data-param-1="1" data-param-2="2">test</div>',
             ],
+            'xss in attribute key' => [
+                'div',
+                ['onclick="alert(\'xss\')" data-param' => 'test'],
+                '',
+                '<div onclick--alert--xss----data-param="test"></div>',
+            ],
+            'xss in attribute value' => [
+                'div',
+                ['test' => '" onclick="alert(\'xss\')" data-param='],
+                '',
+                '<div test="&quot; onclick=&quot;alert(&#039;xss&#039;)&quot; data-param="></div>',
+            ],
+            'xss in tag name' => [
+                'div onclick="alert(\'xss\')',
+                null,
+                'test',
+                '<div-onclick--alert--xss>test</div-onclick--alert--xss>',
+            ],
         ];
     }
 
-    public function testCloseTag()
-    {
-        $res = \serviform\helpers\Html::closeTag('div');
-        $this->assertEquals('</div>', $res);
-    }
-
     /**
-     * @dataProvider toIdProvider
+     * @dataProvider createCloseTagProvider
      */
-    public function testToId($input, $expected)
+    public function testCreateCloseTag($input, $expected)
     {
-        $res = \serviform\helpers\Html::toId($input);
-        $this->assertEquals($expected, $res);
+        $res = Html::createCloseTag($input);
+        $this->assertSame($expected, $res);
     }
 
-    public function toIdProvider()
+    public function createCloseTagProvider()
     {
         return [
-            'xss' => [
-                '" onclick="alert(\'xss\')" data-param="',
-                '__onclick__alert__xss____data-param__',
+            'xss in tag name' => [
+                'div onclick="alert(\'xss\')"',
+                '</div-onclick--alert--xss>',
             ],
-            'brackets' => ['[test]', '_test_'],
-            'lower case' => ['TEst', 'test'],
+            'valid tag' => [
+                'span',
+                '</span>',
+            ],
+            'valid tag' => [
+                123,
+                '</123>',
+            ],
         ];
     }
 
     /**
-     * @dataProvider createAttributesProvider
+     * @dataProvider createAttributeStringProvider
      */
-    public function testCreateAttributes($input, $expected)
+    public function testCreateAttributeString($input, $expected)
     {
-        $res = \serviform\helpers\Html::createAttributes($input);
-        $this->assertEquals($expected, $res);
+        $res = Html::createAttributeString($input);
+        $this->assertSame($expected, $res);
     }
 
-    public function createAttributesProvider()
+    public function createAttributeStringProvider()
     {
         return [
             'xss in key' => [
                 ['onclick="alert(\'xss\')" data-param' => 'test'],
-                'onclick__alert__xss____data-param="test"',
+                'onclick--alert--xss----data-param="test"',
             ],
             'xss in value' => [
                 ['data-param' => '" onclick="alert(\'xss\')" data-param="'],
@@ -96,45 +119,45 @@ class HtmlTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider clearTextProvider
-     */
-    public function testClearAttribute($string, $expected)
-    {
-        $res = \serviform\helpers\Html::clearAttribute($string);
-        $this->assertEquals($expected, $res);
-    }
-
-    /**
      * @dataProvider clearAttributeKeyProvider
      */
     public function testClearAttributeKey($string, $expected)
     {
-        $res = \serviform\helpers\Html::clearAttributeKey($string);
-        $this->assertEquals($expected, $res);
+        $res = Html::clearAttributeKey($string);
+        $this->assertSame($expected, $res);
     }
 
     public function clearAttributeKeyProvider()
     {
         return [
-            'ampersand' => ['&', '_'],
-            'quote' => ["'", '_'],
-            'double quote' => ['"', '_'],
-            'greater than' => ['>', '_'],
-            'lesser than' => ['<', '_'],
-            'equal' => ['=', '_'],
+            'ampersand' => ['&test&test&', 'test-test'],
+            'quote' => ["'test'test'", 'test-test'],
+            'double quote' => ['"test"test"', 'test-test'],
+            'greater than' => ['>test>test>', 'test-test'],
+            'lesser than' => ['<test<test<', 'test-test'],
+            'equal' => ['=test=test=', 'test-test'],
+            'space' => [' test test ', 'test-test'],
+            'valid string' => ['test123', 'test123'],
+            'multiple replacers string' => ['test   test>>', 'test---test'],
         ];
     }
 
-    /**
-     * @dataProvider clearTextProvider
-     */
-    public function testClearText($string, $expected)
+    public function testClearAttributeKeyWithInvalidValue()
     {
-        $res = \serviform\helpers\Html::clearText($string);
-        $this->assertEquals($expected, $res);
+        $this->setExpectedException('\InvalidArgumentException');
+        $res = Html::clearAttributeKey('++++++');
     }
 
-    public function clearTextProvider()
+    /**
+     * @dataProvider clearAttributeValueProvider
+     */
+    public function testClearAttributeValue($string, $expected)
+    {
+        $res = Html::clearAttributeValue($string);
+        $this->assertSame($expected, $res);
+    }
+
+    public function clearAttributeValueProvider()
     {
         return [
             'ampersand' => ['&', '&amp;'],
@@ -142,6 +165,8 @@ class HtmlTest extends PHPUnit_Framework_TestCase
             'double quote' => ['"', '&quot;'],
             'greater than' => ['>', '&gt;'],
             'lesser than' => ['<', '&lt;'],
+            'valid string' => ['test 123', 'test 123'],
+            'compound string' => ['"test" 123"', '&quot;test&quot; 123&quot;'],
         ];
     }
 }

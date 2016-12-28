@@ -1,16 +1,23 @@
 <?php
 
-class SelectTest extends \tests\cases\FieldList
+namespace marvin255\serviform\tests\serviform\fields;
+
+use marvin255\serviform\tests\cases\FieldWithList;
+use marvin255\serviform\helpers\FactoryFields;
+
+class SelectTest extends FieldWithList
 {
     public function getInputProvider()
     {
-        return [
+        $parent = parent::getInputProvider();
+
+        return array_merge($parent, [
             'simple field' => [
                 [
                     'name' => 'test',
                     'list' => ['v' => 'l', 'v1' => 'l1'],
                     'value' => 'v',
-                    'multiple' => false,
+                    'isMultiple' => false,
                 ],
                 '<select name="test"><option value="v" selected="selected">l</option><option value="v1">l1</option></select>',
             ],
@@ -19,7 +26,7 @@ class SelectTest extends \tests\cases\FieldList
                     'name' => 'test',
                     'list' => ['v' => 'l', 'v1' => 'l1'],
                     'value' => 'v',
-                    'multiple' => true,
+                    'isMultiple' => true,
                 ],
                 '<select multiple="multiple" name="test[]"><option value="v" selected="selected">l</option><option value="v1">l1</option></select>',
             ],
@@ -28,7 +35,7 @@ class SelectTest extends \tests\cases\FieldList
                     'name' => 'test',
                     'list' => ['v' => 'l', 'v1' => 'l1'],
                     'value' => 'v',
-                    'multiple' => false,
+                    'isMultiple' => false,
                     'prompt' => '-',
                 ],
                 '<select name="test"><option value="">-</option><option value="v" selected="selected">l</option><option value="v1">l1</option></select>',
@@ -36,42 +43,42 @@ class SelectTest extends \tests\cases\FieldList
             'xss in attribute' => [
                 [
                     'attributes' => [
-                        'class' => '" onclick="alert(\'xss\')" data-param="',
+                        'data-param' => '" onclick="alert(\'xss\')" data-param="',
+                        'data" onclick="alert(\'xss\')" data-param="' => 'xss',
                     ],
                     'name' => 'test',
                     'list' => ['v' => 'l', 'v1' => 'l1'],
+                    'isMultiple' => false,
                 ],
-                '<select class="&quot; onclick=&quot;alert(&#039;xss&#039;)&quot; data-param=&quot;" name="test"><option value="v">l</option><option value="v1">l1</option></select>',
+                '<select data-param="&quot; onclick=&quot;alert(&#039;xss&#039;)&quot; data-param=&quot;" data--onclick--alert--xss----data-param="xss" name="test"><option value="v">l</option><option value="v1">l1</option></select>',
             ],
             'list items options' => [
                 [
                     'name' => 'test',
                     'list' => ['v' => 'l', 'v1' => 'l1'],
                     'listItemsOptions' => [
-                        'v' => ['data-test' => 'test'],
+                        'v' => [
+                            'data-param' => '" onclick="alert(\'xss\')" data-param="',
+                            'data" onclick="alert(\'xss\')" data-param="' => 'xss',
+                        ],
                         'v1' => ['data-test-1' => 'test-1'],
                     ],
+                    'isMultiple' => false,
                 ],
-                '<select name="test"><option data-test="test" value="v">l</option><option data-test-1="test-1" value="v1">l1</option></select>',
+                '<select name="test"><option data-param="&quot; onclick=&quot;alert(&#039;xss&#039;)&quot; data-param=&quot;" data--onclick--alert--xss----data-param="xss" value="v">l</option><option data-test-1="test-1" value="v1">l1</option></select>',
             ],
-            'template' => [
-                [
-                    'template' => __DIR__.'/../../files/template.php',
-                ],
-                "test_template\n"
-            ],
-        ];
+       ]);
     }
 
-    public function testConfigPrompt()
+    /**
+     * @param array $options
+     *
+     * @return \marvin255\serviform\interfaces\Field
+     */
+    protected function getField(array $options = array())
     {
-        $field = $this->getField();
-        $field->config(['prompt' => '-']);
-        $this->assertEquals('-', $field->prompt);
-    }
+        $type = '\\marvin255\\serviform\\fields\\Select';
 
-    protected function getField()
-    {
-        return new \serviform\fields\Select();
+        return FactoryFields::initElement($type, $options);
     }
 }

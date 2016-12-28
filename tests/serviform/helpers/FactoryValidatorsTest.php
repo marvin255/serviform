@@ -1,113 +1,73 @@
 <?php
 
+namespace marvin255\serviform\tests\serviform\helpers;
+
+use PHPUnit_Framework_TestCase;
+use marvin255\serviform\helpers\FactoryValidators;
+
 class FactoryValidatorsTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     * @dataProvider initProvider
-     */
-    public function testInit($options, $expected)
+    public function testInitElementWithType()
     {
-        $field = \serviform\helpers\FactoryValidators::init($options);
-        $this->assertInstanceOf($expected, $field);
-    }
+        $model = $this->getMockBuilder('\\marvin255\\serviform\\interfaces\\Validator')->getMock();
+        $class = get_class($model);
 
-    public function initProvider()
-    {
-        return [
-            'builtin field' => [
-                ['type' => 'compare'],
-                '\serviform\validators\Compare',
-            ],
-            'force class' => [
-                ['type' => '\serviform\validators\Compare'],
-                '\serviform\validators\Compare',
-            ],
+        $description = [
+            'type' => $class,
+            'param1' => 1,
+            'param2' => '2',
         ];
+        FactoryValidators::setDescription('test', $description);
+
+        $this->assertInstanceOf($class, FactoryValidators::initElement('test'));
     }
 
-    public function testConfigOnInit()
+    public function testInitElementWithClassName()
     {
-        $field = \serviform\helpers\FactoryValidators::init([
-            'type' => 'compare',
-            'operator' => '>=',
-        ]);
-        $this->assertEquals('>=', $field->operator);
+        $model = $this->getMockBuilder('\\marvin255\\serviform\\interfaces\\Validator')->getMock();
+        $class = get_class($model);
+        $this->assertInstanceOf($class, FactoryValidators::initElement($class));
     }
 
-    /**
-     * @expectedException \serviform\Exception
-     */
-    public function testInitBadType()
+    public function testInitElementWithWrongClassName()
     {
-        $field = \serviform\helpers\FactoryValidators::init([
-            'type' => '\Bad\Class',
-        ]);
+        $this->setExpectedException('\InvalidArgumentException');
+        FactoryValidators::initElement(get_class($this));
     }
 
-    /**
-     * @expectedException \serviform\Exception
-     */
-    public function testInitBadTypeWithoutNamespace()
+    public function testGetDescription()
     {
-        $field = \serviform\helpers\FactoryValidators::init([
-            'type' => 'BadClass',
-        ]);
+        $model = $this->getMockBuilder('\\marvin255\\serviform\\interfaces\\Validator')->getMock();
+        $class = get_class($model);
+
+        $this->assertSame(null, FactoryValidators::getDescription(mt_rand().'_'.time()));
+
+        $description = [
+            'type' => $class,
+            'param1' => 1,
+            'param2' => '2',
+        ];
+        FactoryValidators::setDescription('test', $description);
+        $this->assertSame($description, FactoryValidators::getDescription('test'));
+
+        $description = [
+            'type' => $class,
+            'param1' => 3,
+            'param2' => '4',
+        ];
+        FactoryValidators::setDescription('test', $description);
+        $this->assertSame($description, FactoryValidators::getDescription('test'));
     }
 
-    /**
-     * @expectedException \serviform\Exception
-     */
-    public function testInitNoType()
+    public function testSetDescriptionWithEmptyTypeParam()
     {
-        $field = \serviform\helpers\FactoryValidators::init([]);
+        $this->setExpectedException('\InvalidArgumentException');
+        FactoryValidators::setDescription('test', []);
     }
 
-    public function testSetValidatorDescription()
+    public function testSetDescriptionWithWrongTypeParam()
     {
-        \serviform\helpers\FactoryValidators::setValidatorDescription(
-            'regexp',
-            [
-                'type' => '\serviform\validators\Regexp',
-                'regexp' => '[0-9]+',
-            ]
-        );
-        $field = \serviform\helpers\FactoryValidators::init([
-            'type' => 'regexp',
-        ]);
-        $this->assertInstanceOf('\serviform\validators\Regexp', $field);
-        $this->assertEquals('[0-9]+', $field->regexp);
-    }
-
-    public function testGetValidatorDescription()
-    {
-        \serviform\helpers\FactoryValidators::setValidatorDescription(
-            'regexp',
-            [
-                'type' => '\serviform\validators\Regexp',
-                'regexp' => '[0-9]+',
-            ]
-        );
-        $this->assertEquals(
-            ['type' => '\serviform\validators\Regexp', 'regexp' => '[0-9]+'],
-            \serviform\helpers\FactoryValidators::getValidatorDescription('regexp')
-        );
-    }
-
-    /**
-     * @expectedException \serviform\Exception
-     */
-    public function testSetFieldDescriptionBadType()
-    {
-        $field = \serviform\helpers\FactoryValidators::setValidatorDescription('input', [
-            'type' => '\Bad\Class',
-        ]);
-    }
-
-    /**
-     * @expectedException \serviform\Exception
-     */
-    public function testSetFieldDescriptionNoType()
-    {
-        $field = \serviform\helpers\FactoryValidators::setValidatorDescription('input', []);
+        $this->setExpectedException('\InvalidArgumentException');
+        FactoryValidators::setDescription('test', ['type' => 'test']);
     }
 }

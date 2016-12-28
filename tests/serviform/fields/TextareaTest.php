@@ -1,10 +1,17 @@
 <?php
 
-class TextareaTest extends \tests\cases\Field
+namespace marvin255\serviform\tests\serviform\fields;
+
+use marvin255\serviform\tests\cases\Field;
+use marvin255\serviform\helpers\FactoryFields;
+
+class TextareaTest extends Field
 {
     public function getInputProvider()
     {
-        return [
+        $parent = parent::getInputProvider();
+
+        return array_merge($parent, [
             'simple field' => [
                 [
                     'name' => 'test',
@@ -32,22 +39,24 @@ class TextareaTest extends \tests\cases\Field
                 [
                     'attributes' => [
                         'data-param' => '" onclick="alert(\'xss\')" data-param="',
+                        'data" onclick="alert(\'xss\')" data-param="' => 'xss',
                     ],
                     'name' => 'test',
                 ],
-                '<textarea data-param="&quot; onclick=&quot;alert(&#039;xss&#039;)&quot; data-param=&quot;" name="test"></textarea>',
+                '<textarea data-param="&quot; onclick=&quot;alert(&#039;xss&#039;)&quot; data-param=&quot;" data--onclick--alert--xss----data-param="xss" name="test"></textarea>',
             ],
-            'template' => [
-                [
-                    'template' => __DIR__.'/../../files/template.php',
-                ],
-                "test_template\n"
-            ],
-        ];
+       ]);
     }
 
-    protected function getField()
+    /**
+     * @param array $options
+     *
+     * @return \marvin255\serviform\interfaces\Field
+     */
+    protected function getField(array $options = array())
     {
-        return new \serviform\fields\Textarea();
+        $type = '\\marvin255\\serviform\\fields\\Textarea';
+
+        return FactoryFields::initElement($type, $options);
     }
 }

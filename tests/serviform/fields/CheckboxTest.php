@@ -1,10 +1,17 @@
 <?php
 
-class CheckboxTest extends \tests\cases\Field
+namespace marvin255\serviform\tests\serviform\fields;
+
+use marvin255\serviform\tests\cases\Field;
+use marvin255\serviform\helpers\FactoryFields;
+
+class CheckboxTest extends Field
 {
     public function getInputProvider()
     {
-        return [
+        $parent = parent::getInputProvider();
+
+        return array_merge($parent, [
             'simple field' => [
                 [
                     'name' => 'test',
@@ -39,12 +46,13 @@ class CheckboxTest extends \tests\cases\Field
                 [
                     'attributes' => [
                         'class' => '" onclick="alert(\'xss\')" data-param="',
+                        'data" onclick="alert(\'xss\')" data-param="' => 'xss',
                     ],
                     'name' => 'test',
                     'trueValue' => 1,
                     'falseValue' => 0,
                 ],
-                '<input type="hidden" name="test" value="0"><input class="&quot; onclick=&quot;alert(&#039;xss&#039;)&quot; data-param=&quot;" name="test" value="1" type="checkbox">',
+                '<input type="hidden" name="test" value="0"><input class="&quot; onclick=&quot;alert(&#039;xss&#039;)&quot; data-param=&quot;" data--onclick--alert--xss----data-param="xss" name="test" value="1" type="checkbox">',
             ],
             'checked input' => [
                 [
@@ -55,35 +63,18 @@ class CheckboxTest extends \tests\cases\Field
                 ],
                 '<input type="hidden" name="test" value="0"><input name="test" value="1" type="checkbox" checked="checked">',
             ],
-            'template' => [
-                [
-                    'template' => __DIR__.'/../../files/template.php',
-                ],
-                "test_template\n"
-            ],
-        ];
+        ]);
     }
 
-    public function testConfigTrueValue()
+    /**
+     * @param array $options
+     *
+     * @return \marvin255\serviform\interfaces\Field
+     */
+    protected function getField(array $options = array())
     {
-        $field = $this->getField();
-        $field->config(['trueValue' => 1]);
-        $this->assertEquals(1, $field->trueValue);
-        $field->config(['trueValue' => 'test']);
-        $this->assertEquals('test', $field->trueValue);
-    }
+        $type = '\\marvin255\\serviform\\fields\\Checkbox';
 
-    public function testConfigFalseValue()
-    {
-        $field = $this->getField();
-        $field->config(['falseValue' => 1]);
-        $this->assertEquals(1, $field->falseValue);
-        $field->config(['falseValue' => 'test']);
-        $this->assertEquals('test', $field->falseValue);
-    }
-
-    protected function getField()
-    {
-        return new \serviform\fields\Checkbox();
+        return FactoryFields::initElement($type, $options);
     }
 }

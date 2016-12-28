@@ -1,10 +1,17 @@
 <?php
 
-class FileTest extends \tests\cases\Field
+namespace marvin255\serviform\tests\serviform\fields;
+
+use marvin255\serviform\tests\cases\Field;
+use marvin255\serviform\helpers\FactoryFields;
+
+class FileTest extends Field
 {
     public function getInputProvider()
     {
-        return [
+        $parent = parent::getInputProvider();
+
+        return array_merge($parent, [
             'simple field' => [
                 [
                     'name' => 'test',
@@ -26,18 +33,25 @@ class FileTest extends \tests\cases\Field
                 [
                     'attributes' => [
                         'class' => '" onclick="alert(\'xss\')" data-param="',
+                        'data" onclick="alert(\'xss\')" data-param="' => 'xss',
                     ],
                     'name' => 'test',
                 ],
-                '<input class="&quot; onclick=&quot;alert(&#039;xss&#039;)&quot; data-param=&quot;" type="file" value="" name="test">',
+                '<input class="&quot; onclick=&quot;alert(&#039;xss&#039;)&quot; data-param=&quot;" data--onclick--alert--xss----data-param="xss" type="file" value="" name="test">',
             ],
-            'template' => [
-                [
-                    'template' => __DIR__.'/../../files/template.php',
-                ],
-                "test_template\n"
-            ],
-        ];
+       ]);
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return \marvin255\serviform\interfaces\Field
+     */
+    protected function getField(array $options = array())
+    {
+        $type = '\\marvin255\\serviform\\fields\\File';
+
+        return FactoryFields::initElement($type, $options);
     }
 
     public function testSetValue()
@@ -59,17 +73,5 @@ class FileTest extends \tests\cases\Field
             'size' => 123,
         ];
         $this->assertEquals($_FILES['test'], $field->getValue());
-    }
-
-    public function testConfigValue()
-    {
-        $field = $this->getField();
-        $field->config(['value' => 'test']);
-        $this->assertEquals([], $field->getValue());
-    }
-
-    protected function getField()
-    {
-        return new \serviform\fields\File();
     }
 }

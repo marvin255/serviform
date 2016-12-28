@@ -1,22 +1,26 @@
 {
-	"name": "marvin255/serviform",
-	"description": "Php form constructor",
-	"type": "library",
-	"keywords": ["php", "forms"],
-	"license": "MIT",
-	"require": {
-		"php": ">=5.4.0"
-	},
-	"require-dev": {
-		"phpunit/phpunit": "*"
-	},
-	"autoload": {
-		"psr-4": { "serviform\\": "lib/" }
-	},
-	"repositories": [
-		{
-			"type": "git",
-			"url": "https://github.com/marvin255/serviform"
-		}
-	]
+    "name": "marvin255/serviform",
+    "description": "Php form constructor",
+    "type": "library",
+    "keywords": ["php", "forms"],
+    "license": "MIT",
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*",
+        "friendsofphp/php-cs-fixer": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "marvin255\\serviform\\": "src/",
+            "marvin255\\serviform\\tests\\": "tests/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/marvin255/serviform"
+        }
+    ]
 }

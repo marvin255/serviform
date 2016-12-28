@@ -1,10 +1,17 @@
 <?php
 
-class HtmlTextTest extends \tests\cases\Field
+namespace marvin255\serviform\tests\serviform\fields;
+
+use marvin255\serviform\tests\cases\Field;
+use marvin255\serviform\helpers\FactoryFields;
+
+class HtmlTextTest extends Field
 {
     public function getInputProvider()
     {
-        return [
+        $parent = parent::getInputProvider();
+
+        return array_merge($parent, [
             'simple field' => [
                 [
                     'name' => 'test',
@@ -23,17 +30,45 @@ class HtmlTextTest extends \tests\cases\Field
                 ],
                 '<div class="test" data-param="1">test</div>',
             ],
-            'template' => [
+            'xss in attributes' => [
                 [
-                    'template' => __DIR__.'/../../files/template.php',
+                    'attributes' => [
+                        'class' => '" onclick="alert(\'xss\')" data-param="',
+                        'data" onclick="alert(\'xss\')" data-param="' => 'xss',
+                    ],
+                    'name' => 'test',
+                    'value' => '',
                 ],
-                "test_template\n"
+                '<div class="&quot; onclick=&quot;alert(&#039;xss&#039;)&quot; data-param=&quot;" data--onclick--alert--xss----data-param="xss"></div>',
             ],
-        ];
+            'no html content' => [
+                [
+                    'name' => 'test',
+                    'value' => "<span>test</span>",
+                    'allowHtmlContent' => false,
+                ],
+                '<div>&lt;span&gt;test&lt;/span&gt;</div>',
+            ],
+            'html content' => [
+                [
+                    'name' => 'test',
+                    'value' => "<span>test</span>",
+                    'allowHtmlContent' => true,
+                ],
+                '<div><span>test</span></div>',
+            ],
+       ]);
     }
 
-    protected function getField()
+    /**
+     * @param array $options
+     *
+     * @return \marvin255\serviform\interfaces\Field
+     */
+    protected function getField(array $options = array())
     {
-        return new \serviform\fields\HtmlText();
+        $type = '\\marvin255\\serviform\\fields\\HtmlText';
+
+        return FactoryFields::initElement($type, $options);
     }
 }

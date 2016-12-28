@@ -1,117 +1,73 @@
 <?php
 
+namespace marvin255\serviform\tests\serviform\helpers;
+
+use PHPUnit_Framework_TestCase;
+use marvin255\serviform\helpers\FactoryFields;
+
 class FactoryFieldsTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     * @dataProvider initProvider
-     */
-    public function testInit($options, $expected)
+    public function testInitElementWithType()
     {
-        $field = \serviform\helpers\FactoryFields::init($options);
-        $this->assertInstanceOf($expected, $field);
-    }
+        $model = $this->getMockBuilder('\\marvin255\\serviform\\interfaces\\Field')->getMock();
+        $class = get_class($model);
 
-    public function initProvider()
-    {
-        return [
-            'builtin field' => [
-                ['type' => 'input'],
-                '\serviform\fields\Input',
-            ],
-            'force class' => [
-                ['type' => '\serviform\fields\Input'],
-                '\serviform\fields\Input',
-            ],
+        $description = [
+            'type' => $class,
+            'param1' => 1,
+            'param2' => '2',
         ];
+        FactoryFields::setDescription('test', $description);
+
+        $this->assertInstanceOf($class, FactoryFields::initElement('test'));
     }
 
-    public function testConfigOnInit()
+    public function testInitElementWithClassName()
     {
-        $field = \serviform\helpers\FactoryFields::init([
-            'type' => 'input',
-            'name' => 'name',
-            'value' => 'value',
-        ]);
-        $this->assertEquals('name', $field->getName());
-        $this->assertEquals('value', $field->getValue());
+        $model = $this->getMockBuilder('\\marvin255\\serviform\\interfaces\\Field')->getMock();
+        $class = get_class($model);
+        $this->assertInstanceOf($class, FactoryFields::initElement($class));
     }
 
-    /**
-     * @expectedException \serviform\Exception
-     */
-    public function testInitBadType()
+    public function testInitElementWithWrongClassName()
     {
-        $field = \serviform\helpers\FactoryFields::init([
-            'type' => '\Bad\Class',
-        ]);
+        $this->setExpectedException('\InvalidArgumentException');
+        FactoryFields::initElement(get_class($this));
     }
 
-    /**
-     * @expectedException \serviform\Exception
-     */
-    public function testInitBadTypeWithoutNamespace()
+    public function testGetDescription()
     {
-        $field = \serviform\helpers\FactoryFields::init([
-            'type' => 'BadClass',
-        ]);
+        $model = $this->getMockBuilder('\\marvin255\\serviform\\interfaces\\Field')->getMock();
+        $class = get_class($model);
+
+        $this->assertSame(null, FactoryFields::getDescription(mt_rand().'_'.time()));
+
+        $description = [
+            'type' => $class,
+            'param1' => 1,
+            'param2' => '2',
+        ];
+        FactoryFields::setDescription('test', $description);
+        $this->assertSame($description, FactoryFields::getDescription('test'));
+
+        $description = [
+            'type' => $class,
+            'param1' => 3,
+            'param2' => '4',
+        ];
+        FactoryFields::setDescription('test', $description);
+        $this->assertSame($description, FactoryFields::getDescription('test'));
     }
 
-    /**
-     * @expectedException \serviform\Exception
-     */
-    public function testInitNoType()
+    public function testSetDescriptionWithEmptyTypeParam()
     {
-        $field = \serviform\helpers\FactoryFields::init([]);
+        $this->setExpectedException('\InvalidArgumentException');
+        FactoryFields::setDescription('test', []);
     }
 
-    public function testSetFieldDescription()
+    public function testSetDescriptionWithWrongTypeParam()
     {
-        \serviform\helpers\FactoryFields::setFieldDescription(
-            'input',
-            [
-                'type' => '\serviform\fields\Button',
-                'label' => 'test',
-            ]
-        );
-        $field = \serviform\helpers\FactoryFields::init([
-            'type' => 'input',
-            'name' => 'name',
-            'value' => 'value',
-        ]);
-        $this->assertInstanceOf('\serviform\fields\Button', $field);
-        $this->assertEquals('test', $field->getLabel());
-    }
-
-    public function testGetFieldDescription()
-    {
-        \serviform\helpers\FactoryFields::setFieldDescription(
-            'input',
-            [
-                'type' => '\serviform\fields\Button',
-                'label' => 'test',
-            ]
-        );
-        $this->assertEquals(
-            ['type' => '\serviform\fields\Button', 'label' => 'test'],
-            \serviform\helpers\FactoryFields::getFieldDescription('input')
-        );
-    }
-
-    /**
-     * @expectedException \serviform\Exception
-     */
-    public function testSetFieldDescriptionBadType()
-    {
-        $field = \serviform\helpers\FactoryFields::setFieldDescription('input', [
-            'type' => '\Bad\Class',
-        ]);
-    }
-
-    /**
-     * @expectedException \serviform\Exception
-     */
-    public function testSetFieldDescriptionNoType()
-    {
-        $field = \serviform\helpers\FactoryFields::setFieldDescription('input', []);
+        $this->setExpectedException('\InvalidArgumentException');
+        FactoryFields::setDescription('test', ['type' => 'test']);
     }
 }

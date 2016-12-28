@@ -1,10 +1,17 @@
 <?php
 
-class InputTest extends \tests\cases\Field
+namespace marvin255\serviform\tests\serviform\fields;
+
+use marvin255\serviform\tests\cases\Field;
+use marvin255\serviform\helpers\FactoryFields;
+
+class InputTest extends Field
 {
     public function getInputProvider()
     {
-        return [
+        $parent = parent::getInputProvider();
+
+        return array_merge($parent, [
             'simple field' => [
                 [
                     'name' => 'test',
@@ -33,22 +40,24 @@ class InputTest extends \tests\cases\Field
                 [
                     'attributes' => [
                         'type' => '" onclick="alert(\'xss\')" data-param="',
+                        'data" onclick="alert(\'xss\')" data-param="' => 'xss',
                     ],
                     'name' => 'test',
                 ],
-                '<input type="&quot; onclick=&quot;alert(&#039;xss&#039;)&quot; data-param=&quot;" value="" name="test">',
-            ],
-            'template' => [
-                [
-                    'template' => __DIR__.'/../../files/template.php',
-                ],
-                "test_template\n"
-            ],
-        ];
+                '<input type="&quot; onclick=&quot;alert(&#039;xss&#039;)&quot; data-param=&quot;" data--onclick--alert--xss----data-param="xss" value="" name="test">',
+           ],
+       ]);
     }
 
-    protected function getField()
+    /**
+     * @param array $options
+     *
+     * @return \marvin255\serviform\interfaces\Field
+     */
+    protected function getField(array $options = array())
     {
-        return new \serviform\fields\Input();
+        $type = '\\marvin255\\serviform\\fields\\Input';
+
+        return FactoryFields::initElement($type, $options);
     }
 }
