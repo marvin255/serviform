@@ -160,13 +160,15 @@ trait HasChildren
     }
 
     /**
-     * @param string $error
+     * @return \marvin255\serviform\interfaces\Field
      */
     public function clearErrors()
     {
         foreach ($this->getElements() as $element) {
             $element->clearErrors();
         }
+
+        return $this;
     }
 
     /**

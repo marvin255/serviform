@@ -20,7 +20,10 @@ class FactoryFields
             'button' => ['type' => '\\\\marvin255\\serviform\\fields\\Button'],
             'checkbox' => ['type' => '\\marvin255\\serviform\\fields\\Checkbox'],
             'file' => ['type' => '\\marvin255\\serviform\\fields\\File'],
-            'form' => ['type' => '\\marvin255\\serviform\\fields\\Form'],
+            'form' => [
+                'type' => '\\marvin255\\serviform\\fields\\Form',
+                'template' => realpath(__DIR__.'/../../views/bootstrap_3.php'),
+            ],
             'formGrouped' => ['type' => '\\marvin255\\serviform\\fields\\FormGrouped'],
             'htmlText' => ['type' => '\\marvin255\\serviform\\fields\\HtmlText'],
             'input' => ['type' => '\\marvin255\\serviform\\fields\\Input'],

@@ -15,6 +15,7 @@
         <whitelist>
             <directory>src</directory>
             <exclude>
+                <directory>src/views</directory>
                 <file>src/Autoloader.php</file>
             </exclude>
         </whitelist>

@@ -276,7 +276,7 @@ trait Field
     /**
      * @param string $error
      *
-     * @return \marvin255\serviform\interfaces\HasErrors
+     * @return \marvin255\serviform\interfaces\Field
      */
     public function clearErrors()
     {
