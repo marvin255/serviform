@@ -9,7 +9,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "*",
-        "friendsofphp/php-cs-fixer": "*"
+        "friendsofphp/php-cs-fixer": "*",
+        "sebastian/phpcpd": "*"
     },
     "autoload": {
         "psr-4": {
