@@ -16,13 +16,8 @@ class Select implements IField
     /**
      * @return string
      */
-    public function getInput()
+    protected function renderInternal()
     {
-        $input = $this->renderTemplate();
-        if ($input !== null) {
-            return $input;
-        }
-
         $list = $this->getList();
         $prompt = $this->getPrompt();
         if (!empty($prompt)) {

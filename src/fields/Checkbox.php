@@ -16,13 +16,8 @@ class Checkbox implements IField
     /**
      * @return string
      */
-    public function getInput()
+    protected function renderInternal()
     {
-        $input = $this->renderTemplate();
-        if ($input !== null) {
-            return $input;
-        }
-
         $value = $this->getValue();
         $options = $this->getAttributes();
         $options['name'] = $this->getNameChainString();

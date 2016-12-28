@@ -13,6 +13,7 @@ class File extends Input
     public function getInput()
     {
         $this->setAttribute('type', 'file');
+
         return parent::getInput();
     }
 
@@ -30,6 +31,7 @@ class File extends Input
                 $values = null;
             }
         }
+
         return $values;
     }
 }

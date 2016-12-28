@@ -16,13 +16,8 @@ class RadioList implements IField
     /**
      * @return string
      */
-    public function getInput()
+    protected function renderInternal()
     {
-        $input = $this->renderTemplate();
-        if ($input !== null) {
-            return $input;
-        }
-
         $list = $this->getList();
         $value = $this->getValue();
         $options = [

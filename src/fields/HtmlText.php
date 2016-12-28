@@ -16,13 +16,8 @@ class HtmlText implements IField
     /**
      * @return string
      */
-    public function getInput()
+    protected function renderInternal()
     {
-        $input = $this->renderTemplate();
-        if ($input !== null) {
-            return $input;
-        }
-
         $options = $this->getAttributes();
 
         return Html::createTag(

@@ -12,7 +12,41 @@ trait Field
      */
     public function getInput()
     {
-        return $this->renderTemplate();
+        $return = $this->renderTemplate();
+        if ($return === null) {
+            $return = $this->renderInternal();
+        }
+
+        return $return;
+    }
+
+    /**
+     * @return string|null
+     */
+    protected function renderTemplate()
+    {
+        $return = null;
+        $templatePath = $this->getTemplate();
+        if ($templatePath !== null) {
+            if (is_callable($templatePath)) {
+                $return = call_user_func($templatePath, $this);
+            } elseif (file_exists($templatePath)) {
+                ob_start();
+                ob_implicit_flush(false);
+                require $templatePath;
+                $return = ob_get_clean();
+            }
+        }
+
+        return $return;
+    }
+
+    /**
+     * @return string
+     */
+    protected function renderInternal()
+    {
+        return '';
     }
 
     /**
@@ -38,27 +72,6 @@ trait Field
     public function getTemplate()
     {
         return $this->template;
-    }
-
-    /**
-     * @return string|null
-     */
-    protected function renderTemplate()
-    {
-        $return = null;
-        $templatePath = $this->getTemplate();
-        if ($templatePath !== null) {
-            if (is_callable($templatePath)) {
-                $return = call_user_func($templatePath, $this);
-            } elseif (file_exists($templatePath)) {
-                ob_start();
-                ob_implicit_flush(false);
-                require $templatePath;
-                $return = ob_get_clean();
-            }
-        }
-
-        return $return;
     }
 
     /**
@@ -313,6 +326,7 @@ trait Field
         $class = get_class($this);
         $class = explode('\\', $class);
         $class = end($class);
+
         return [
             'type' => strtolower($class),
             'attributes' => $this->getAttributes(),

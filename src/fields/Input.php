@@ -16,13 +16,8 @@ class Input implements IField
     /**
      * @return string
      */
-    public function getInput()
+    protected function renderInternal()
     {
-        $input = $this->renderTemplate();
-        if ($input !== null) {
-            return $input;
-        }
-
         $attrubutes = $this->getAttributes();
         $attrubutes['value'] = $this->getValue();
         $attrubutes['name'] = $this->getNameChainString();

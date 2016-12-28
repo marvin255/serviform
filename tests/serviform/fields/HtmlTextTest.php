@@ -44,7 +44,7 @@ class HtmlTextTest extends Field
             'no html content' => [
                 [
                     'name' => 'test',
-                    'value' => "<span>test</span>",
+                    'value' => '<span>test</span>',
                     'allowHtmlContent' => false,
                 ],
                 '<div>&lt;span&gt;test&lt;/span&gt;</div>',
@@ -52,7 +52,7 @@ class HtmlTextTest extends Field
             'html content' => [
                 [
                     'name' => 'test',
-                    'value' => "<span>test</span>",
+                    'value' => '<span>test</span>',
                     'allowHtmlContent' => true,
                 ],
                 '<div><span>test</span></div>',
