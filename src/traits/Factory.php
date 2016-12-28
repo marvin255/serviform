@@ -42,7 +42,7 @@ trait Factory
      *
      * @return string
      */
-    protected function checkClass($class)
+    protected static function checkClass($class)
     {
         return true;
     }
