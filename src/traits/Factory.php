@@ -107,7 +107,7 @@ trait Factory
     /**
      * @return array
      */
-    protected function loadDefaultDescriptions()
+    protected static function loadDefaultDescriptions()
     {
         return [];
     }

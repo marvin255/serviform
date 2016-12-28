@@ -14,7 +14,7 @@ class FactoryFields
     /**
      * @return array
      */
-    protected function loadDefaultDescriptions()
+    protected static function loadDefaultDescriptions()
     {
         return [
             'button' => ['type' => '\\\\marvin255\\serviform\\fields\\Button'],

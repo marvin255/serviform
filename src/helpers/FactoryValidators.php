@@ -14,7 +14,7 @@ class FactoryValidators
     /**
      * @return array
      */
-    protected function loadDefaultDescriptions()
+    protected static function loadDefaultDescriptions()
     {
         return [
             'compare' => ['type' => '\\serviform\\validators\\Compare'],
