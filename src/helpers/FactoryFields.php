@@ -36,7 +36,7 @@ class FactoryFields
      *
      * @return string
      */
-    protected function checkClass($class)
+    protected static function checkClass($class)
     {
         return is_subclass_of($class, '\\marvin255\\serviform\\interfaces\\Field');
     }
