@@ -208,7 +208,7 @@ trait Field
      */
     public function getFullName()
     {
-        $return = array();
+        $return = [];
         $parent = $this->getParent();
         if ($parent) {
             $return = $parent->getFullName();

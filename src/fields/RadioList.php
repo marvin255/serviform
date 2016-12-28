@@ -63,7 +63,7 @@ class RadioList implements IField
     /**
      * @var array
      */
-    protected $labelOptions = array();
+    protected $labelOptions = [];
 
     /**
      * @param array $list

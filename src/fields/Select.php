@@ -24,9 +24,10 @@ class Select implements IField
         }
 
         $list = $this->getList();
-        if (!empty($this->getPrompt())) {
+        $prompt = $this->getPrompt();
+        if (!empty($prompt)) {
             $oldList = $list;
-            $list = array('' => $this->getPrompt());
+            $list = ['' => $prompt];
             foreach ($oldList as $key => $val) {
                 $list[$key] = $val;
             }

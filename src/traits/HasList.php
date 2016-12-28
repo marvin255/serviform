@@ -41,7 +41,7 @@ trait HasList
     /**
      * @var array
      */
-    protected $listItemsOptions = array();
+    protected $listItemsOptions = [];
 
     /**
      * @param array $list
