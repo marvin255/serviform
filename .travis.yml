@@ -13,4 +13,4 @@ before_script:
 script:
   - vendor/bin/phpunit -c phpunit.xml.dist
   - vendor/bin/phpcpd src
-  - vendor/bin/phpmetrics --report-cli src
+  - vendor/bin/phpmetrics src
