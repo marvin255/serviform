@@ -38,15 +38,14 @@ class Multiple extends FieldHasValidators
     {
         $max = $this->getMax();
         $count = count($this->elements);
-        if ($max === null || $count < $max) {
-            $options = $this->getMultiplier();
-            if (is_array($element)) {
-                $options = array_merge($element, $options);
-            }
-            return parent::setElement($name, $options);
-        } else {
+        $name = isset($this->elements[$name]) ? (int) $name : $count;
+        if (!isset($this->elements[$name]) && $max !== null && $count >= $max) {
             throw new InvalidArgumentException('Max element count exceeded: '.$max);
+        } else {
+            parent::setElement($name, $element === null ? [] : $element);
         }
+
+        return $this;
     }
 
     /**
@@ -56,13 +55,47 @@ class Multiple extends FieldHasValidators
     {
         $min = $this->getMin();
         $count = count($this->elements);
-        if ($count < $min) {
+        if ($min !== null && $count < $min) {
             for ($i = $count + 1; $i <= $min; ++$i) {
                 $this->setElement($i, null);
             }
         }
 
         return parent::getElements();
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @return \marvin255\serviform\interfaces\Field
+     */
+    public function setValue($value)
+    {
+        if (!is_array($value)) {
+            $value = [];
+        }
+        foreach ($value as $key => $value) {
+            $element = $this->getElement($key);
+            if (!$element) {
+                $this->setElement($key, ['value' => $value]);
+            } else {
+                $element->setValue($value);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return \marvin255\serviform\interfaces\Field
+     */
+    protected function createElement(array $options)
+    {
+        $options = array_merge($options, $this->getMultiplier());
+
+        return parent::createElement($options);
     }
 
     /**
@@ -163,5 +196,19 @@ class Multiple extends FieldHasValidators
     public function getItemAttributes()
     {
         return $this->itemAttributes;
+    }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        $return = parent::jsonSerialize();
+        $return['min'] = $this->getMin();
+        $return['max'] = $this->getMax();
+        $return['multiplier'] = $this->getMultiplier();
+        $return['itemAttributes'] = $this->getItemAttributes();
+
+        return $return;
     }
 }
