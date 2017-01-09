@@ -3,16 +3,13 @@
 namespace marvin255\serviform\fields;
 
 use marvin255\serviform\helpers\Html;
-use marvin255\serviform\interfaces\Field as IField;
-use marvin255\serviform\traits\HasList as TField;
+use marvin255\serviform\abstracts\FieldHasList;
 
 /**
  * Select class.
  */
-class Select implements IField
+class Select extends FieldHasList
 {
-    use TField;
-
     /**
      * @return string
      */

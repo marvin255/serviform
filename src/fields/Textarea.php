@@ -3,16 +3,13 @@
 namespace marvin255\serviform\fields;
 
 use marvin255\serviform\helpers\Html;
-use marvin255\serviform\interfaces\Field as IField;
-use marvin255\serviform\traits\Field as TField;
+use marvin255\serviform\abstracts\Field;
 
 /**
  * Textarea class.
  */
-class Textarea implements IField
+class Textarea extends Field
 {
-    use TField;
-
     /**
      * @return string
      */

@@ -1,19 +1,16 @@
 <?php
 
-namespace marvin255\serviform\traits;
+namespace marvin255\serviform\abstracts;
 
-use InvalidArgumentException;
+use marvin255\serviform\interfaces\HasChildren;
 use marvin255\serviform\helpers\FactoryFields;
+use InvalidArgumentException;
 
 /**
- * Trait for fields that have children.
+ * An abstract class for field that has children.
  */
-trait HasChildren
+abstract class FieldHasChildren extends Field implements HasChildren
 {
-    use Field {
-        jsonSerialize as jsonSerializeField;
-    }
-
     /**
      * @var array
      */
@@ -176,7 +173,7 @@ trait HasChildren
      */
     public function jsonSerialize()
     {
-        $return = $this->jsonSerializeField();
+        $return = parent::jsonSerialize();
         $return['elements'] = [];
         $elements = $this->getElements();
         foreach ($elements as $name => $element) {

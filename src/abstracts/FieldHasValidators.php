@@ -1,16 +1,15 @@
 <?php
 
-namespace marvin255\serviform\traits;
+namespace marvin255\serviform\abstracts;
 
+use marvin255\serviform\interfaces\HasValidators;
 use InvalidArgumentException;
 
 /**
- * Trait for fields that have validation.
+ * An abstract class for field that has list of values.
  */
-trait HasValidators
+abstract class FieldHasValidators extends FieldHasChildren implements HasValidators
 {
-    use HasChildren;
-
     /**
      * @param array $elements
      *

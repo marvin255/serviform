@@ -1,18 +1,12 @@
 <?php
 
-namespace marvin255\serviform\traits;
+namespace marvin255\serviform\abstracts;
 
 /**
- * Trait for fields that have list.
+ * An abstract class for field that has list of values.
  */
-trait HasList
+abstract class FieldHasList extends Field
 {
-    use Field {
-        jsonSerialize as jsonSerializeField;
-        getValue as getValueField;
-        getNameChainString as getNameChainStringField;
-    }
-
     /**
      * @var array
      */
@@ -68,7 +62,7 @@ trait HasList
      */
     public function getValue()
     {
-        $value = $this->getValueField();
+        $value = parent::getValue();
         if ($this->getIsMultiple()) {
             return is_array($value) ? $value : [$value];
         } else {
@@ -81,7 +75,7 @@ trait HasList
      */
     public function getNameChainString()
     {
-        $return = $this->getNameChainStringField();
+        $return = parent::getNameChainString();
         if ($this->getIsMultiple()) {
             $return .= '[]';
         }
@@ -94,7 +88,7 @@ trait HasList
      */
     public function jsonSerialize()
     {
-        $toJson = $this->jsonSerializeField();
+        $toJson = parent::jsonSerialize();
         $toJson['list'] = $this->getList();
         $toJson['listItemsOptions'] = $this->getListItemsOptions();
         $toJson['multiple'] = $this->getIsMultiple();

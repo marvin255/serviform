@@ -3,22 +3,14 @@
 namespace marvin255\serviform\fields;
 
 use marvin255\serviform\helpers\Html;
-use marvin255\serviform\traits\HasValidators as TField;
-use marvin255\serviform\interfaces\Field;
-use marvin255\serviform\interfaces\HasChildren;
-use marvin255\serviform\interfaces\HasValidators;
+use marvin255\serviform\abstracts\FieldHasValidators;
 use InvalidArgumentException;
 
 /**
  * Multiple field class.
  */
-class Multiple implements Field, HasChildren, HasValidators
+class Multiple extends FieldHasValidators
 {
-    use TField {
-        setElement as protected traitSetElement;
-        getElements as protected traitGetElements;
-    }
-
     /**
      * @return string
      */
@@ -47,7 +39,11 @@ class Multiple implements Field, HasChildren, HasValidators
         $max = $this->getMax();
         $count = count($this->elements);
         if ($max === null || $count < $max) {
-            return $this->traitSetElement($name, $this->getMultiplier());
+            $options = $this->getMultiplier();
+            if (is_array($element)) {
+                $options = array_merge($element, $options);
+            }
+            return parent::setElement($name, $options);
         } else {
             throw new InvalidArgumentException('Max element count exceeded: '.$max);
         }
@@ -66,7 +62,7 @@ class Multiple implements Field, HasChildren, HasValidators
             }
         }
 
-        return $this->traitGetElements();
+        return parent::getElements();
     }
 
     /**
@@ -151,10 +147,14 @@ class Multiple implements Field, HasChildren, HasValidators
 
     /**
      * @param array $element
+     *
+     * @return \marvin255\serviform\interfaces\Field
      */
     public function setItemAttributes(array $element)
     {
         $this->itemAttributes = $element;
+
+        return $this;
     }
 
     /**

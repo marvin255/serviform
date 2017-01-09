@@ -2,18 +2,13 @@
 
 namespace marvin255\serviform\fields;
 
-use marvin255\serviform\traits\HasValidators as TField;
-use marvin255\serviform\interfaces\Field;
-use marvin255\serviform\interfaces\HasChildren;
-use marvin255\serviform\interfaces\HasValidators;
+use marvin255\serviform\abstracts\FieldHasValidators;
 
 /**
  * Form class.
  */
-class Form implements Field, HasChildren, HasValidators
+class Form extends FieldHasValidators
 {
-    use TField;
-
     /**
      * @param array $values
      */
