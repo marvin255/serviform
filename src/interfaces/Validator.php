@@ -7,7 +7,7 @@ use JsonSerializable;
 /**
  * Interface for validators objects.
  */
-interface Validator extends JsonSerializable
+interface Validator
 {
     /**
      * @param array $elements

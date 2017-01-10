@@ -38,16 +38,6 @@ trait Factory
     }
 
     /**
-     * @param string $class
-     *
-     * @return string
-     */
-    protected static function checkClass($class)
-    {
-        return true;
-    }
-
-    /**
      * @param mixed $object
      * @param array $options
      *
@@ -102,13 +92,5 @@ trait Factory
         }
 
         return isset(self::$descriptions[$name]) ? self::$descriptions[$name] : null;
-    }
-
-    /**
-     * @return array
-     */
-    protected static function loadDefaultDescriptions()
-    {
-        return [];
     }
 }

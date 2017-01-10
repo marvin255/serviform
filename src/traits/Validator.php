@@ -10,16 +10,6 @@ use InvalidArgumentException;
 trait Validator
 {
     /**
-     * @param mixed $value
-     *
-     * @return bool
-     */
-    protected function vaidateValue($value, $element)
-    {
-        return true;
-    }
-
-    /**
      * @param array $elements
      *
      * @return bool
@@ -115,9 +105,10 @@ trait Validator
      */
     protected function createErrorMessage(\marvin255\serviform\interfaces\Field $element)
     {
+        $value = $element->getValue();
         $replaces = [
             '#label#' => $element->getLabel(),
-            '#value#' => $element->getValue(),
+            '#value#' => is_array($value) ? '' : $value,
             '#name#' => $element->getName(),
         ];
 
@@ -277,7 +268,7 @@ trait Validator
      */
     public function setWhen($value)
     {
-        if (!is_callable($value)) {
+        if (!is_callable($value) && $value !== null) {
             throw new InvalidArgumentException('When parameter must be callable type');
         }
         $this->when = $value;

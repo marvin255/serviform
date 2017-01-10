@@ -42,14 +42,6 @@ trait Field
     }
 
     /**
-     * @return string
-     */
-    protected function renderInternal()
-    {
-        return '';
-    }
-
-    /**
      * @var string
      */
     protected $template = null;
