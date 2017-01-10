@@ -28,7 +28,7 @@ Add code below into your composer.json in section `require`:
 Download library archive and extract to project. Make sure that `Autoloader.php` is included.
 
 ```php
-require_once 'lib/Autoloader.php';
+require_once 'src/Autoloader.php';
 ```
 
 
