@@ -36,11 +36,13 @@ require_once 'lib/Autoloader.php';
 Basic usage
 -----------
 
-Use `\serviform\helpers\FactoryFields` to create form. For each element must be specified an array with required `type` key or set an object that implements `\serviform\IElement` interface. Same is for rules. For each rule must be specified an array with required `type` key or set an object that implements `\serviform\IValidator`.
+Use `\marvin255\serviform\helpers\FactoryFields` to create form. For each element must be specified an array with required `type` key or set an object that implements `\marvin255\serviform\interfaces\Field` interface. For each rule must be specified an array like shown below.
 
 ```php
-$form = \serviform\helpers\FactoryFields::init([
-    'type' => 'form',
+
+use \marvin255\serviform\helpers\FactoryFields;
+
+$form = FactoryFields::initElement('form', [
     'name' => 'feedback',
     'elements' => [
         'name' => [
@@ -94,8 +96,10 @@ Advanced usage
 To create stepped form or insert one form to other form set new `form` element as an element of base form. You can insert any form to any other form with no nesting limit.
 
 ```php
-$form = \serviform\helpers\FactoryFields::init([
-    'type' => 'form',
+
+use \marvin255\serviform\helpers\FactoryField;
+
+$form = FactoryFields::initElement('form', [
     'name' => 'feedback',
     'elements' => [
         'message' => [
@@ -158,8 +162,10 @@ echo $form;
 To create form with duplicated fields there is no need to duplicate all their descriptions. Just use `multiple` field type.
 
 ```php
-$form = \serviform\helpers\FactoryFields::init([
-    'type' => 'form',
+
+use \marvin255\serviform\helpers\FactoryField;
+
+$form = FactoryFields::initElement('form', [
     'name' => 'feedback',
     'elements' => [
         'message' => [
@@ -231,12 +237,12 @@ In that case form with address will be render three times with different `name` 
 Fields
 ------
 
-All fields must implement `\serviform\IElement`. To add new field type to factory or change old one use `\serviform\helpers\FactoryFields::setFieldDescription`.
+All fields must implement `\marvin255\serviform\interfaces\Field`. To add new field type to factory or change old one use `\marvin255\serviform\helpers\FactoryFields::setDescription`.
 
 Add new field type.
 
 ```php
-\serviform\helpers\FactoryFields::setFieldDescription('new_field_type', [
+\serviform\helpers\FactoryFields::setDescription('new_field_type', [
     'type' => '\My\Awesome\Field', // required, string with the name of new type class that implements \serviform\IElement
     'label' => 'Default label', // we can set any default setting for each of newly created fields
     'attributes' => [
@@ -248,7 +254,7 @@ Add new field type.
 Redefine old type.
 
 ```php
-\serviform\helpers\FactoryFields::setFieldDescription('input', [
+\serviform\helpers\FactoryFields::setDescription('input', [
     'type' => '\My\Awesome\Input', // we can set new class for builtin field types
     'label' => 'Default label', // we can set any default setting for each of newly created fields
 ]);
