@@ -39,9 +39,7 @@
                 </div>
             </div>
         <?php elseif ($el instanceof \marvin255\serviform\fields\Checkbox): ?>
-            <div class="form-group<?php if (!empty($errors)) {
-        echo ' has-error';
-    } ?>">
+            <div class="form-group<?php if (!empty($errors)) echo ' has-error'; ?>">
                 <div class="col-sm-offset-3 col-sm-9">
                     <div class="checkbox">
                         <label>
@@ -67,11 +65,9 @@
                 </div>
             </div>
         <?php else: ?>
-            <div class="form-group<?php if (!empty($errors)) {
-        echo ' has-error';
-    } ?>">
+            <div class="form-group<?php if (!empty($errors)) echo ' has-error'; ?>">
                 <?php if (!$this->getParent() || $el->getLabel()): ?>
-                    <label for="<?php echo Html::clearAttribute($el->getAttribute('id')); ?>" class="col-sm-3 control-label">
+                    <label for="<?php echo Html::clearAttributeValue($el->getAttribute('id')); ?>" class="col-sm-3 control-label">
                         <?php echo Html::clearAttributeValue($el->getLabel()); ?>
                     </label>
                 <?php endif; ?>
