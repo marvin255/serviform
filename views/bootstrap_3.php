@@ -6,7 +6,6 @@
         $tag = 'fieldset';
     } else {
         $tag = 'form';
-        $this->addToAttribute('class', ' form-horizontal');
     }
 
     echo Html::createTag($tag, $this->getAttributes(), false);
@@ -30,55 +29,41 @@
         <?php if ($el instanceof \marvin255\serviform\interfaces\HasChildren): ?>
             <div class="form-group">
                 <?php if ($el->getLabel()): ?>
-                    <label class="col-sm-3 control-label">
+                    <label>
                         <?php echo Html::clearAttributeValue($el->getLabel()); ?>
                     </label>
                 <?php endif; ?>
-                <div class="col-sm-9">
-                    <?php echo $el->getInput(); ?>
-                </div>
+                <?php echo $el->getInput(); ?>
             </div>
         <?php elseif ($el instanceof \marvin255\serviform\fields\Checkbox): ?>
-            <div class="form-group<?php if (!empty($errors)) echo ' has-error'; ?>">
-                <div class="col-sm-offset-3 col-sm-9">
-                    <div class="checkbox">
-                        <label>
-                            <?php echo $el->getInput(); ?>
-                            <?php echo Html::clearAttributeValue($el->getLabel()); ?>
-                        </label>
-                    </div>
-                    <?php if (!empty($errors)): ?>
-                        <span class="help-block"><?php echo implode(', ', $errors); ?></span>
-                    <?php endif; ?>
-                </div>
+            <div class="checkbox<?php if (!empty($errors)) echo ' has-error'; ?>">
+                <label>
+                    <?php echo $el->getInput(); ?>
+                    <?php echo Html::clearAttributeValue($el->getLabel()); ?>
+                </label>
+                <?php if (!empty($errors)): ?>
+                    <span class="help-block"><?php echo implode(', ', $errors); ?></span>
+                <?php endif; ?>
             </div>
         <?php elseif ($el instanceof \marvin255\serviform\fields\Button): ?>
-            <div class="form-group">
-                <div class="col-sm-9 col-sm-offset-3">
-                    <?php echo $el->addToAttribute('class', ' btn')->getInput(); ?>
-                </div>
-            </div>
+            <?php echo $el->addToAttribute('class', ' btn')->getInput(); ?>
         <?php elseif ($el instanceof \marvin255\serviform\fields\HtmlText): ?>
             <div class="form-group">
-                <div class="col-sm-9 col-sm-offset-3">
-                    <?php echo $el->getInput(); ?>
-                </div>
+                <?php echo $el->getInput(); ?>
             </div>
         <?php else: ?>
             <div class="form-group<?php if (!empty($errors)) echo ' has-error'; ?>">
                 <?php if (!$this->getParent() || $el->getLabel()): ?>
-                    <label for="<?php echo Html::clearAttributeValue($el->getAttribute('id')); ?>" class="col-sm-3 control-label">
+                    <label for="<?php echo Html::clearAttributeValue($el->getAttribute('id')); ?>">
                         <?php echo Html::clearAttributeValue($el->getLabel()); ?>
                     </label>
                 <?php endif; ?>
-                <div class="<?php echo (!$this->getParent() || $el->getLabel()) ? 'col-sm-9' : 'col-sm-12'; ?>">
-                    <?php
-                        echo $el->addToAttribute('class', ' form-control')->getInput();
-                    ?>
-                    <?php if (!empty($errors)): ?>
-                        <span class="help-block"><?php echo implode(', ', $errors); ?></span>
-                    <?php endif; ?>
-                </div>
+                <?php
+                    echo $el->addToAttribute('class', ' form-control')->getInput();
+                ?>
+                <?php if (!empty($errors)): ?>
+                    <span class="help-block"><?php echo implode(', ', $errors); ?></span>
+                <?php endif; ?>
             </div>
         <?php endif; ?>
     <?php endforeach; ?>
