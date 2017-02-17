@@ -17,7 +17,7 @@ class FactoryFields
     protected static function loadDefaultDescriptions()
     {
         return [
-            'button' => ['type' => '\\\\marvin255\\serviform\\fields\\Button'],
+            'button' => ['type' => '\\marvin255\\serviform\\fields\\Button'],
             'checkbox' => ['type' => '\\marvin255\\serviform\\fields\\Checkbox'],
             'file' => ['type' => '\\marvin255\\serviform\\fields\\File'],
             'form' => [
