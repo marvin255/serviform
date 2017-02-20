@@ -17,12 +17,12 @@ class FactoryValidators
     protected static function loadDefaultDescriptions()
     {
         return [
-            'compare' => ['type' => '\\serviform\\validators\\Compare'],
-            'defaultValue' => ['type' => '\\serviform\\validators\\DefaultValue'],
-            'filter' => ['type' => '\\serviform\\validators\\Filter'],
-            'range' => ['type' => '\\serviform\\validators\\Range'],
-            'regexp' => ['type' => '\\serviform\\validators\\Regexp'],
-            'required' => ['type' => '\\serviform\\validators\\Required'],
+            'compare' => ['type' => '\\marvin255\\serviform\\validators\\Compare'],
+            'defaultValue' => ['type' => '\\marvin255\\serviform\\validators\\DefaultValue'],
+            'filter' => ['type' => '\\marvin255\\serviform\\validators\\Filter'],
+            'range' => ['type' => '\\marvin255\\serviform\\validators\\Range'],
+            'regexp' => ['type' => '\\marvin255\\serviform\\validators\\Regexp'],
+            'required' => ['type' => '\\marvin255\\serviform\\validators\\Required'],
         ];
     }
 
