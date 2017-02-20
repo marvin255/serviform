@@ -48,9 +48,7 @@
         <?php elseif ($el instanceof \marvin255\serviform\fields\Button): ?>
             <?php echo $el->addToAttribute('class', ' btn')->getInput(); ?>
         <?php elseif ($el instanceof \marvin255\serviform\fields\HtmlText): ?>
-            <div class="form-group">
-                <?php echo $el->getInput(); ?>
-            </div>
+            <?php echo $el->getInput(); ?>
         <?php else: ?>
             <div class="form-group<?php if (!empty($errors)) echo ' has-error'; ?>">
                 <?php if (!$this->getParent() || $el->getLabel()): ?>
