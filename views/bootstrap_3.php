@@ -37,8 +37,8 @@
             </div>
         <?php elseif ($el instanceof \marvin255\serviform\fields\Checkbox): ?>
             <div class="checkbox<?php if (!empty($errors)) echo ' has-error'; ?>">
-                <label>
-                    <?php echo $el->getInput(); ?>
+                <?php echo $el->getInput(); ?>
+                <label for="<?php echo Html::clearAttributeValue($el->getAttribute('id')); ?>">
                     <?php echo Html::clearAttributeValue($el->getLabel()); ?>
                 </label>
                 <?php if (!empty($errors)): ?>
