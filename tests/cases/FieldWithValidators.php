@@ -50,12 +50,12 @@ abstract class FieldWithValidators extends FieldWithChildren
 
         $field->expects($this->at(0))
             ->method('createValidator')
-            ->with('required', [['test'], 'parent' => $field])
+            ->with('required', ['parent' => $field, 'elements' => ['test']])
             ->will($this->returnValue($validator));
 
         $field->expects($this->at(1))
             ->method('createValidator')
-            ->with('email', [['test'], 'parent' => $field])
+            ->with('email', ['parent' => $field, 'elements' => ['test']])
             ->will($this->returnValue($validator2));
 
         $this->assertSame(false, $field->validate());
@@ -104,7 +104,7 @@ abstract class FieldWithValidators extends FieldWithChildren
 
         $field->expects($this->once())
             ->method('createValidator')
-            ->with('required', [['test', 'test1'], 'parent' => $field])
+            ->with('required', ['elements' => ['test', 'test1'], 'parent' => $field])
             ->will($this->returnValue($validator));
 
         $this->assertSame(true, $field->validate(['test1']));
