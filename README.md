@@ -40,7 +40,7 @@ Use `\marvin255\serviform\helpers\FactoryFields` to create form. For each elemen
 
 ```php
 
-use \marvin255\serviform\helpers\FactoryFields;
+use marvin255\serviform\helpers\FactoryFields;
 
 $form = FactoryFields::initElement('form', [
     'name' => 'feedback',
@@ -97,7 +97,7 @@ To create stepped form or insert one form to other form set new `form` element a
 
 ```php
 
-use \marvin255\serviform\helpers\FactoryField;
+use marvin255\serviform\helpers\FactoryField;
 
 $form = FactoryFields::initElement('form', [
     'name' => 'feedback',
@@ -163,7 +163,7 @@ To create form with duplicated fields there is no need to duplicate all their de
 
 ```php
 
-use \marvin255\serviform\helpers\FactoryField;
+use marvin255\serviform\helpers\FactoryField;
 
 $form = FactoryFields::initElement('form', [
     'name' => 'feedback',
@@ -242,8 +242,10 @@ All fields must implement `\marvin255\serviform\interfaces\Field`. To add new fi
 Add new field type.
 
 ```php
-\serviform\helpers\FactoryFields::setDescription('new_field_type', [
-    'type' => '\My\Awesome\Field', // required, string with the name of new type class that implements \serviform\IElement
+use serviform\helpers\FactoryFields;
+
+FactoryFields::setDescription('new_field_type', [
+    'type' => '\My\Awesome\Field', // required, string with the name of new type class that implements \marvin255\serviform\interfaces\Field
     'label' => 'Default label', // we can set any default setting for each of newly created fields
     'attributes' => [
         'class' => 'form-control',
@@ -254,8 +256,39 @@ Add new field type.
 Redefine old type.
 
 ```php
-\serviform\helpers\FactoryFields::setDescription('input', [
+use serviform\helpers\FactoryFields;
+
+FactoryFields::setDescription('input', [
     'type' => '\My\Awesome\Input', // we can set new class for builtin field types
     'label' => 'Default label', // we can set any default setting for each of newly created fields
+]);
+```
+
+
+
+Validation rules
+----------------
+
+All validation rules must implement `\marvin255\serviform\interfaces\Validator`. To add new validation rule to factory or change old one use `\marvin255\serviform\helpers\FactoryValidators::setDescription`.
+
+Add new rule.
+
+```php
+use serviform\helpers\FactoryValidators;
+
+FactoryValidators::setDescription('new_rule', [
+    'type' => '\My\Awesome\Rule', // required, string with the name of new rule class that implements \marvin255\serviform\interfaces\Validator
+    'skipOnError' => true, // we can set any default setting for each of newly created rule
+]);
+```
+
+Redefine old rule.
+
+```php
+use serviform\helpers\FactoryValidators;
+
+FactoryFields::setDescription('require', [
+    'type' => '\My\Awesome\Require', // we can set new class for builtin rule
+    'skipOnError' => true, // we can set any default setting for each of newly created rules
 ]);
 ```
