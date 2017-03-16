@@ -64,13 +64,17 @@ trait Factory
     /**
      * @param string $namespace
      * @param array  $options
+     * @param bool   $resetOptions
      *
      * @throws \InvalidArgumentException
      */
-    public static function setDescription($name, array $options)
+    public static function setDescription($name, array $options, $resetOptions = false)
     {
         if (self::$descriptions === null) {
             self::$descriptions = self::loadDefaultDescriptions();
+        }
+        if ($resetOptions && !empty(self::$descriptions[$name])) {
+            $options = array_merge(self::$descriptions[$name], $options);
         }
         if (empty($options['type'])) {
             throw new InvalidArgumentException('Type parameter is empty');
