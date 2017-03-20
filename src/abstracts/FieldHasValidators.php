@@ -60,7 +60,7 @@ abstract class FieldHasValidators extends FieldHasChildren implements HasValidat
             if (!empty($elements) && !array_intersect($elements, $rule[0])) {
                 continue;
             }
-            if (!array_key_exists($key, $this->elements)) {
+            if (!array_key_exists($key, $this->validators)) {
                 $options = $rule;
                 unset($options[0], $options[1]);
                 $options['parent'] = $this;
