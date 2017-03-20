@@ -64,16 +64,16 @@ trait Factory
     /**
      * @param string $namespace
      * @param array  $options
-     * @param bool   $resetOptions
+     * @param bool   $mergeOptions
      *
      * @throws \InvalidArgumentException
      */
-    public static function setDescription($name, array $options, $resetOptions = false)
+    public static function setDescription($name, array $options, $mergeOptions = false)
     {
         if (self::$descriptions === null) {
             self::$descriptions = self::loadDefaultDescriptions();
         }
-        if ($resetOptions && !empty(self::$descriptions[$name])) {
+        if ($mergeOptions && !empty(self::$descriptions[$name])) {
             $options = array_merge(self::$descriptions[$name], $options);
         }
         if (empty($options['type'])) {

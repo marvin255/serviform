@@ -46,6 +46,7 @@ class FactoryValidatorsTest extends PHPUnit_Framework_TestCase
             'type' => $class,
             'param1' => 1,
             'param2' => '2',
+            'param3' => 3,
         ];
         FactoryValidators::setDescription('test', $description);
         $this->assertSame($description, FactoryValidators::getDescription('test'));
@@ -57,6 +58,32 @@ class FactoryValidatorsTest extends PHPUnit_Framework_TestCase
         ];
         FactoryValidators::setDescription('test', $description);
         $this->assertSame($description, FactoryValidators::getDescription('test'));
+    }
+
+    public function testSetDescriptionWithrueMergeOptions()
+    {
+        $model = $this->getMockBuilder('\\marvin255\\serviform\\interfaces\\Field')->getMock();
+        $class = get_class($model);
+
+        $description = [
+            'type' => $class,
+            'param1' => 1,
+            'param2' => '2',
+            'param3' => 3,
+        ];
+        FactoryValidators::setDescription('test', $description);
+        $this->assertSame($description, FactoryValidators::getDescription('test'));
+
+        $description1 = [
+            'type' => $class,
+            'param1' => 3,
+            'param2' => '4',
+        ];
+        FactoryValidators::setDescription('test', $description1, true);
+        $this->assertSame(
+            array_merge($description, $description1),
+            FactoryValidators::getDescription('test')
+        );
     }
 
     public function testSetDescriptionWithEmptyTypeParam()
