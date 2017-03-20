@@ -135,16 +135,19 @@ abstract class FieldHasValidators extends FieldHasChildren implements HasValidat
         $name = trim($name);
         if ($name === '') {
             throw new InvalidArgumentException('Empty rule name');
-        } elseif (is_array($element) && !empty($element['type'])) {
+        }
+        if (is_array($element) && !empty($element['type'])) {
             $element['parent'] = $this;
             $type = $element['type'];
             unset($element['type']);
             $validator = $this->createValidator($type, $element);
-        } elseif ($element instanceof \marvin255\serviform\interfaces\Validator) {
+        }
+        if ($element instanceof \marvin255\serviform\interfaces\Validator) {
             $element->setParent($this);
             $validator = $element;
-        } else {
-            throw new InvalidArgumentException('Wrong child type for rule: ' . $name);
+        }
+        if (!isset($validator)) {
+            throw new InvalidArgumentException('Wrong type for rule: ' . $name);
         }
         $this->validators[$name] = $validator;
 

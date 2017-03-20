@@ -119,4 +119,29 @@ abstract class FieldWithValidators extends FieldWithChildren
         $this->setExpectedException('\InvalidArgumentException');
         $field->validate();
     }
+
+    public function testSetValidator()
+    {
+        $field = $this->getField();
+        $validator = $this->getMockBuilder('\\marvin255\\serviform\\interfaces\\Validator')->getMock();
+
+        $field->setValidator('test', $validator);
+        $this->assertSame($validator, $field->getValidator('test'));
+    }
+
+    public function testSetValidatorWithEmptyName()
+    {
+        $field = $this->getField();
+        $validator = $this->getMockBuilder('\\marvin255\\serviform\\interfaces\\Validator')->getMock();
+        $this->setExpectedException('\InvalidArgumentException');
+        $field->setValidator('', $validator);
+    }
+
+    public function testSetValidatorWithEmptyType()
+    {
+        $field = $this->getField();
+        $validator = $this->getMockBuilder('\\marvin255\\serviform\\interfaces\\Validator')->getMock();
+        $this->setExpectedException('\InvalidArgumentException');
+        $field->setValidator('test', []);
+    }
 }
