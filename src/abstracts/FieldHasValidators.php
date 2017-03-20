@@ -60,15 +60,15 @@ abstract class FieldHasValidators extends FieldHasChildren implements HasValidat
             if (!empty($elements) && !array_intersect($elements, $rule[0])) {
                 continue;
             }
-            if (!array_key_exists($key, $this->validators)) {
+            if ($this->getValidator($key) === null) {
                 $options = $rule;
                 unset($options[0], $options[1]);
-                $options['parent'] = $this;
                 $options['elements'] = $rule[0];
-                $type = $rule[1];
-                $this->validators[$key] = $this->createValidator($type, $options);
+                $options['type'] = $rule[1];
+                $options['parent'] = $this;
+                $this->setValidator($key, $options);
             }
-            $return[] = $this->validators[$key];
+            $return[] = $this->getValidator($key);
         }
 
         return $return;
@@ -120,5 +120,44 @@ abstract class FieldHasValidators extends FieldHasChildren implements HasValidat
     public function getRules()
     {
         return $this->rules;
+    }
+
+    /**
+     * @param string $name
+     * @param mixed  $element
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return \marvin255\serviform\interfaces\HasValidators
+     */
+    public function setValidator($name, $element)
+    {
+        $name = trim($name);
+        if ($name === '') {
+            throw new InvalidArgumentException('Empty rule name');
+        } elseif (is_array($element) && !empty($element['type'])) {
+            $element['parent'] = $this;
+            $type = $element['type'];
+            unset($element['type']);
+            $validator = $this->createValidator($type, $element);
+        } elseif ($element instanceof \marvin255\serviform\interfaces\Validator) {
+            $element->setParent($this);
+            $validator = $element;
+        } else {
+            throw new InvalidArgumentException('Wrong child type for rule: ' . $name);
+        }
+        $this->validators[$name] = $validator;
+
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return \marvin255\serviform\interfaces\Validator
+     */
+    public function getValidator($name)
+    {
+        return isset($this->validators[$name]) ? $this->validators[$name] : null;
     }
 }
