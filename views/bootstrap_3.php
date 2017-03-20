@@ -35,8 +35,8 @@
     ?>
         <?php if ($el instanceof Checkbox): ?>
             <div class="checkbox<?php if (!empty($errors)) echo ' has-error'; ?>">
-                <?php echo $el->getInput(); ?>
-                <label for="<?php echo Html::clearAttributeValue($el->getAttribute('id')); ?>">
+                <label>
+                    <?php echo $el->getInput(); ?>
                     <?php echo Html::clearAttributeValue($el->getLabel()); ?>
                 </label>
                 <?php if (!empty($errors)): ?>
@@ -67,7 +67,7 @@
                         <?php echo Html::clearAttributeValue(implode(', ', $errors)); ?>
                     </span>
                 <?php endif; ?>
-            </div>         
+            </div>
         <?php endif; ?>
     <?php endforeach; ?>
 <?php echo Html::createCloseTag($tag); ?>
