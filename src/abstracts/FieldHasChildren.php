@@ -50,7 +50,7 @@ abstract class FieldHasChildren extends Field implements HasChildren
             $config['parent'] = $this;
             $config['name'] = $name;
             $element = $this->createElement($config);
-        } elseif ($element instanceof \marvin255\serviform\interfaces\Field) {
+        } elseif (true === ($element instanceof \marvin255\serviform\interfaces\Field)) {
             $element->setName($name);
             $element->setParent($this);
         } else {

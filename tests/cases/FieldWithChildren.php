@@ -51,6 +51,36 @@ abstract class FieldWithChildren extends Field
         $this->assertInstanceOf(get_class($field), $field->getElement('test2'));
     }
 
+    public function testSetElementWithPositionParam()
+    {
+        $field = $this->getField();
+        $field2 = $this->getMockBuilder('\\marvin255\\serviform\\interfaces\\Field')->getMock();
+        $field3 = $this->getMockBuilder('\\marvin255\\serviform\\interfaces\\Field')->getMock();
+        $field4 = $this->getMockBuilder('\\marvin255\\serviform\\interfaces\\Field')->getMock();
+        $field->setElement('test2', $field2);
+        $field->setElement('test3', $field3);
+        $field->setElement('test4', $field4, 1);
+        $this->assertSame(
+            ['test2' => $field2, 'test4' => $field4, 'test3' => $field3],
+            $field->getElements()
+        );
+    }
+
+    public function testSetElementWithNegativePositionParam()
+    {
+        $field = $this->getField();
+        $field2 = $this->getMockBuilder('\\marvin255\\serviform\\interfaces\\Field')->getMock();
+        $field3 = $this->getMockBuilder('\\marvin255\\serviform\\interfaces\\Field')->getMock();
+        $field4 = $this->getMockBuilder('\\marvin255\\serviform\\interfaces\\Field')->getMock();
+        $field->setElement('test2', $field2);
+        $field->setElement('test3', $field3);
+        $field->setElement('test4', $field4, -2);
+        $this->assertSame(
+            ['test4' => $field4, 'test2' => $field2, 'test3' => $field3],
+            $field->getElements()
+        );
+    }
+
     public function testSetElementWithEmptyName()
     {
         $field = $this->getField();
