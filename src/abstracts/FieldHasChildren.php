@@ -34,12 +34,13 @@ abstract class FieldHasChildren extends Field implements HasChildren
     /**
      * @param string $name
      * @param mixed  $element
+     * @param int    $position
      *
      * @throws \InvalidArgumentException
      *
      * @return \marvin255\serviform\interfaces\HasChildren
      */
-    public function setElement($name, $element)
+    public function setElement($name, $element, $position = null)
     {
         $name = trim($name);
         if ($name === '') {
@@ -55,7 +56,19 @@ abstract class FieldHasChildren extends Field implements HasChildren
         } else {
             throw new InvalidArgumentException('Wrong child type for field: '.$name);
         }
-        $this->elements[$name] = $element;
+        if ($position === null) {
+            $this->elements[$name] = $element;
+        } else {
+            $elements = [];
+            $itemPosition = $position < 0 ? count($this->elements) + $position  : $position;
+            $i = 0;
+            foreach ($this->elements as $iKey => $iElement) {
+                if ($i === $itemPosition) $elements[$name] = $element;
+                $elements[$iKey] = $iElement;
+                $i++;
+            }
+            $this->elements = $elements;
+        }
 
         return $this;
     }
