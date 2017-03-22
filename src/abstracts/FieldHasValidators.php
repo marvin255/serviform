@@ -55,15 +55,21 @@ abstract class FieldHasValidators extends FieldHasChildren implements HasValidat
     protected function getValidatorsForFields(array $elements = array())
     {
         $return = [];
-        $rules = $this->getRules();
-        foreach ($rules as $key => $rule) {
-            if (!empty($elements) && !array_intersect($elements, $rule[0])) {
+        foreach ($this->validators as $key => $validator) {
+            if (!empty($elements) && !array_intersect($elements, $validator->getElements())) {
                 continue;
             }
-            $return[] = $this->getValidator($key);
+            $return[$key] = $validator;
+        }
+        $rules = $this->getRules();
+        foreach ($rules as $key => $rule) {
+            if (isset($return[$key]) || !empty($elements) && !array_intersect($elements, $rule[0])) {
+                continue;
+            }
+            $return[$key] = $this->getValidator($key);
         }
 
-        return $return;
+        return array_values($return);
     }
 
     /**
