@@ -23,6 +23,7 @@ class FactoryValidators
             'range' => ['type' => '\\marvin255\\serviform\\validators\\Range'],
             'regexp' => ['type' => '\\marvin255\\serviform\\validators\\Regexp'],
             'required' => ['type' => '\\marvin255\\serviform\\validators\\Required'],
+            'file' => ['type' => '\\marvin255\\serviform\\validators\\File'],
         ];
     }
 
