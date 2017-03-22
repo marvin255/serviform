@@ -138,7 +138,7 @@ abstract class FieldHasValidators extends FieldHasChildren implements HasValidat
             $type = $element['type'];
             unset($element['type']);
             $validator = $this->createValidator($type, $element);
-        } elseif ($element instanceof \marvin255\serviform\interfaces\Validator) {
+        } elseif (true === ($element instanceof \marvin255\serviform\interfaces\Validator)) {
             $element->setParent($this);
             $validator = $element;
         } else {

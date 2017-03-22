@@ -120,6 +120,37 @@ abstract class FieldWithValidators extends FieldWithChildren
         $field->validate();
     }
 
+    public function testValidateWithSetValidator()
+    {
+        $field = $this->getMockBuilder(get_class($this->getField()))
+            ->setMethods(['createValidator'])
+            ->getMock();
+        $field->setElement(
+            'test',
+            $this->getMockBuilder('\\marvin255\\serviform\\interfaces\\Field')->getMock()
+        );
+        $field->setElement(
+            'test1',
+            $this->getMockBuilder('\\marvin255\\serviform\\interfaces\\Field')->getMock()
+        );
+
+        $validator = $this->getMockBuilder('\\marvin255\\serviform\\interfaces\\Validator')->getMock();
+        $validator->method('getElements')->will($this->returnValue(['test1']));
+        $validator->expects($this->once())
+            ->method('validate')
+            ->with(['test1'])
+            ->will($this->returnValue(true));
+        $field->setValidator('test_validator', $validator);
+
+        $validator2 = $this->getMockBuilder('\\marvin255\\serviform\\interfaces\\Validator')->getMock();
+        $validator2->method('getElements')->will($this->returnValue(['test']));
+        $validator2->expects($this->never())->method('validate');
+        $field->setValidator('test_validator_2', $validator2);
+
+
+        $this->assertSame(true, $field->validate(['test1']));
+    }
+
     public function testSetValidator()
     {
         $field = $this->getField();
@@ -140,8 +171,14 @@ abstract class FieldWithValidators extends FieldWithChildren
     public function testSetValidatorWithEmptyType()
     {
         $field = $this->getField();
-        $validator = $this->getMockBuilder('\\marvin255\\serviform\\interfaces\\Validator')->getMock();
         $this->setExpectedException('\InvalidArgumentException');
         $field->setValidator('test', []);
+    }
+
+    public function testGetValidatorWithNoRuleException()
+    {
+        $field = $this->getField();
+        $this->setExpectedException('\InvalidArgumentException');
+        $field->getValidator('unexisted_validator');
     }
 }
