@@ -10,7 +10,7 @@ abstract class Validator extends \PHPUnit_Framework_TestCase
     /**
      * Return object for field representation.
      */
-    abstract protected function getValidator();
+    abstract protected function getValidator(array $options = array());
 
     /**
      * Return array values to test validate

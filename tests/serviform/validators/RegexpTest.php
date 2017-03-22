@@ -1,6 +1,6 @@
 <?php
 
-namespace marvin255\serviform\tests\serviform\fields;
+namespace marvin255\serviform\tests\serviform\validators;
 
 use marvin255\serviform\tests\cases\Validator;
 use marvin255\serviform\helpers\FactoryValidators;
@@ -101,7 +101,7 @@ class RegexpTest extends Validator
     /**
      * Return object for validator representation.
      */
-    protected function getValidator($options = array())
+    protected function getValidator(array $options = array())
     {
         $type = '\\marvin255\\serviform\\validators\\Regexp';
 

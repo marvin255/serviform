@@ -1,6 +1,6 @@
 <?php
 
-namespace marvin255\serviform\tests\serviform\fields;
+namespace marvin255\serviform\tests\serviform\validators;
 
 use marvin255\serviform\tests\cases\Validator;
 use marvin255\serviform\helpers\FactoryValidators;
@@ -25,10 +25,10 @@ class RequiredTest extends Validator
     /**
      * Return object for validator representation.
      */
-    protected function getValidator()
+    protected function getValidator(array $options = array())
     {
         $type = '\\marvin255\\serviform\\validators\\Required';
 
-        return FactoryValidators::initElement($type);
+        return FactoryValidators::initElement($type, $options);
     }
 }
