@@ -60,14 +60,6 @@ abstract class FieldHasValidators extends FieldHasChildren implements HasValidat
             if (!empty($elements) && !array_intersect($elements, $rule[0])) {
                 continue;
             }
-            if ($this->getValidator($key) === null) {
-                $options = $rule;
-                unset($options[0], $options[1]);
-                $options['elements'] = $rule[0];
-                $options['type'] = $rule[1];
-                $options['parent'] = $this;
-                $this->setValidator($key, $options);
-            }
             $return[] = $this->getValidator($key);
         }
 
@@ -135,19 +127,16 @@ abstract class FieldHasValidators extends FieldHasChildren implements HasValidat
         $name = trim($name);
         if ($name === '') {
             throw new InvalidArgumentException('Empty rule name');
-        }
-        if (is_array($element) && !empty($element['type'])) {
+        } elseif (is_array($element) && !empty($element['type'])) {
             $element['parent'] = $this;
             $type = $element['type'];
             unset($element['type']);
             $validator = $this->createValidator($type, $element);
-        }
-        if ($element instanceof \marvin255\serviform\interfaces\Validator) {
+        } elseif ($element instanceof \marvin255\serviform\interfaces\Validator) {
             $element->setParent($this);
             $validator = $element;
-        }
-        if (!isset($validator)) {
-            throw new InvalidArgumentException('Wrong type for rule: ' . $name);
+        } else {
+            throw new InvalidArgumentException('Wrong child type for rule: ' . $name);
         }
         $this->validators[$name] = $validator;
 
@@ -161,6 +150,18 @@ abstract class FieldHasValidators extends FieldHasChildren implements HasValidat
      */
     public function getValidator($name)
     {
-        return isset($this->validators[$name]) ? $this->validators[$name] : null;
+        if (!isset($this->validators[$name])) {
+            $rules = $this->getRules();
+            if (!isset($rules[$name])) {
+                throw new InvalidArgumentException('Can not find rule with name: ' . $name);
+            } else {
+                $options = $rules[$name];
+                $options['elements'] = $options[0];
+                $options['type'] = $options[1];
+                unset($options[0], $options[1]);
+                $this->setValidator($name, $options);
+            }
+        }
+        return $this->validators[$name];
     }
 }
