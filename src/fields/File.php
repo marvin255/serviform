@@ -33,6 +33,12 @@ class File extends Field
         foreach ($arName as $name) {
             if (isset($values[$name])) {
                 $values = $values[$name];
+            } elseif (isset($values['tmp_name'][$name])) {
+                $newValues = [];
+                foreach ($values as $fileParam => $fileValue) {
+                    $newValues[$fileParam] = $fileValue[$name];
+                }
+                $values = $newValues;
             } else {
                 $values = null;
             }
