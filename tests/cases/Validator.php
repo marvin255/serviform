@@ -184,4 +184,12 @@ abstract class Validator extends \PHPUnit_Framework_TestCase
             ->setElements(['test']);
         $this->assertSame(true, $validator->validate());
     }
+
+    public function testSetArrayValue()
+    {
+        $validator = $this->getValidator();
+        $arrayValue = true;
+        $this->assertSame($validator, $validator->setArrayValue($arrayValue));
+        $this->assertSame($arrayValue, $validator->getArrayValue());
+    }
 }
