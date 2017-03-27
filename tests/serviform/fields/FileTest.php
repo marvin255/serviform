@@ -74,4 +74,42 @@ class FileTest extends Field
         ];
         $this->assertEquals($_FILES['test'], $field->getValue());
     }
+
+    public function testGetValueWithSubNames()
+    {
+        $parent = $this->getMockBuilder('\\marvin255\\serviform\\abstracts\\FieldHasValidators')
+            ->setMethods(['getName'])
+            ->getMock();
+        $parent->method('getName')
+            ->will($this->returnValue('parent'));
+
+        $field = $this->getField();
+        $field->setName('test');
+        $field->setParent($parent);
+
+        $_FILES['parent'] = [
+            'name' => [
+                'test' => 'MyFile.txt'
+            ],
+            'type' => [
+                'test' => 'text/plain'
+            ],
+            'tmp_name' => [
+                'test' => '/tmp/php/php1h4j1o'
+            ],
+            'error' => [
+                'test' => 0
+            ],
+            'size' => [
+                'test' => 123
+            ],
+        ];
+        $this->assertEquals([
+            'name' => 'MyFile.txt',
+            'type' => 'text/plain',
+            'tmp_name' => '/tmp/php/php1h4j1o',
+            'error' => 0,
+            'size' => 123,
+        ], $field->getValue());
+    }
 }
