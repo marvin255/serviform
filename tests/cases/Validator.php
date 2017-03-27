@@ -35,11 +35,7 @@ abstract class Validator extends \PHPUnit_Framework_TestCase
                 ->setElements(['test']);
             $this->assertSame($value[1], $validator->validate(), $message);
         }
-    }
 
-    public function testValidateWithSetArrayValue()
-    {
-        $data = $this->getValidatorProvider();
         foreach ($data as $message => $value) {
             $field = $this->getMockBuilder('\\marvin255\\serviform\\abstracts\\Field')->getMock();
             $field->method('getValue')->will($this->returnValue([$value[0], $value[0]]));
