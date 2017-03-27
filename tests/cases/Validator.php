@@ -73,6 +73,35 @@ abstract class Validator extends \PHPUnit_Framework_TestCase
         $validator->validate(['test1']);
     }
 
+    public function testValidateWithSetArrayValueAndNotArrayValue()
+    {
+        $field = $this->getMockBuilder('\\marvin255\\serviform\\abstracts\\Field')->getMock();
+        $field->expects($this->once())
+            ->method('getValue')
+            ->will($this->returnValue(1));
+        $field->method('getName')
+            ->will($this->returnValue('test_name'));
+        $parent = $this->getMockBuilder('\\marvin255\\serviform\\abstracts\\FieldHasValidators')
+            ->setMethods(['getElement'])
+            ->getMock();
+        $parent->expects($this->once())
+            ->method('getElement')
+            ->with('test1')
+            ->will($this->returnValue($field));
+        $validator = $this->getValidator()
+            ->setSkipOnError(false)
+            ->setSkipOnEmpty(false)
+            ->setWhen(null)
+            ->setArrayValue(true)
+            ->setParent($parent)
+            ->setElements(['test1']);
+        $this->setExpectedException(
+            '\InvalidArgumentException',
+            'Value must ba an array for element: test_name'
+        );
+        $validator->validate();
+    }
+
     public function testSetMessage()
     {
         $validator = $this->getValidator();
