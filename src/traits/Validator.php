@@ -90,7 +90,21 @@ trait Validator
     protected function validateElement(\marvin255\serviform\interfaces\Field $element)
     {
         $value = $element->getValue();
-        $res = $this->vaidateValue($value, $element);
+        if ($this->getArrayValue()) {
+            if (!is_array($value)) {
+                throw new InvalidArgumentException('Value must ba an array for element: ' . $element->getName());
+            }
+            $res = true;
+            foreach ($value as $item) {
+                if ($this->vaidateValue($item, $element)) {
+                    continue;
+                }
+                $res = false;
+                break;
+            }
+        } else {
+            $res = $this->vaidateValue($value, $element);
+        }
         if ($res === false) {
             $element->addError($this->createErrorMessage($element));
         }
@@ -282,5 +296,32 @@ trait Validator
     public function getWhen()
     {
         return $this->when;
+    }
+
+    /**
+     * @var bool
+     */
+    protected $arrayValue = false;
+
+    /**
+     * @param bool $value
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return \marvin255\serviform\interfaces\Validator
+     */
+    public function setArrayValue($value)
+    {
+        $this->arrayValue = (bool) $value;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getArrayValue()
+    {
+        return $this->arrayValue;
     }
 }
