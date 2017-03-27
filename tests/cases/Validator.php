@@ -37,6 +37,27 @@ abstract class Validator extends \PHPUnit_Framework_TestCase
         }
     }
 
+    public function testValidateWithSetArrayValue()
+    {
+        $data = $this->getValidatorProvider();
+        foreach ($data as $message => $value) {
+            $field = $this->getMockBuilder('\\marvin255\\serviform\\abstracts\\Field')->getMock();
+            $field->method('getValue')->will($this->returnValue([$value[0], $value[0]]));
+            $parent = $this->getMockBuilder('\\marvin255\\serviform\\abstracts\\FieldHasValidators')
+                ->setMethods(['getElement'])
+                ->getMock();
+            $parent->method('getElement')->with('test')->will($this->returnValue($field));
+            $validator = $this->getValidator(isset($value[2]) ? $value[2] : [])
+                ->setSkipOnError(false)
+                ->setSkipOnEmpty(false)
+                ->setArrayValue(true)
+                ->setWhen(null)
+                ->setParent($parent)
+                ->setElements(['test']);
+            $this->assertSame($value[1], $validator->validate(), $message);
+        }
+    }
+
     public function testValidateWithWrongFieldName()
     {
         $field = $this->getMockBuilder('\\marvin255\\serviform\\abstracts\\Field')->getMock();
