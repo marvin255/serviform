@@ -64,7 +64,7 @@ abstract class FieldHasList extends Field
     {
         $value = parent::getValue();
         if ($this->getIsMultiple()) {
-            return is_array($value) ? $value : [$value];
+            return is_array($value) ? $value : ($value ? [$value] : []);
         } else {
             return is_array($value) ? reset($value) : $value;
         }
