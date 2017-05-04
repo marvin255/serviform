@@ -206,7 +206,6 @@ class Multiple extends FieldHasValidators
         $return = parent::jsonSerialize();
         $return['min'] = $this->getMin();
         $return['max'] = $this->getMax();
-        $return['multiplier'] = $this->getMultiplier();
         $return['itemAttributes'] = $this->getItemAttributes();
 
         return $return;
