@@ -241,7 +241,6 @@ class MultipleTest extends Field
             'elements' => [0 => ['test' => 'test']],
             'min' => $field->getMin(),
             'max' => $field->getMax(),
-            'multiplier' => $field->getMultiplier(),
             'itemAttributes' => $field->getItemAttributes(),
         ]);
         $this->assertSame($toTest, json_encode($field));
