@@ -165,6 +165,9 @@ abstract class FieldHasChildren extends Field implements HasChildren
             }
             $return[$name] = $element->getErrors();
         }
+        if (empty($return)) {
+            $return = parent::getErrors();
+        }
 
         return $return;
     }
