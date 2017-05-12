@@ -159,14 +159,15 @@ abstract class FieldHasChildren extends Field implements HasChildren
     public function getErrors()
     {
         $return = [];
+        $selfErrors = parent::getErrors();
+        if (!empty($selfErrors)) {
+            $return['_self'] = $selfErrors;
+        }
         foreach ($this->getElements() as $name => $element) {
             if (!$element->getErrors()) {
                 continue;
             }
             $return[$name] = $element->getErrors();
-        }
-        if (empty($return)) {
-            $return = parent::getErrors();
         }
 
         return $return;
