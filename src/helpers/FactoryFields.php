@@ -49,7 +49,7 @@ class FactoryFields
      *
      * @return options
      */
-    protected function checkOptions(array $options)
+    protected static function checkOptions(array $options)
     {
         if (isset($options['value'])) {
             $value = $options['value'];
