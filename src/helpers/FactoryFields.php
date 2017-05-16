@@ -43,4 +43,20 @@ class FactoryFields
     {
         return is_subclass_of($class, '\\marvin255\\serviform\\interfaces\\Field');
     }
+    
+    /**
+     * @param array $options
+     *
+     * @return options
+     */
+    protected function checkOptions(array $options)
+    {
+        if (isset($options['value'])) {
+            $value = $options['value'];
+            unset($options['value']);
+            $options['value'] = $value;
+        }
+
+        return $options;
+    }
 }
