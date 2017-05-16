@@ -42,7 +42,7 @@ class FactoryValidators
      *
      * @return options
      */
-    protected function checkOptions(array $options)
+    protected static function checkOptions(array $options)
     {
         return $options;
     }
