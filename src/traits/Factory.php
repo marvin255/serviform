@@ -45,6 +45,7 @@ trait Factory
      */
     protected static function configObject($object, array $options)
     {
+        $options = self::checkOptions($options);
         foreach ($options as $name => $value) {
             $methodName = 'set'.ucfirst($name);
             if (!method_exists($object, $methodName)) {
