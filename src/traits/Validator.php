@@ -95,18 +95,22 @@ trait Validator
                 throw new InvalidArgumentException('Value must ba an array for element: ' . $element->getName());
             }
             $res = true;
-            foreach ($value as $item) {
+            $errors = [];
+            foreach ($value as $key => $item) {
                 if ($this->vaidateValue($item, $element)) {
                     continue;
                 }
                 $res = false;
-                break;
+                $errors[$key] = $this->createErrorMessage($element);
+            }
+            if ($res === false) {
+                $element->addError($errors);
             }
         } else {
             $res = $this->vaidateValue($value, $element);
-        }
-        if ($res === false) {
-            $element->addError($this->createErrorMessage($element));
+            if ($res === false) {
+                $element->addError($this->createErrorMessage($element));
+            }
         }
 
         return $res;
