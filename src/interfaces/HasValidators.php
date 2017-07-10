@@ -12,7 +12,7 @@ interface HasValidators
      *
      * @return bool
      */
-    public function validate(array $toValidate = null);
+    public function validate(array $toValidate = array());
 
     /**
      * @param array $rules
