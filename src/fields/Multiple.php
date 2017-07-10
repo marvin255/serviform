@@ -27,14 +27,9 @@ class Multiple extends FieldHasValidators
     }
 
     /**
-     * @param string $name
-     * @param mixed  $element
-     *
-     * @throws \InvalidArgumentException
-     *
-     * @return \marvin255\serviform\interfaces\HasChildren
+     * @inheritdoc
      */
-    public function setElement($name, $element)
+    public function setElement($name, $element, $position = null)
     {
         $max = $this->getMax();
         $count = count($this->elements);
