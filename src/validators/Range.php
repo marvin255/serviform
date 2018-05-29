@@ -99,7 +99,7 @@ class Range extends Validator
      */
     public function setRange($value)
     {
-        if ($value && (is_array($value) || $value instanceof \Traversable)) {
+        if (is_array($value) || $value instanceof \Traversable) {
             $this->range = $value;
         } else {
             throw new InvalidArgumentException('Range param must be instance of an array or Traversable');
