@@ -23,7 +23,7 @@ composer require marvin255/serviform:~1.2
 
 **Common**
 
-Download library archive and extract to project. Make sure that `Autoloader.php` is included.
+Download library archive and extract to project. Make sure that `Autoloader.php` is included:
 
 ```php
 require_once 'src/Autoloader.php';
