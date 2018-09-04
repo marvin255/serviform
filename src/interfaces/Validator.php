@@ -2,8 +2,6 @@
 
 namespace marvin255\serviform\interfaces;
 
-use JsonSerializable;
-
 /**
  * Interface for validators objects.
  */

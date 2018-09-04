@@ -51,7 +51,7 @@ trait Validator
             }
             $element = $parent->getElement($elementName);
             if ($element === null) {
-                throw new InvalidArgumentException('Wrong validated field name: '.$elementName);
+                throw new InvalidArgumentException('Wrong validated field name: ' . $elementName);
             }
             $return[] = $element;
         }

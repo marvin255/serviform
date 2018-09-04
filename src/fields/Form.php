@@ -21,7 +21,7 @@ class Form extends FieldHasValidators
             if (isset($values[$name])) {
                 $values = $values[$name];
             } else {
-                $values = array();
+                $values = [];
             }
         }
         if (is_array($values)) {

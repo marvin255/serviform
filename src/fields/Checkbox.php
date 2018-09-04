@@ -31,7 +31,7 @@ class Checkbox extends Field
         ];
         $disableOption = Html::createTag('input', $disableOptions, false);
 
-        return $disableOption.$option;
+        return $disableOption . $option;
     }
 
     /**

@@ -35,7 +35,7 @@ class Multiple extends FieldHasValidators
         $count = count($this->elements);
         $name = isset($this->elements[$name]) ? (int) $name : $count;
         if (!isset($this->elements[$name]) && $max !== null && $count >= $max) {
-            throw new InvalidArgumentException('Max element count exceeded: '.$max);
+            throw new InvalidArgumentException('Max element count exceeded: ' . $max);
         } else {
             parent::setElement($name, $element === null ? [] : $element);
         }

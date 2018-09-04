@@ -47,7 +47,7 @@ class FileTest extends Field
      *
      * @return \marvin255\serviform\interfaces\Field
      */
-    protected function getField(array $options = array())
+    protected function getField(array $options = [])
     {
         $type = '\\marvin255\\serviform\\fields\\File';
 
@@ -89,19 +89,19 @@ class FileTest extends Field
 
         $_FILES['parent'] = [
             'name' => [
-                'test' => 'MyFile.txt'
+                'test' => 'MyFile.txt',
             ],
             'type' => [
-                'test' => 'text/plain'
+                'test' => 'text/plain',
             ],
             'tmp_name' => [
-                'test' => '/tmp/php/php1h4j1o'
+                'test' => '/tmp/php/php1h4j1o',
             ],
             'error' => [
-                'test' => 0
+                'test' => 0,
             ],
             'size' => [
-                'test' => 123
+                'test' => 123,
             ],
         ];
         $this->assertEquals([

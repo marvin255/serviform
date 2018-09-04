@@ -7,7 +7,6 @@
     use marvin255\serviform\fields\Input;
     use marvin255\serviform\fields\Select;
     use marvin255\serviform\fields\Textarea;
-    use marvin255\serviform\fields\File;
 
     if ($this->getParent()) {
         $tag = 'fieldset';
@@ -34,7 +33,9 @@
         $errors = $el->getErrors();
     ?>
         <?php if ($el instanceof Checkbox): ?>
-            <div class="checkbox<?php if (!empty($errors)) echo ' has-error'; ?>">
+            <div class="checkbox<?php if (!empty($errors)) {
+        echo ' has-error';
+    } ?>">
                 <label>
                     <?php echo $el->getInput(); ?>
                     <?php echo Html::clearAttributeValue($el->getLabel()); ?>
@@ -50,7 +51,9 @@
         <?php elseif ($el instanceof Button): ?>
             <?php echo $el->addToAttribute('class', ' btn')->getInput(); ?>
         <?php else: ?>
-            <div class="form-group<?php if (!empty($errors)) echo ' has-error'; ?>">
+            <div class="form-group<?php if (!empty($errors)) {
+        echo ' has-error';
+    } ?>">
                 <?php if ($el->getLabel()): ?>
                     <label for="<?php echo Html::clearAttributeValue($el->getAttribute('id')); ?>">
                         <?php echo Html::clearAttributeValue($el->getLabel()); ?>

@@ -17,7 +17,7 @@ trait Factory
      *
      * @return \serviform\IElement
      */
-    public static function initElement($type, array $options = array())
+    public static function initElement($type, array $options = [])
     {
         if (strpos($type, '\\') !== false) {
             $class = $type;
@@ -31,7 +31,7 @@ trait Factory
         if (self::checkClass($class)) {
             $item = self::configObject(new $class(), $options);
         } else {
-            throw new InvalidArgumentException('Wrong class: '.$class);
+            throw new InvalidArgumentException('Wrong class: ' . $class);
         }
 
         return $item;
@@ -47,7 +47,7 @@ trait Factory
     {
         $options = self::checkOptions($options);
         foreach ($options as $name => $value) {
-            $methodName = 'set'.ucfirst($name);
+            $methodName = 'set' . ucfirst($name);
             if (!method_exists($object, $methodName)) {
                 continue;
             }
@@ -80,7 +80,7 @@ trait Factory
         if (empty($options['type'])) {
             throw new InvalidArgumentException('Type parameter is empty');
         } elseif (!class_exists($options['type'])) {
-            throw new InvalidArgumentException('Class does not exist: '.$options['type']);
+            throw new InvalidArgumentException('Class does not exist: ' . $options['type']);
         }
         self::$descriptions[$name] = $options;
     }

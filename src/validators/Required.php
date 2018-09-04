@@ -15,7 +15,7 @@ class Required extends Validator
     protected $message = 'Field "#label#" is required';
 
     /**
-     * @param mixed                 $value
+     * @param mixed                                 $value
      * @param \marvin255\serviform\interfaces\Field $element
      *
      * @return bool

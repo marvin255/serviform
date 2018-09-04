@@ -15,7 +15,7 @@ abstract class FieldHasValidators extends FieldHasChildren implements HasValidat
      *
      * @return bool
      */
-    public function validate(array $toValidate = array())
+    public function validate(array $toValidate = [])
     {
         $return = true;
         $validators = $this->getValidatorsForFields($toValidate);
@@ -52,7 +52,7 @@ abstract class FieldHasValidators extends FieldHasChildren implements HasValidat
      *
      * @return array
      */
-    protected function getValidatorsForFields(array $elements = array())
+    protected function getValidatorsForFields(array $elements = [])
     {
         $return = [];
         foreach ($this->validators as $key => $validator) {
@@ -168,6 +168,7 @@ abstract class FieldHasValidators extends FieldHasChildren implements HasValidat
                 $this->setValidator($name, $options);
             }
         }
+
         return $this->validators[$name];
     }
 }

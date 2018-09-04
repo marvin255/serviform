@@ -40,7 +40,7 @@ class FactoryFieldsTest extends PHPUnit_Framework_TestCase
         $model = $this->getMockBuilder('\\marvin255\\serviform\\interfaces\\Field')->getMock();
         $class = get_class($model);
 
-        $this->assertSame(null, FactoryFields::getDescription(mt_rand().'_'.time()));
+        $this->assertSame(null, FactoryFields::getDescription(mt_rand() . '_' . time()));
 
         $description = [
             'type' => $class,

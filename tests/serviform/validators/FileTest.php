@@ -33,7 +33,7 @@ class FileTest extends Validator
     }
 
     /**
-     * Return array values to test validate
+     * Return array values to test validate.
      */
     protected function getValidatorProvider()
     {
@@ -43,6 +43,7 @@ class FileTest extends Validator
             'type' => 'text/plain',
             'error' => 0,
         ];
+
         return [
             'empty file' => [null, false],
             'wrong type' => ['test.txt', false],
@@ -87,7 +88,7 @@ class FileTest extends Validator
     /**
      * Return object for validator representation.
      */
-    protected function getValidator(array $options = array())
+    protected function getValidator(array $options = [])
     {
         $type = '\\marvin255\\serviform\\validators\\File';
 
@@ -100,7 +101,7 @@ class FileTest extends Validator
     {
         parent::setUp();
         $this->loadedFile = tempnam(sys_get_temp_dir(), mt_rand());
-        file_put_contents($this->loadedFile, "text");
+        file_put_contents($this->loadedFile, 'text');
     }
 
     public function tearDown()

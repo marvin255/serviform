@@ -26,7 +26,7 @@ class RegexpTest extends Validator
     }
 
     /**
-     * Return array values to test validate
+     * Return array values to test validate.
      */
     protected function getValidatorProvider()
     {
@@ -37,7 +37,7 @@ class RegexpTest extends Validator
                 [
                     'regexp' => '\+\d\S\s',
                     'modifiers' => 'i',
-                ]
+                ],
             ],
             'false regexp' => [
                 '+3A',
@@ -45,7 +45,7 @@ class RegexpTest extends Validator
                 [
                     'regexp' => '\+\d\S\s',
                     'modifiers' => 'i',
-                ]
+                ],
             ],
             'modifiers' => [
                 'AAA',
@@ -53,7 +53,7 @@ class RegexpTest extends Validator
                 [
                     'regexp' => '[a-z]+',
                     'modifiers' => '',
-                ]
+                ],
             ],
             'empty regexp' => [
                 'AAA',
@@ -61,7 +61,7 @@ class RegexpTest extends Validator
                 [
                     'regexp' => '',
                     'modifiers' => 'i',
-                ]
+                ],
             ],
             'builtin email' => [
                 'test@test.ru',
@@ -69,7 +69,7 @@ class RegexpTest extends Validator
                 [
                     'regexp' => 'email',
                     'modifiers' => 'i',
-                ]
+                ],
             ],
             'builtin url' => [
                 'http://test.ru',
@@ -77,7 +77,7 @@ class RegexpTest extends Validator
                 [
                     'regexp' => 'url',
                     'modifiers' => 'i',
-                ]
+                ],
             ],
             'builtin ipv4' => [
                 '127.0.0.1',
@@ -85,7 +85,7 @@ class RegexpTest extends Validator
                 [
                     'regexp' => 'ipv4',
                     'modifiers' => 'i',
-                ]
+                ],
             ],
             'builtin ipv6' => [
                 '2001:0db8:11a3:09d7:1f34:8a2e:07a0:765d',
@@ -93,7 +93,7 @@ class RegexpTest extends Validator
                 [
                     'regexp' => 'ipv6',
                     'modifiers' => 'i',
-                ]
+                ],
             ],
         ];
     }
@@ -101,7 +101,7 @@ class RegexpTest extends Validator
     /**
      * Return object for validator representation.
      */
-    protected function getValidator(array $options = array())
+    protected function getValidator(array $options = [])
     {
         $type = '\\marvin255\\serviform\\validators\\Regexp';
 

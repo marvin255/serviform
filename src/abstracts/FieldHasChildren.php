@@ -54,18 +54,20 @@ abstract class FieldHasChildren extends Field implements HasChildren
             $element->setName($name);
             $element->setParent($this);
         } else {
-            throw new InvalidArgumentException('Wrong child type for field: '.$name);
+            throw new InvalidArgumentException('Wrong child type for field: ' . $name);
         }
         if ($position === null) {
             $this->elements[$name] = $element;
         } else {
             $elements = [];
-            $itemPosition = $position < 0 ? count($this->elements) + $position  : $position;
+            $itemPosition = $position < 0 ? count($this->elements) + $position : $position;
             $i = 0;
             foreach ($this->elements as $iKey => $iElement) {
-                if ($i === $itemPosition) $elements[$name] = $element;
+                if ($i === $itemPosition) {
+                    $elements[$name] = $element;
+                }
                 $elements[$iKey] = $iElement;
-                $i++;
+                ++$i;
             }
             $this->elements = $elements;
         }

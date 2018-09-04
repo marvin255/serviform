@@ -8,7 +8,7 @@ use marvin255\serviform\helpers\FactoryValidators;
 class RequiredTest extends Validator
 {
     /**
-     * Return array values to test validate
+     * Return array values to test validate.
      */
     protected function getValidatorProvider()
     {
@@ -25,7 +25,7 @@ class RequiredTest extends Validator
     /**
      * Return object for validator representation.
      */
-    protected function getValidator(array $options = array())
+    protected function getValidator(array $options = [])
     {
         $type = '\\marvin255\\serviform\\validators\\Required';
 

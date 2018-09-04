@@ -19,7 +19,7 @@ class FilterTest extends ValidatorElementValue
     }
 
     /**
-     * Return array values to test validate
+     * Return array values to test validate.
      */
     protected function getValidatorProvider()
     {
@@ -34,9 +34,10 @@ class FilterTest extends ValidatorElementValue
                         if ($value === 'test input') {
                             $element->setValue('test callback');
                         }
+
                         return true;
-                    }
-                ]
+                    },
+                ],
             ],
         ];
     }
@@ -44,7 +45,7 @@ class FilterTest extends ValidatorElementValue
     /**
      * Return object for validator representation.
      */
-    protected function getValidator(array $options = array())
+    protected function getValidator(array $options = [])
     {
         $type = '\\marvin255\\serviform\\validators\\Filter';
 

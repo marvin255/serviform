@@ -147,7 +147,6 @@ abstract class FieldWithValidators extends FieldWithChildren
         $validator2->expects($this->never())->method('validate');
         $field->setValidator('test_validator_2', $validator2);
 
-
         $this->assertSame(true, $field->validate(['test1']));
     }
 

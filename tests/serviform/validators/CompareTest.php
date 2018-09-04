@@ -35,7 +35,7 @@ class CompareTest extends Validator
     }
 
     /**
-     * Return array values to test validate
+     * Return array values to test validate.
      */
     protected function getValidatorProvider()
     {
@@ -47,7 +47,7 @@ class CompareTest extends Validator
                     'operator' => '==',
                     'compareAttribute' => null,
                     'compareValue' => '3',
-                ]
+                ],
             ],
             'not ==' => [
                 3,
@@ -56,7 +56,7 @@ class CompareTest extends Validator
                     'operator' => '==',
                     'compareAttribute' => null,
                     'compareValue' => 4,
-                ]
+                ],
             ],
             '!=' => [
                 3,
@@ -65,7 +65,7 @@ class CompareTest extends Validator
                     'operator' => '!=',
                     'compareAttribute' => null,
                     'compareValue' => '4',
-                ]
+                ],
             ],
             'not !=' => [
                 3,
@@ -74,7 +74,7 @@ class CompareTest extends Validator
                     'operator' => '!=',
                     'compareAttribute' => null,
                     'compareValue' => 4,
-                ]
+                ],
             ],
             '===' => [
                 3,
@@ -83,7 +83,7 @@ class CompareTest extends Validator
                     'operator' => '===',
                     'compareAttribute' => null,
                     'compareValue' => 3,
-                ]
+                ],
             ],
             'not ===' => [
                 '4',
@@ -92,7 +92,7 @@ class CompareTest extends Validator
                     'operator' => '===',
                     'compareAttribute' => null,
                     'compareValue' => 4,
-                ]
+                ],
             ],
             '!==' => [
                 3,
@@ -101,7 +101,7 @@ class CompareTest extends Validator
                     'operator' => '!==',
                     'compareAttribute' => null,
                     'compareValue' => '3',
-                ]
+                ],
             ],
             'not !==' => [
                 4,
@@ -110,7 +110,7 @@ class CompareTest extends Validator
                     'operator' => '!==',
                     'compareAttribute' => null,
                     'compareValue' => 4,
-                ]
+                ],
             ],
             '>' => [
                 3,
@@ -119,7 +119,7 @@ class CompareTest extends Validator
                     'operator' => '>',
                     'compareAttribute' => null,
                     'compareValue' => 2,
-                ]
+                ],
             ],
             'not >' => [
                 4,
@@ -128,7 +128,7 @@ class CompareTest extends Validator
                     'operator' => '>',
                     'compareAttribute' => null,
                     'compareValue' => 5,
-                ]
+                ],
             ],
             '>=' => [
                 3,
@@ -137,7 +137,7 @@ class CompareTest extends Validator
                     'operator' => '>=',
                     'compareAttribute' => null,
                     'compareValue' => 3,
-                ]
+                ],
             ],
             'not >=' => [
                 4,
@@ -146,7 +146,7 @@ class CompareTest extends Validator
                     'operator' => '>=',
                     'compareAttribute' => null,
                     'compareValue' => 5,
-                ]
+                ],
             ],
             '<' => [
                 3,
@@ -155,7 +155,7 @@ class CompareTest extends Validator
                     'operator' => '<',
                     'compareAttribute' => null,
                     'compareValue' => 5,
-                ]
+                ],
             ],
             'not <' => [
                 4,
@@ -164,7 +164,7 @@ class CompareTest extends Validator
                     'operator' => '<',
                     'compareAttribute' => null,
                     'compareValue' => 3,
-                ]
+                ],
             ],
             '<=' => [
                 3,
@@ -173,7 +173,7 @@ class CompareTest extends Validator
                     'operator' => '<=',
                     'compareAttribute' => null,
                     'compareValue' => 3,
-                ]
+                ],
             ],
             'not <=' => [
                 4,
@@ -182,7 +182,7 @@ class CompareTest extends Validator
                     'operator' => '<=',
                     'compareAttribute' => null,
                     'compareValue' => 3,
-                ]
+                ],
             ],
         ];
     }
@@ -240,7 +240,7 @@ class CompareTest extends Validator
     /**
      * Return object for validator representation.
      */
-    protected function getValidator(array $options = array())
+    protected function getValidator(array $options = [])
     {
         $type = '\\marvin255\\serviform\\validators\\Compare';
 

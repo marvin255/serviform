@@ -40,7 +40,7 @@ class FactoryValidatorsTest extends PHPUnit_Framework_TestCase
         $model = $this->getMockBuilder('\\marvin255\\serviform\\interfaces\\Validator')->getMock();
         $class = get_class($model);
 
-        $this->assertSame(null, FactoryValidators::getDescription(mt_rand().'_'.time()));
+        $this->assertSame(null, FactoryValidators::getDescription(mt_rand() . '_' . time()));
 
         $description = [
             'type' => $class,

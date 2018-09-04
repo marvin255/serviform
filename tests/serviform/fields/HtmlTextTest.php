@@ -65,7 +65,7 @@ class HtmlTextTest extends Field
      *
      * @return \marvin255\serviform\interfaces\Field
      */
-    protected function getField(array $options = array())
+    protected function getField(array $options = [])
     {
         $type = '\\marvin255\\serviform\\fields\\HtmlText';
 

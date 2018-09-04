@@ -54,6 +54,7 @@ class Compare extends Validator
                 $return = $value == $toTest;
             break;
         }
+
         return $return;
     }
 

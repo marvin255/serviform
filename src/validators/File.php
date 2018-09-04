@@ -20,7 +20,7 @@ class File extends Validator
         $return = !empty($value['tmp_name']) && !empty($value['name']) && empty($value['error']);
         if ($return && $this->getExtensions()) {
             $ext = mb_strtolower(pathinfo($value['name'], PATHINFO_EXTENSION));
-            $return = in_array($ext, array_map('mb_strtolower', $this->getExtensions()));;
+            $return = in_array($ext, array_map('mb_strtolower', $this->getExtensions()));
         }
         if ($return && $this->getMimes()) {
             $mime = extension_loaded('fileinfo') ? mime_content_type($value['tmp_name']) : $value['type'];

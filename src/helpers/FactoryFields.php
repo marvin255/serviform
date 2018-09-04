@@ -22,7 +22,7 @@ class FactoryFields
             'file' => ['type' => '\\marvin255\\serviform\\fields\\File'],
             'form' => [
                 'type' => '\\marvin255\\serviform\\fields\\Form',
-                'template' => realpath(__DIR__.'/../../views/bootstrap_3.php'),
+                'template' => realpath(__DIR__ . '/../../views/bootstrap_3.php'),
             ],
             'formGrouped' => ['type' => '\\marvin255\\serviform\\fields\\FormGrouped'],
             'htmlText' => ['type' => '\\marvin255\\serviform\\fields\\HtmlText'],
@@ -43,7 +43,7 @@ class FactoryFields
     {
         return is_subclass_of($class, '\\marvin255\\serviform\\interfaces\\Field');
     }
-    
+
     /**
      * @param array $options
      *

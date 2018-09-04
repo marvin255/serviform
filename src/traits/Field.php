@@ -143,7 +143,7 @@ trait Field
     public function addToAttribute($name, $value)
     {
         $attr = $this->getAttribute($name);
-        $this->setAttribute($name, $attr.$value);
+        $this->setAttribute($name, $attr . $value);
 
         return $this;
     }
@@ -234,7 +234,7 @@ trait Field
         $names = $this->getFullName();
         $return = array_shift($names);
         if (!empty($names)) {
-            $return .= '['.implode('][', $names).']';
+            $return .= '[' . implode('][', $names) . ']';
         }
 
         return $return;

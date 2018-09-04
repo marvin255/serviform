@@ -30,7 +30,7 @@ class Regexp extends Validator
         if (isset($this->patterns[$this->getRegexp()])) {
             return (bool) preg_match($this->patterns[$this->getRegexp()], $value);
         } elseif ($this->getRegexp()) {
-            return (bool) preg_match('/^'.$this->getRegexp().'$/'.$this->getModifiers(), $value);
+            return (bool) preg_match('/^' . $this->getRegexp() . '$/' . $this->getModifiers(), $value);
         } else {
             return false;
         }

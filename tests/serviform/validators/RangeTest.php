@@ -40,7 +40,7 @@ class RangeTest extends Validator
     }
 
     /**
-     * Return array values to test validate
+     * Return array values to test validate.
      */
     protected function getValidatorProvider()
     {
@@ -52,7 +52,7 @@ class RangeTest extends Validator
                     'range' => [1, 2],
                     'strict' => false,
                     'not' => false,
-                ]
+                ],
             ],
             'in range' => [
                 3,
@@ -61,7 +61,7 @@ class RangeTest extends Validator
                     'range' => [1, 2, 3],
                     'strict' => false,
                     'not' => false,
-                ]
+                ],
             ],
             'not in range with not' => [
                 3,
@@ -70,7 +70,7 @@ class RangeTest extends Validator
                     'range' => [1, 2],
                     'strict' => false,
                     'not' => true,
-                ]
+                ],
             ],
             'in range with not' => [
                 3,
@@ -79,7 +79,7 @@ class RangeTest extends Validator
                     'range' => [1, 2, 3],
                     'strict' => false,
                     'not' => true,
-                ]
+                ],
             ],
             'not in range with strict' => [
                 '3',
@@ -88,7 +88,7 @@ class RangeTest extends Validator
                     'range' => [1, 2, 3],
                     'strict' => true,
                     'not' => false,
-                ]
+                ],
             ],
             'in range with strict' => [
                 3,
@@ -97,7 +97,7 @@ class RangeTest extends Validator
                     'range' => [1, 2, 3],
                     'strict' => true,
                     'not' => false,
-                ]
+                ],
             ],
         ];
     }
@@ -105,7 +105,7 @@ class RangeTest extends Validator
     /**
      * Return object for validator representation.
      */
-    protected function getValidator(array $options = array())
+    protected function getValidator(array $options = [])
     {
         $type = '\\marvin255\\serviform\\validators\\Range';
 

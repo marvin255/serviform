@@ -29,7 +29,7 @@ class RadioList extends FieldHasList
                 : $options;
             $optionOptions['value'] = $optionValue;
             $optionOptions['type'] = $isMultiple ? 'checkbox' : 'radio';
-            $optionOptions['id'] = Html::clearAttributeKey($options['name'].'-'.$optionValue);
+            $optionOptions['id'] = Html::clearAttributeKey($options['name'] . '-' . $optionValue);
             if (
                 $value !== null
                 && (
@@ -45,7 +45,7 @@ class RadioList extends FieldHasList
             $content .= Html::createTag(
                 'label',
                 $labelOptions,
-                $option.Html::clearAttributeValue($optionContent)
+                $option . Html::clearAttributeValue($optionContent)
             );
         }
 

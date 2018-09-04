@@ -36,7 +36,7 @@ class FactoryValidators
     {
         return is_subclass_of($class, '\\marvin255\\serviform\\interfaces\\Validator');
     }
-    
+
     /**
      * @param array $options
      *

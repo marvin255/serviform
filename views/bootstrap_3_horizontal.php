@@ -1,6 +1,6 @@
 <?php
 
-    use \marvin255\serviform\helpers\Html;
+    use marvin255\serviform\helpers\Html;
 
     if ($this->getParent()) {
         $tag = 'fieldset';
@@ -39,7 +39,9 @@
                 </div>
             </div>
         <?php elseif ($el instanceof \marvin255\serviform\fields\Checkbox): ?>
-            <div class="form-group<?php if (!empty($errors)) echo ' has-error'; ?>">
+            <div class="form-group<?php if (!empty($errors)) {
+        echo ' has-error';
+    } ?>">
                 <div class="col-sm-offset-3 col-sm-9">
                     <div class="checkbox">
                         <label>
@@ -61,7 +63,9 @@
         <?php elseif ($el instanceof \marvin255\serviform\fields\HtmlText): ?>
             <?php echo $el->getInput(); ?>
         <?php else: ?>
-            <div class="form-group<?php if (!empty($errors)) echo ' has-error'; ?>">
+            <div class="form-group<?php if (!empty($errors)) {
+        echo ' has-error';
+    } ?>">
                 <?php if (!$this->getParent() || $el->getLabel()): ?>
                     <label for="<?php echo Html::clearAttributeValue($el->getAttribute('id')); ?>" class="col-sm-3 control-label">
                         <?php echo Html::clearAttributeValue($el->getLabel()); ?>

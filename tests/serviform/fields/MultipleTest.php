@@ -269,7 +269,7 @@ class MultipleTest extends Field
             $field2->method('getInput')->will($this->returnValue('test field'));
             $field->expects($this->any())->method('createElement')->will($this->returnValue($field2));
             foreach ($value[0] as $optionName => $optionValue) {
-                $methodName = 'set'.ucfirst($optionName);
+                $methodName = 'set' . ucfirst($optionName);
                 if (!method_exists($field, $methodName)) {
                     continue;
                 }
@@ -290,7 +290,7 @@ class MultipleTest extends Field
             $field2->method('getInput')->will($this->returnValue('test field'));
             $field->expects($this->any())->method('createElement')->will($this->returnValue($field2));
             foreach ($value[0] as $optionName => $optionValue) {
-                $methodName = 'set'.ucfirst($optionName);
+                $methodName = 'set' . ucfirst($optionName);
                 if (!method_exists($field, $methodName)) {
                     continue;
                 }
@@ -305,7 +305,7 @@ class MultipleTest extends Field
      *
      * @return \marvin255\serviform\interfaces\Field
      */
-    protected function getField(array $options = array())
+    protected function getField(array $options = [])
     {
         $type = '\\marvin255\\serviform\\fields\\Multiple';
 

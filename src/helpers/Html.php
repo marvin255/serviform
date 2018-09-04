@@ -22,13 +22,13 @@ class Html
         $tag = self::clearAttributeKey(trim($tag));
         if ($tag) {
             $attributes = self::createAttributeString($htmlOptions);
-            $return = '<'.$tag.(!empty($attributes) ? ' '.$attributes : '');
+            $return = '<' . $tag . (!empty($attributes) ? ' ' . $attributes : '');
             if ($content === false) {
                 $return .= '>';
             } elseif ($content === true) {
                 $return .= '>';
             } else {
-                $return .= '>'.$content.self::createCloseTag($tag);
+                $return .= '>' . $content . self::createCloseTag($tag);
             }
         }
 
@@ -42,7 +42,7 @@ class Html
      */
     public static function createCloseTag($tag)
     {
-        return '</'.self::clearAttributeKey($tag).'>';
+        return '</' . self::clearAttributeKey($tag) . '>';
     }
 
     /**
@@ -78,8 +78,8 @@ class Html
     {
         $replacer = '-';
         $clearString = preg_replace('/[^0-9a-z\-]{1}/i', $replacer, $string);
-        if (preg_match('/^\\'.$replacer.'+$/', $clearString)) {
-            throw new InvalidArgumentException('Can not convert to attribute key: '.$string);
+        if (preg_match('/^\\' . $replacer . '+$/', $clearString)) {
+            throw new InvalidArgumentException('Can not convert to attribute key: ' . $string);
         }
 
         return strtolower(trim($clearString, $replacer));
