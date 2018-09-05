@@ -44,6 +44,10 @@ class File extends Field
             }
         }
 
+        if (!empty($values['error']) == UPLOAD_ERR_NO_FILE) {
+            $values = null;
+        }
+
         return $values;
     }
 }
