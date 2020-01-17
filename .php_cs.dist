@@ -14,4 +14,12 @@ if (class_exists('\\PhpCsFixer\\Fixer\\ControlStructure\\YodaStyleFixer')) {
     $rules['yoda_style'] = false;
 }
 
+if (class_exists('\\PhpCsFixer\\Fixer\\Phpdoc\\PhpdocNoEmptyReturnFixer')) {
+    $rules['phpdoc_no_empty_return'] = false;
+}
+
+if (class_exists('\\PhpCsFixer\\Fixer\\Phpdoc\\NoSuperfluousPhpdocTagsFixer')) {
+    $rules['no_superfluous_phpdoc_tags'] = false;
+}
+
 return PhpCsFixer\Config::create()->setRules($rules)->setFinder($finder);

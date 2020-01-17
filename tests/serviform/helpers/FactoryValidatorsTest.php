@@ -2,10 +2,10 @@
 
 namespace marvin255\serviform\tests\serviform\helpers;
 
-use PHPUnit_Framework_TestCase;
 use marvin255\serviform\helpers\FactoryValidators;
+use marvin255\serviform\tests\BaseTestCase;
 
-class FactoryValidatorsTest extends PHPUnit_Framework_TestCase
+class FactoryValidatorsTest extends BaseTestCase
 {
     public function testInitElementWithType()
     {

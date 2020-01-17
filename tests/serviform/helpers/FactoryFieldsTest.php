@@ -2,10 +2,10 @@
 
 namespace marvin255\serviform\tests\serviform\helpers;
 
-use PHPUnit_Framework_TestCase;
 use marvin255\serviform\helpers\FactoryFields;
+use marvin255\serviform\tests\BaseTestCase;
 
-class FactoryFieldsTest extends PHPUnit_Framework_TestCase
+class FactoryFieldsTest extends BaseTestCase
 {
     public function testInitElementWithType()
     {

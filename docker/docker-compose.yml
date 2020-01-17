@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+  php:
+    container_name: marvin255-serviform-php
+    image: marvin255-serviform-php
+    restart: 'no'
+    build:
+      context: php
+    volumes:
+      - ./../:/var/app:cached

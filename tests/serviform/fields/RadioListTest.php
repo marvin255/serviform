@@ -2,8 +2,8 @@
 
 namespace marvin255\serviform\tests\serviform\fields;
 
-use marvin255\serviform\tests\cases\FieldWithList;
 use marvin255\serviform\helpers\FactoryFields;
+use marvin255\serviform\tests\cases\FieldWithList;
 
 class RadioListTest extends FieldWithList
 {

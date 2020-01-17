@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<phpunit bootstrap="tests/bootstrap.php"
-    colors="true"
-    beStrictAboutTestSize="true"
-    beStrictAboutTestsThatDoNotTestAnything="true">
+<phpunit bootstrap="vendor/autoload.php" colors="true">
 
     <testsuites>
         <testsuite name="Serviform Test Suite">
@@ -20,4 +17,5 @@
             </exclude>
         </whitelist>
     </filter>
+
 </phpunit>

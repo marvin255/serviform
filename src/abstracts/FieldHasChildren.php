@@ -2,9 +2,9 @@
 
 namespace marvin255\serviform\abstracts;
 
-use marvin255\serviform\interfaces\HasChildren;
-use marvin255\serviform\helpers\FactoryFields;
 use InvalidArgumentException;
+use marvin255\serviform\helpers\FactoryFields;
+use marvin255\serviform\interfaces\HasChildren;
 
 /**
  * An abstract class for field that has children.

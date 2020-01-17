@@ -2,8 +2,8 @@
 
 namespace marvin255\serviform\validators;
 
-use marvin255\serviform\abstracts\Validator;
 use InvalidArgumentException;
+use marvin255\serviform\abstracts\Validator;
 
 /**
  * Range validator class.

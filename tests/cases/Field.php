@@ -2,9 +2,9 @@
 
 namespace marvin255\serviform\tests\cases;
 
-use PHPUnit_Framework_TestCase;
+use marvin255\serviform\tests\BaseTestCase;
 
-abstract class Field extends PHPUnit_Framework_TestCase
+abstract class Field extends BaseTestCase
 {
     /**
      * @param array $options

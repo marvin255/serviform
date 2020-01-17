@@ -1,8 +1,12 @@
-index.php
+.idea
 vendor
 composer.lock
-phpunit.xml
-logs
-metrics.html
 .php_cs.cache
+.phpunit.result.cache
+
 tests/coverage
+Docker/.env
+test.php
+test
+
+.~lock.*

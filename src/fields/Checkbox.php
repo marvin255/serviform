@@ -2,8 +2,8 @@
 
 namespace marvin255\serviform\fields;
 
-use marvin255\serviform\helpers\Html;
 use marvin255\serviform\abstracts\Field;
+use marvin255\serviform\helpers\Html;
 
 /**
  * Checkbox class.

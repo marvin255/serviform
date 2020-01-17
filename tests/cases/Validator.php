@@ -2,10 +2,12 @@
 
 namespace marvin255\serviform\tests\cases;
 
+use marvin255\serviform\tests\BaseTestCase;
+
 /**
  * Base class to test form validators.
  */
-abstract class Validator extends \PHPUnit_Framework_TestCase
+abstract class Validator extends BaseTestCase
 {
     /**
      * Return object for field representation.

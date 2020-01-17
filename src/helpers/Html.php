@@ -92,6 +92,6 @@ class Html
      */
     public static function clearAttributeValue($string)
     {
-        return htmlspecialchars($string, ENT_QUOTES);
+        return is_scalar($string) ? htmlspecialchars($string, ENT_QUOTES) : '';
     }
 }

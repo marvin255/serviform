@@ -1,12 +1,12 @@
 <?php
 
-    use marvin255\serviform\helpers\Html;
-    use marvin255\serviform\interfaces\HasChildren;
-    use marvin255\serviform\fields\Checkbox;
     use marvin255\serviform\fields\Button;
+    use marvin255\serviform\fields\Checkbox;
     use marvin255\serviform\fields\Input;
     use marvin255\serviform\fields\Select;
     use marvin255\serviform\fields\Textarea;
+    use marvin255\serviform\helpers\Html;
+    use marvin255\serviform\interfaces\HasChildren;
 
     if ($this->getParent()) {
         $tag = 'fieldset';

@@ -2,8 +2,8 @@
 
 namespace marvin255\serviform\abstracts;
 
-use marvin255\serviform\interfaces\HasValidators;
 use InvalidArgumentException;
+use marvin255\serviform\interfaces\HasValidators;
 
 /**
  * An abstract class for field that has list of values.

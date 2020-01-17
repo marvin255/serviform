@@ -2,8 +2,8 @@
 
 namespace marvin255\serviform\tests\serviform\validators;
 
-use marvin255\serviform\tests\cases\ValidatorElementValue;
 use marvin255\serviform\helpers\FactoryValidators;
+use marvin255\serviform\tests\cases\ValidatorElementValue;
 
 class DefaultValueTest extends ValidatorElementValue
 {

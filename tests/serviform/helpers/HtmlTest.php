@@ -2,10 +2,10 @@
 
 namespace marvin255\serviform\tests\serviform\helpers;
 
-use PHPUnit_Framework_TestCase;
 use marvin255\serviform\helpers\Html;
+use marvin255\serviform\tests\BaseTestCase;
 
-class HtmlTest extends PHPUnit_Framework_TestCase
+class HtmlTest extends BaseTestCase
 {
     /**
      * @dataProvider createTagProvider
