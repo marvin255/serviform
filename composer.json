@@ -15,7 +15,7 @@
     },
     "autoload": {
         "psr-4": {
-            "marvin255\\serviform\\": "src/"
+            "Marvin255\\Serviform\\": "src/"
         }
     },
     "autoload-dev": {
