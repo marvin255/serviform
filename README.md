@@ -15,20 +15,9 @@ Installation
 
 **Via [Composer](https://getcomposer.org/doc/00-intro.md)**
 
-Run command in project folder:
-
 ```bash
-composer require marvin255/serviform:~1.2
+composer req marvin255/serviform
 ```
-
-**Common**
-
-Download library archive and extract to project. Make sure that `Autoloader.php` is included:
-
-```php
-require_once 'src/Autoloader.php';
-```
-
 
 
 Basic usage
