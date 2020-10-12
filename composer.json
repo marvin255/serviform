@@ -5,13 +5,13 @@
     "keywords": ["php", "forms"],
     "license": "MIT",
     "require": {
-        "php": ">=5.6.0"
+        "php": ">=7.4"
     },
     "require-dev": {
-        "phpunit/phpunit": "^5.0|^7.0",
+        "phpunit/phpunit": "^9.0",
         "friendsofphp/php-cs-fixer": "^2.2",
         "sebastian/phpcpd": "*",
-        "phpmetrics/phpmetrics": "*"
+        "vimeo/psalm": "^3.16"
     },
     "autoload": {
         "psr-4": {

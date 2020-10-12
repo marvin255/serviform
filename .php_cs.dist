@@ -1,6 +1,15 @@
 <?php
 
-$finder = PhpCsFixer\Finder::create()->in(__DIR__);
+$finder = PhpCsFixer\Finder::create()
+    ->ignoreDotFiles(false)
+    ->ignoreVCS(true)
+    ->exclude(
+        [
+            'vendor',
+        ]
+    )
+    ->in(__DIR__)
+;
 
 $rules = [
     '@Symfony' => true,
@@ -8,18 +17,10 @@ $rules = [
     'phpdoc_inline_tag' => false,
     'concat_space' => ['spacing' => 'one'],
     'array_syntax' => ['syntax' => 'short'],
+    'yoda_style' => false,
+    'phpdoc_no_empty_return' => false,
+    'no_superfluous_phpdoc_tags' => false,
+    'single_line_throw' => false,
 ];
-
-if (class_exists('\\PhpCsFixer\\Fixer\\ControlStructure\\YodaStyleFixer')) {
-    $rules['yoda_style'] = false;
-}
-
-if (class_exists('\\PhpCsFixer\\Fixer\\Phpdoc\\PhpdocNoEmptyReturnFixer')) {
-    $rules['phpdoc_no_empty_return'] = false;
-}
-
-if (class_exists('\\PhpCsFixer\\Fixer\\Phpdoc\\NoSuperfluousPhpdocTagsFixer')) {
-    $rules['no_superfluous_phpdoc_tags'] = false;
-}
 
 return PhpCsFixer\Config::create()->setRules($rules)->setFinder($finder);

@@ -6,7 +6,7 @@ user_id := $(shell id -u)
 docker_compose := $(shell command -v docker-compose 2> /dev/null)  --file "$(docker_compose_yml)"
 docker_php := $(docker_compose) run --rm -u "$(user_id)" "$(php_container_name)"
 
-.PHONY : help build shell test fixer linter
+.PHONY : help build shell test coverage fixer linter
 .DEFAULT_GOAL := build
 
 # --- [ Development tasks ] --------------------------------------------------------------------------------------------
@@ -19,6 +19,9 @@ shell: ## Runs shell in container
 	$(docker_php) /bin/bash
 
 test: ## Execute tests
+	$(docker_php) vendor/bin/phpunit --configuration phpunit.xml.dist
+
+coverage: ## Execute tests with coverage
 	$(docker_php) vendor/bin/phpunit --configuration phpunit.xml.dist --coverage-html=tests/coverage
 
 fixer: ## Run fixes for code style
@@ -27,5 +30,4 @@ fixer: ## Run fixes for code style
 linter: ## Execute code checks
 	$(docker_php) vendor/bin/php-cs-fixer fix --config=.php_cs.dist -v --dry-run --stop-on-violation
 	$(docker_php) vendor/bin/phpcpd ./src -v
-	$(docker_php) vendor/bin/phpunit --configuration phpunit.xml.dist
-	$(docker_php) vendor/bin/phpmetrics src
+	$(docker_php) vendor/bin/psalm --show-info=true
