@@ -6,7 +6,7 @@ user_id := $(shell id -u)
 docker_compose := $(shell command -v docker-compose 2> /dev/null)  --file "$(docker_compose_yml)"
 docker_php := $(docker_compose) run --rm -u "$(user_id)" "$(php_container_name)"
 
-.PHONY : help build shell test coverage fixer linter
+.PHONY : help build shell test coverage fixer linter release
 .DEFAULT_GOAL := build
 
 # --- [ Development tasks ] --------------------------------------------------------------------------------------------
@@ -31,3 +31,5 @@ linter: ## Execute code checks
 	$(docker_php) vendor/bin/php-cs-fixer fix --config=.php_cs.dist -v --dry-run --stop-on-violation
 	$(docker_php) vendor/bin/phpcpd ./src -v
 	$(docker_php) vendor/bin/psalm --show-info=true
+
+release: fixer linter test ## Run all checks before release
