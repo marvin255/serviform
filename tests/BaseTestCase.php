@@ -1,6 +1,8 @@
 <?php
 
-namespace marvin255\serviform\tests;
+declare(strict_types=1);
+
+namespace Marvin255\Serviform\Tests;
 
 use PHPUnit\Framework\TestCase;
 

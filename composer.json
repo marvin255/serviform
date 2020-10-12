@@ -15,8 +15,12 @@
     },
     "autoload": {
         "psr-4": {
-            "marvin255\\serviform\\": "src/",
-            "marvin255\\serviform\\tests\\": "tests/"
+            "marvin255\\serviform\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Marvin255\\Serviform\\Tests\\": "tests/"
         }
     },
     "repositories": [
